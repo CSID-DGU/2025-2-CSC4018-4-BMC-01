@@ -1,0 +1,62 @@
+version: 1
+dataset: PlantVillage
+notes: >
+  Train/Val/Test는 이 매핑으로 합친 뒤 다시 분할.
+  "(removed)"는 학습에서 제외한다.
+
+label_map:
+  # ---------- 공통 질병군: 통합 라벨 ----------
+  Peach___Bacterial_spot: Bacterial_spot
+  Pepper_bell___Bacterial_spot: Bacterial_spot
+  Tomato___Bacterial_spot: Bacterial_spot
+
+  Potato___Early_blight: Early_blight
+  Tomato___Early_blight: Early_blight
+
+  Potato___Late_blight: Late_blight
+  Tomato___Late_blight: Late_blight
+
+  Apple___Black_rot: Black_rot
+  Grape___Black_rot: Black_rot
+
+  Cherry___Powdery_mildew: Powdery_mildew
+  Grape___Powdery_mildew: Powdery_mildew
+  Squash___Powdery_mildew: Powdery_mildew
+
+  Apple___Cedar_apple_rust: Rust
+  Corn___Common_rust: Rust
+
+  Corn___Cercospora_leaf_spot_Gray_leaf_spot: Leaf_spot
+  Grape___Leaf_blight_(Isariopsis_Leaf_Spot): Leaf_spot
+  Tomato___Septoria_leaf_spot: Leaf_spot
+  Tomato___Target_Spot: Leaf_spot
+
+  Tomato___Spider_mites_Two-spotted_spider_mite: Mite_damage
+
+  Tomato___Tomato_mosaic_virus: Viral_disease
+  Tomato___Tomato_Yellow_Leaf_Curl_Virus: Viral_disease
+
+  # ---------- Healthy: 전종 통합 ----------
+  Apple___healthy: Healthy
+  Blueberry___healthy: Healthy
+  Cherry___healthy: Healthy
+  Corn___healthy: Healthy
+  Grape___healthy: Healthy
+  Peach___healthy: Healthy
+  Pepper_bell___healthy: Healthy
+  Potato___healthy: Healthy
+  Raspberry___healthy: Healthy
+  Soybean___healthy: Healthy
+  Strawberry___healthy: Healthy
+  Tomato___healthy: Healthy
+
+  # ---------- 종 특이 질병: 제외(removed) ----------
+  # Apple___Apple_scab
+  # Orange___Haunglongbing_(Citrus_greening)
+  # Grape___Esca_(Black_Measles)
+  # Strawberry___Leaf_scorch
+  # Tomato___Leaf_Mold
+  # Corn___Northern_Leaf_Blight
+
+  # ---------- 배경: 제외(removed) ----------
+  # Background_without_leaves
