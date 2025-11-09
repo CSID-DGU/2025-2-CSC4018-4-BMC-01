@@ -1,10 +1,8 @@
-# 2025-2 종합설계1 04분반 BMC
-# dip_dev / 이미지 처리·AI Feature 로컬 검증용 🌿
+# dip_dev Branch 🌿
 
-스마트 화분 관리 앱의 이미지 전처리 + 분류 모델 모듈
-목표: 단일 이미지 입력을 두 파이프라인(①/②) 중 하나로 처리하고 JSON 결과로 저장해 로컬에서 검증한다
+**스마트 화분 관리 앱의 이미지 전처리 + 분류 모델 모듈**
 
---
+---
 
 ## 📘 프로젝트 정보
 
@@ -20,6 +18,7 @@
 
 ## 🗂️ 디렉터리 구조
 
+```
 dip_dev/
 ├─ src/
 │  ├─ config.yaml                # 공통 설정(img_size, mean/std, 경로 등)
@@ -30,11 +29,11 @@ dip_dev/
 │  │   └─ morphology.py          # 이진화/에지/열기/닫기
 │  ├─ models/
 │  │   ├─ factory.py             # timm 백본 조립 + 헤드
-│  │   ├─ species.py             # 경로 ① 종 분류 모델
-│  │   └─ disease.py             # 경로 ② 병충해 분류 모델
+│  │   ├─ species.py             # 경로① 종 분류 모델
+│  │   └─ disease.py             # 경로② 병충해 분류 모델
 │  ├─ pipelines/
-│  │   ├─ pot_species.py         # 경로 ①: 리사이즈 → 종분류
-│  │   └─ leaf_disease.py        # 경로 ②: 리사이즈 → 모폴로지 → 병충해
+│  │   ├─ pot_species.py         # 경로①: 리사이즈 → 종분류
+│  │   └─ leaf_disease.py        # 경로②: 리사이즈 → 모폴로지 → 병충해
 │  ├─ utils/
 │  │   ├─ postprocess.py         # softmax, top-k, 라벨 매핑
 │  │   └─ checkpoints.py         # save/load, EMA, seeding
@@ -48,6 +47,7 @@ dip_dev/
 │  └─ batch_eval.py              # 폴더 일괄 추론
 ├─ samples/                      # 샘플 이미지
 └─ outputs/                      # JSON 결과 저장
+```
 
 ---
 
@@ -64,20 +64,24 @@ dip_dev/
 ## 📤 결과 스키마(JSON) 예시
 
 **종 분류**
+```
 {
   "index": 1,
   "common_name": "passion flower",
   "confidence": 0.91,
   "topk": [{"index":1,"name":"passion flower","p":0.91}]
 }
+```
 
 **병충해 분류**
+```
 {
   "index": 3,
   "label": "Leaf Blight",
   "confidence": 0.88,
   "topk": [{"index":3,"label":"Leaf Blight","p":0.88}]
 }
+```
 
 ## 📝 라이선스 · 데이터
 
