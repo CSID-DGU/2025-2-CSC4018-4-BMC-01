@@ -1,8 +1,8 @@
-# index_mapping.py
+# dataset_map_species.py
 # 사용:
-#   python index_mapping.py                                # ../index_mapping.json → ../plants_by_class_from_index
-#   python index_mapping.py --out ../plants_by_class
-#   python index_mapping.py --split train                  # train/val/test만 선택
+#   python dataset_map_species.py                                # ../dataset_map_species.json → ../plants_by_class_from_index
+#   python dataset_map_species.py --out ../plants_by_class
+#   python dataset_map_species.py --split train                  # train/val/test만 선택
 
 import argparse, json, shutil, sys, re
 from pathlib import Path
@@ -22,8 +22,8 @@ def load_records(json_path: Path) -> list[dict]:
     return data
 
 def main():
-    ap = argparse.ArgumentParser(description="Materialize folders by common_name from index_mapping.json")
-    ap.add_argument("--json", default="../index_mapping.json", help="index_mapping.json 경로")
+    ap = argparse.ArgumentParser(description="Materialize folders by common_name from dataset_map_species.json")
+    ap.add_argument("--json", default="../dataset_map_species.json", help="dataset_map_species.json 경로")
     ap.add_argument("--out", default="../plants_by_class_from_index", help="출력 루트")
     ap.add_argument("--split", choices=["all","train","val","test"], default="all", help="특정 split만")
     args = ap.parse_args()

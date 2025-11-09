@@ -20,15 +20,22 @@
 
 ```
 dip_dev/
+├─ README.md
+├─ house_plants.json             # 종 메타데이터
+├─ samples/
+│  ├─ plants/                    # 종 분류 입력
+│  │  └─ dataset_map_species.json
+│  └─ leaves/                    # 병충해 분류 입력
+│     └─ dataset_map_disease.yaml
+├─ outputs/                      # 추론 결과 JSON
 ├─ src/
 │  ├─ config.yaml                # 공통 설정(img_size, mean/std, 경로 등)
-│  ├─ router.py                  # 파일명 규칙에 따른 경로①/② 분기
+│  ├─ router.py                  # 파일명 규칙 기반 ①/② 분기
 │  ├─ data/
-│  │   ├─ image_io.py            # 파일→ndarray, RGB 변환
-│  │   ├─ transforms.py          # 학습/검증/추론 전처리(Albumentations)
-│  │   └─ morphology.py          # 이진화/에지/열기/닫기
+│  │   ├─ image.py               # 입출력, 리사이즈, 정규화, 텐서 변환
+│  │   └─ morphology.py          # 잎 전용 모폴로지 단계
 │  ├─ models/
-│  │   ├─ factory.py             # timm 백본 조립 + 헤드
+│  │   ├─ factory.py             
 │  │   ├─ species.py             # 경로① 종 분류 모델
 │  │   └─ disease.py             # 경로② 병충해 분류 모델
 │  ├─ pipelines/
@@ -36,17 +43,15 @@ dip_dev/
 │  │   └─ leaf_disease.py        # 경로②: 리사이즈 → 모폴로지 → 병충해
 │  ├─ utils/
 │  │   ├─ postprocess.py         # softmax, top-k, 라벨 매핑
-│  │   └─ checkpoints.py         # save/load, EMA, seeding
+│  │   └─ checkpoints.py         
 │  └─ io/
-│      ├─ label_map_species.json # index ↔ {scientific_name, ko_name}
-│      └─ label_map_disease.json # index ↔ {label}
-├─ scripts/
-│  ├─ train_species.py           # 종 분류 학습
-│  ├─ train_disease.py           # 병충해 분류 학습
-│  ├─ run_local.py               # 단일 이미지 추론
-│  └─ batch_eval.py              # 폴더 일괄 추론
-├─ samples/                      # 샘플 이미지
-└─ outputs/                      # JSON 결과 저장
+│      ├─ label_map_species.json # index ↔ {common_name, ko_name}
+│      └─ label_map_disease.json # index ↔ {disease, ko_name}
+└─ scripts/
+   ├─ run_local.py                   # 단일 이미지 추론
+   ├─ batch_eval.py                  # 폴더 일괄 추론
+   ├─ train_species.py
+   └─ train_disease.py
 ```
 
 ---
@@ -55,8 +60,8 @@ dip_dev/
 
 - 입력은 단일 이미지 1장
 - router.py의 파일명 규칙으로 분기:
-  - 경로 ①: 화분 사진 → image_io.py → pot_species.py → 종 분류
-  - 경로 ②: 잎사귀 사진 → image_io.py → morphology.py → leaf_disease.py → 병충해 분류
+  - 경로①: 화분 사진 → image_io.py → pot_species.py → 종 분류
+  - 경로②: 잎사귀 사진 → image_io.py → morphology.py → leaf_disease.py → 병충해 분류
 - 학습과 추론의 리사이즈·정규화는 동일하게 유지
 
 ---
