@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "route": "disease",
+  "meta": {
+    "stage": "image",
+    "mode": "disease",
+    "source_path": "samples\\img_leaf_0001.jpg",
+    "stages": [
+      "model:disease"
+    ]
+  },
+  "prediction": {
+    "class_id": 5,
+    "class_name": "disease_5",
+    "score": 0.40985069387026907,
+    "topk": [
+      {
+        "class_id": 5,
+        "class_name": "disease_5",
+        "score": 0.40985069387026907
+      },
+      {
+        "class_id": 10,
+        "class_name": "disease_10",
+        "score": 0.27199751550554807
+      },
+      {
+        "class_id": 8,
+        "class_name": "disease_8",
+        "score": 0.12977379963484528
+      }
+    ]
+  },
+  "timing_ms": {
+    "total": 0,
+    "model": 0
+  },
+  "version": "v0"
+}

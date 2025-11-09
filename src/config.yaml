@@ -1,0 +1,97 @@
+# config.yaml
+version: "0.1"
+
+app:
+  project_name: "smart-pot-app"
+  default_route: null         # null | "species" | "disease"  (router의 --force 기본값)
+  skip_morphology: false      # router의 --skip-morph 기본값
+  topk: 3
+
+io:
+  input_extensions: [".jpg", ".jpeg", ".png", ".bmp"]
+  outputs_dir: "outputs"      # router가 결과 JSON 저장
+  overwrite: true
+  save_preview: false         # 추후 시각화 산출물 저장 여부
+
+logging:
+  level: "INFO"               # DEBUG | INFO | WARNING | ERROR
+  fmt: "%(asctime)s %(levelname)s %(name)s: %(message)s"
+
+labels:
+  species_map:
+    kind: "json"              # json | yaml | auto
+    path: "/mnt/data/dataset_map_species.json"
+  disease_map:
+    kind: "yaml"              # json | yaml | auto
+    path: "/mnt/data/dataset_map_disease.yaml"
+  fallback_prefix:
+    species: "species_"
+    disease: "disease_"
+
+preprocess:
+  common:
+    # 실제 수치는 나중에 확정. 현재는 패스스루.
+    img_size: [0, 0]          # [W, H] 0은 미적용 의미
+    to_rgb: true
+    normalize:
+      enable: false
+      mean: []                # 예: [0.485, 0.456, 0.406]
+      std: []                 # 예: [0.229, 0.224, 0.225]
+  species:
+    enable: true              # 종 분류용 별도 전처리 스위치
+    extra: {}                 # 예약 필드
+  disease:
+    enable: true
+    extra: {}
+
+morphology:
+  enable: true                # router --skip-morph가 true면 무시됨
+  # 아래 값들은 모두 설계 후 채움. 지금은 비활성/디폴트.
+  grayscale: true
+  binarization:
+    method: "otsu"            # otsu | adaptive | fixed
+    thresh: null
+  ops:
+    open:   { enable: false, ksize: [3, 3], iter: 1 }
+    close:  { enable: false, ksize: [3, 3], iter: 1 }
+    erode:  { enable: false, ksize: [3, 3], iter: 1 }
+    dilate: { enable: false, ksize: [3, 3], iter: 1 }
+    tophat: { enable: false, ksize: [15, 15] }
+    blackhat: { enable: false, ksize: [15, 15] }
+  roi:
+    enable: false
+    method: "largest_contour" # 설계 후 변경
+
+models:
+  species:
+    backend: "dummy"          # dummy | torch | onnx | tflite
+    ckpt_path: ""             # 가중치 경로. 비어 있으면 더미 추론
+    num_classes: 100          # ENV SPECIES_NUM_CLASSES로 덮어쓰기 가능
+    device: "cpu"             # cpu | cuda:0
+    input_size: [0, 0]        # 모델 입력 고정 시 사용
+  disease:
+    backend: "dummy"
+    ckpt_path: ""
+    num_classes: 20           # ENV DISEASE_NUM_CLASSES로 덮어쓰기 가능
+    device: "cpu"
+    input_size: [0, 0]
+
+router:
+  rules:
+    - contains: "leaf"
+      route: "disease"
+    - contains: "plant"
+      route: "species"
+
+security:
+  # 경로 검증 및 안전장치
+  resolve_symlink: true
+  max_file_size_mb: 100
+  allow_network_paths: false
+
+testing:
+  # 샘플 실행 시나리오
+  samples_dir: "samples"
+  examples:
+    - "img_plant_0001.jpg"
+    - "img_leaf_0001.jpg"

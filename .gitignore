@@ -1,0 +1,9 @@
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# limit to src (redundant safety)
+src/**/__pycache__/
+src/**/*.py[cod]
+src/**/*$py.class

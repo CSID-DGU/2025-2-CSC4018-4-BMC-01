@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "route": "species",
+  "meta": {
+    "stage": "image",
+    "mode": "species",
+    "source_path": "samples\\img_plant_0001.jpg",
+    "stages": [
+      "model:species"
+    ]
+  },
+  "prediction": {
+    "class_id": 57,
+    "class_name": "species_57",
+    "score": 0.11995473399485498,
+    "topk": [
+      {
+        "class_id": 57,
+        "class_name": "species_57",
+        "score": 0.11995473399485498
+      },
+      {
+        "class_id": 27,
+        "class_name": "species_27",
+        "score": 0.10853953178909496
+      },
+      {
+        "class_id": 53,
+        "class_name": "species_53",
+        "score": 0.09065983766395769
+      }
+    ],
+    "common_name": null,
+    "labels": null,
+    "raw_entry": null
+  },
+  "timing_ms": {
+    "total": 3,
+    "model": 0,
+    "pipeline": 3
+  },
+  "version": "v0"
+}
