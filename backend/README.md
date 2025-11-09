@@ -1,40 +1,30 @@
-# 🌱 BMC Plant Data Processor
+# 🌱 BMC Plant Backend
 
-식물 관리 앱 - DB 및 서버 모듈
+식물 관리 앱 백엔드 서버
 
-## 목표
+## 역할
 
-JSON 형식의 식물 데이터를 SQLite DB로 변환
+- 식물 정보 데이터베이스 관리
+- API 서버 구축
+- 기상청 API 연동
 
 ## 기술 스택
 
-- Python 3.13
-- SQLite3
-
-## 구조
-
-```
-data-processor/
-├── data/              # 식물 정보 JSON
-├── database/          # DB 스키마
-└── src/              # 소스 코드
-```
+Python 3.13, SQLite3
 
 ## 실행
 
 ```bash
-# 환경 설정
 conda create -n bmc python=3.13
 conda activate bmc
 pip install pandas numpy requests python-dotenv
-
-# DB 초기화
-python database/init_db.py
 ```
 
-## 팀
+## 구조
 
-- DB/서버: 정태호
-- 클라이언트: 유성식
-- AI: 조준혁
-- UI/UX: 채희주
+```
+backend/
+├── database/    # DB 스키마
+├── data/        # 식물 데이터
+└── src/         # 소스 코드
+```
