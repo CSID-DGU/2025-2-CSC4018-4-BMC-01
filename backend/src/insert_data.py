@@ -8,7 +8,7 @@ from parser import load_plants_json, parse_plant
 
 
 def insert_plants_to_db(db_path, json_path):
-    """파싱된 식물 데이터를 DB에 삽입"""
+    # 파싱된 식물 데이터를 DB에 삽입
     # JSON 데이터 로드
     plants = load_plants_json(json_path)
     
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     db_path = os.path.join(parent_dir, 'database', 'plants.db')
     json_path = os.path.join(parent_dir, 'data', 'house_plants.json')
     
-    print("식물 데이터 삽입 시작...\n")
+    print("식물 데이터 삽입 시작\n")
     
     # 삽입 실행
     insert_plants_to_db(db_path, json_path)

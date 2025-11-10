@@ -35,3 +35,28 @@ CREATE TABLE IF NOT EXISTS plants (
 CREATE INDEX IF NOT EXISTS idx_common_name ON plants(common_name);
 CREATE INDEX IF NOT EXISTS idx_latin_name ON plants(latin_name);
 CREATE INDEX IF NOT EXISTS idx_category ON plants(category);
+
+-- 사용자 테이블
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,  
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 사용자-식물 관계 테이블
+CREATE TABLE IF NOT EXISTS user_plants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    plant_id INTEGER NOT NULL,
+    nickname TEXT,  
+    last_watered DATE,
+    next_watering DATE,
+    watering_cycle INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
+
+-- 인덱스
+CREATE INDEX IF NOT EXISTS idx_user_plants_user ON user_plants(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_plants_plant ON user_plants(plant_id);

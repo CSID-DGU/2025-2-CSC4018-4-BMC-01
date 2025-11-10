@@ -37,7 +37,7 @@ def parse_plant(plant_data):
     
     # 일반명은 리스트의 첫 번째 값 사용
     common_list = plant_data.get('common', ['Unknown'])
-    common_name = common_list[0] if common_list else 'Unknown'
+    common_name = common_list[0] if common_list else 'Unknown' 
     
     # 배열 데이터는 JSON 문자열로 변환
     insects = json.dumps(plant_data.get('insects', []))
