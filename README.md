@@ -64,21 +64,28 @@ dip_dev/
 
 **종 분류**
 ```
-{
-  "index": 1,
-  "common_name": "passion flower",
-  "confidence": 0.91,
-  "topk": [{"index":1,"name":"passion flower","p":0.91}]
+  "stage": "infer",
+  "mode": "disease",
+  "pred_class": 2,
+  "pred_label": "Early_blight",
+  "pred_label_ko": "겹무늬병",
+  "confidence": 0.5041054487228394,
+  "topk": [
+  ...
 }
 ```
 
 **병충해 분류**
 ```
 {
-  "index": 3,
-  "label": "Leaf Blight",
-  "confidence": 0.88,
-  "topk": [{"index":3,"label":"Leaf Blight","p":0.88}]
+  "stage": "infer",
+  "mode": "species",
+  "pred_class": 74,
+  "pred_label": "primula",
+  "pred_label_ko": "앵",
+  "confidence": 0.6328405141830444,
+  "topk": [
+  ...
 }
 ```
 
