@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Dict, Tuple, Optional, List
-import logging, json
+import logging, json, re
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -177,6 +177,35 @@ def _get_model_and_device(cfg: Dict[str, Any]) -> Tuple[nn.Module, torch.device,
     return model, device, labels
 
 # -----------------------------
+# Translator
+# -----------------------------
+_TR_CACHE: Optional[Dict[str, str]] = None
+_NORM_RE = re.compile(r"[\s_\-]+")
+
+def _norm_key(s: str) -> str:
+    return _NORM_RE.sub("", s.strip().lower())
+
+def _load_translator(path: Optional[str]) -> Dict[str, str]:
+    global _TR_CACHE
+    if _TR_CACHE is not None:
+        return _TR_CACHE
+    if not path:
+        _TR_CACHE = {}
+        return _TR_CACHE
+    p = Path(path)
+    if not p.exists():
+        _TR_CACHE = {}
+        return _TR_CACHE
+    with open(p, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+    _TR_CACHE = {_norm_key(k): str(v) for k, v in raw.items()}
+    return _TR_CACHE
+
+def _tr(label_en: str, tmap: Dict[str, str]) -> str:
+    """없으면 원문 반환."""
+    return tmap.get(_norm_key(label_en), label_en)
+
+# -----------------------------
 # Inference API
 # -----------------------------
 def run_disease_direct(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict[str, Any]:
@@ -185,6 +214,8 @@ def run_disease_direct(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict
 
     cfg = load_config()
     model, device, labels = _get_model_and_device(cfg)
+
+    tmap = _load_translator(cfg.get("models", {}).get("disease", {}).get("translate_path"))
 
     with torch.inference_mode():
         xb = x.unsqueeze(0).to(device, non_blocking=True)  # [1, C, H, W]
@@ -195,12 +226,15 @@ def run_disease_direct(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict
         pvals, inds = torch.topk(probs[0], k=k)
 
     pred_idx = int(pred.item())
+    pred_en = labels[pred_idx]
+    pred_ko = _tr(pred_en, tmap)
 
     return {
         "stage": "infer",
         "mode": "disease",
         "pred_class": pred_idx,
-        "pred_label": labels[pred_idx],
+        "pred_label": pred_en,
+        "pred_label_ko": pred_ko,
         "confidence": float(conf.item()),
         "topk": [
             {"index": int(i.item()), "label": labels[int(i.item())], "prob": float(p.item())}

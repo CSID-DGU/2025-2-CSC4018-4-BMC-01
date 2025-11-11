@@ -1,0 +1,12 @@
+{
+  "Bacterial_spot": "세균점무늬병",
+  "Black_rot": "검은무늬병",
+  "Early_blight": "겹무늬병",
+  "Healthy": "건강한 상태",
+  "Late_blight": "잎마름병",
+  "Leaf_spot": "점무늬병",
+  "Mite_damage": "진드기 피해",
+  "Powdery_mildew": "흰가루병",
+  "Rust": "녹병",
+  "Viral_disease": "바이러스성 질병"
+}

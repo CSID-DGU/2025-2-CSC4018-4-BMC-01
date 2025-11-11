@@ -61,12 +61,14 @@ models:
     backend: "torch"          # dummy | torch | onnx | tflite
     ckpt_path: "src/train/checkpoints/species/efficientnet_b0/ckpt.pt.best"
     label_path: "src/train/labels/species.labels.json"
+    translate_path: "src/io/label_map_species.json"
     num_classes: 102
     device: "cuda:0"          # cpu | cuda:0
   disease:
     backend: "torch"          # dummy | torch | onnx | tflite
     ckpt_path: "src/train/checkpoints/disease/efficientnet_b0/ckpt.pt.best"
     label_path: "src/train/labels/disease.labels.json"
+    translate_path: "src/io/label_map_disease.json"
     num_classes: 10
     device: "cuda:0"
 

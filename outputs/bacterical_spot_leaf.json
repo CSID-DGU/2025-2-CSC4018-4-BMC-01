@@ -3,6 +3,7 @@
   "mode": "disease",
   "pred_class": 2,
   "pred_label": "Early_blight",
+  "pred_label_ko": "겹무늬병",
   "confidence": 0.5041054487228394,
   "topk": [
     {
@@ -59,7 +60,7 @@
       "species": {
         "enable": true,
         "extra": {
-          "anchor": "top"
+          "anchor": "center"
         }
       },
       "disease": {
