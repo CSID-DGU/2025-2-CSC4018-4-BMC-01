@@ -1,0 +1,73 @@
+{
+  "stage": "infer",
+  "mode": "species",
+  "pred_class": 74,
+  "pred_label": "primula",
+  "confidence": 0.9521589279174805,
+  "topk": [
+    {
+      "index": 74,
+      "label": "primula",
+      "prob": 0.9521589279174805
+    },
+    {
+      "index": 38,
+      "label": "garden_phlox",
+      "prob": 0.0059500024653971195
+    },
+    {
+      "index": 88,
+      "label": "sweet_william",
+      "prob": 0.001717714942060411
+    },
+    {
+      "index": 5,
+      "label": "balloon_flower",
+      "prob": 0.001692006248049438
+    },
+    {
+      "index": 71,
+      "label": "pink_primrose",
+      "prob": 0.0016398580046370625
+    }
+  ],
+  "meta": {
+    "stage": "image",
+    "mode": "species",
+    "source_path": "C:\\Users\\junhy\\Documents\\GitHub\\2025-2-CSC4018-4-BMC-01\\samples\\pink_primrose_plant_2.jpg",
+    "preprocess": {
+      "common": {
+        "img_size": [
+          488,
+          488
+        ],
+        "to_rgb": true,
+        "normalize": {
+          "enable": true,
+          "mean": [
+            0.485,
+            0.456,
+            0.406
+          ],
+          "std": [
+            0.229,
+            0.224,
+            0.225
+          ]
+        }
+      },
+      "species": {
+        "enable": true,
+        "extra": {
+          "anchor": "center"
+        }
+      },
+      "disease": {
+        "enable": true,
+        "extra": {
+          "anchor": "center"
+        }
+      }
+    }
+  }
+}

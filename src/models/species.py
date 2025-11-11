@@ -1,216 +1,211 @@
 # src/models/species.py
 from __future__ import annotations
-from dataclasses import dataclass
+
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
-import json
-import math
-import os
+from typing import Any, Dict, Tuple, Optional, List
+import logging, json
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 try:
-    import yaml  # 선택 의존. 없으면 매핑 없이 동작.
+    import yaml
 except Exception:
     yaml = None
 
-# ---------- 공통 유틸 ----------
+try:
+    import torch
+    import torch.nn as nn
+    from torch import Tensor
+except Exception:
+    torch = None
 
-def _safe_softmax(xs: List[float]) -> List[float]:
-    if not xs:
-        return []
-    m = max(xs)
-    exps = [math.exp(x - m) for x in xs]
-    s = sum(exps) or 1.0
-    return [e / s for e in exps]
+try:
+    import timm
+    _HAS_TIMM = True
+except Exception:
+    timm = None
+    _HAS_TIMM = False
 
-def _stable_hash(s: str) -> int:
-    h = 2166136261
-    for ch in s:
-        h ^= ord(ch)
-        h = (h * 16777619) & 0xFFFFFFFF
-    return h
+# -----------------------------
+# Config loading
+# -----------------------------
+_CONFIG_PATHS = [
+    Path("config.yaml"),
+    Path("src/config.yaml"),
+    Path("/mnt/src/config.yaml"),
+]
 
-# ---------- 라벨 매핑 ----------
+_REQUIRED_KEYS: Tuple[Tuple[str, ...], ...] = (
+    ("models",),
+    ("models","species"),
+    ("models","species","backend"),
+    ("models","species","ckpt_path"),
+    ("models","species","label_path"),
+    ("models","species","num_classes"),
+    ("models","species","device"),
+)
 
-_SPECIES_MAP: Dict[int, str] | None = None
+def _need(cfg: Dict[str, Any], path: Tuple[str, ...]) -> Any:
+    cur = cfg
+    for k in path:
+        if not isinstance(cur, dict) or k not in cur:
+            dotted = ".".join(path)
+            raise KeyError(f"config 누락: {dotted}")
+        cur = cur[k]
+    return cur
 
-def _load_species_map() -> Dict[int, str]:
-    global _SPECIES_MAP
-    if _SPECIES_MAP is not None:
-        return _SPECIES_MAP
+def load_config() -> Dict[str, Any]:
+    cfg_path = next((p for p in _CONFIG_PATHS if p.exists()), None)
+    if not cfg_path:
+        raise FileNotFoundError("config.yaml을 찾을 수 없음: " + ", ".join(map(str, _CONFIG_PATHS)))
+    with open(cfg_path, "r", encoding="utf-8") as f:
+        cfg = yaml.safe_load(f) or {}
+    for p in _REQUIRED_KEYS:
+        _need(cfg, p)
+    return cfg
 
-    mp: Dict[int, str] = {}
-    # 1순위: JSON
-    p_json = Path("/mnt/data/dataset_map_species.json")
-    if p_json.exists():
-        obj = json.loads(p_json.read_text(encoding="utf-8"))
-        # 예상 스키마: {"classes":[{"id":0,"common_name":"Rose"}, ...]}
-        if "classes" in obj:
-            for it in obj["classes"]:
-                cid = int(it.get("id"))
-                name = str(it.get("common_name") or it.get("name") or f"species_{cid}")
-                mp[cid] = name
-        else:
-            # 단순 dict{id: name}도 수용
-            for k, v in obj.items():
-                try:
-                    mp[int(k)] = str(v)
-                except Exception:
-                    continue
-    # 2순위: YAML(옵션)
-    if not mp and yaml is not None:
-        p_yml = Path("/mnt/data/dataset_map_species.yaml")
-        if p_yml.exists():
-            obj = yaml.safe_load(p_yml.read_text(encoding="utf-8"))
-            if isinstance(obj, dict):
-                for k, v in obj.items():
-                    try:
-                        mp[int(k)] = str(v)
-                    except Exception:
-                        continue
+# -----------------------------
+# Labels
+# -----------------------------
+_LABELS_CACHE: Optional[List[str]] = None
 
-    _SPECIES_MAP = mp
-    return _SPECIES_MAP
-
-_SPECIES_ENTRY: dict[int, dict] | None = None
-
-def _load_species_entry() -> dict[int, dict]:
-    global _SPECIES_ENTRY
-    if _SPECIES_ENTRY is not None:
-        return _SPECIES_ENTRY
-    entries: dict[int, dict] = {}
-
-    p_json = Path("/mnt/data/dataset_map_species.json")
-    if p_json.exists():
-        obj = json.loads(p_json.read_text(encoding="utf-8"))
-        if isinstance(obj, dict) and "classes" in obj:
-            for it in obj["classes"]:
-                try:
-                    entries[int(it["id"])] = dict(it)
-                except Exception:
-                    continue
-        elif isinstance(obj, dict):
-            # {id: name} 형태면 name만 감싼다
-            for k, v in obj.items():
-                try:
-                    entries[int(k)] = {"id": int(k), "common_name": str(v)}
-                except Exception:
-                    continue
+def _load_labels(path: str, num_classes: int) -> List[str]:
+    global _LABELS_CACHE
+    if _LABELS_CACHE is not None:
+        return _LABELS_CACHE
+    
+    fp = Path(path)
+    if not fp.exists():
+        raise FileNotFoundError(f"라벨 파일 없음: {fp}")
+    
+    with open(fp, "r", encoding="utf-8") as f:
+        obj = json.load(f)
+    
+    # 허용 형태: ["rose", "tulip", ...] 또는 {"0":"rose","1":"tulip",...} 또는 {0:"rose",...}
+    if isinstance(obj, list):
+        labels = [str(x) for x in obj]
+    elif isinstance(obj, dict):
+        try:
+            items = sorted(((int(k), v) for k, v in obj.items()), key=lambda kv: kv[0])
+        except Exception:
+            raise ValueError("라벨 맵의 키는 0..N-1 정수여야 합니다.")
+        labels = [str(v) for _, v in items]
     else:
-        # 선택: YAML 백업도 허용
-        p_yml = Path("/mnt/data/dataset_map_species.yaml")
-        if p_yml.exists() and yaml is not None:
-            obj = yaml.safe_load(p_yml.read_text(encoding="utf-8"))
-            if isinstance(obj, dict) and "classes" in obj:
-                for it in obj["classes"]:
-                    try:
-                        entries[int(it["id"])] = dict(it)
-                    except Exception:
-                        continue
-            elif isinstance(obj, dict):
-                for k, v in obj.items():
-                    try:
-                        entries[int(k)] = {"id": int(k), "common_name": str(v)}
-                    except Exception:
-                        continue
+        raise ValueError("라벨 파일 형식 오류: list 또는 dict(int->str) 필요")
+    
+    if len(labels) != num_classes:
+        raise ValueError(f"num_classes({num_classes})와 라벨 수({len(labels)}) 불일치")
+    
+    _LABELS_CACHE = labels
+    return labels
 
-    _SPECIES_ENTRY = entries
-    return _SPECIES_ENTRY
+# -----------------------------
+# Model cache / loaders
+# -----------------------------
+_MODEL_CACHE: Optional[nn.Module] = None
+_DEVICE_CACHE: Optional[torch.device] = None # type: ignore
 
-def _name_from_id(cid: int) -> str:
-    mp = _load_species_map()
-    return mp.get(cid, f"species_{cid}")
+def _load_torch_model(ckpt_path: str, num_classes: int) -> nn.Module:
+    p = Path(ckpt_path)
+    if not p.exists():
+        raise FileNotFoundError(f"종 모델 체크포인트 없음: {p}")
 
-def _entry_from_id(cid: int) -> dict | None:
-    return _load_species_entry().get(cid)
+    # 1) TorchScript
+    try:
+        m = torch.jit.load(str(p), map_location="cpu")
+        if isinstance(m, torch.jit.ScriptModule) or isinstance(m, torch.jit.RecursiveScriptModule):
+            m.eval()
+            return m  # type: ignore[return-value]
+    except Exception:
+        pass
 
-# ---------- 모델 래퍼 ----------
+    # 2) PyTorch
+    obj = torch.load(str(p), map_location="cpu")
+    if isinstance(obj, nn.Module):
+        obj.eval()
+        return obj
 
-@dataclass
-class SpeciesModelConfig:
-    num_classes: int = 100  # 실제 값으로 교체 예정
-    ckpt_path: str = ""     # 가중치 경로. 비어 있으면 더미 동작.
+    if isinstance(obj, dict):
+        # 가능한 키: 'model', 'state_dict', 'arch'
+        state = obj.get("model") or obj.get("state_dict") or obj
+        arch = obj.get("arch", None)
 
-class SpeciesModel:
-    def __init__(self, cfg: SpeciesModelConfig | None = None) -> None:
-        self.cfg = cfg or SpeciesModelConfig()
-        self._loaded = False
-        self._backend = None  # 추후 torchscript/onnx/runtime 객체
+        if arch and _HAS_TIMM:
+            model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
+            missing, unexpected = model.load_state_dict(state, strict=False)
+            if missing or unexpected:
+                logger.info(
+                    "state_dict load mismatch | missing=%d unexpected=%d",
+                    len(missing),
+                    len(unexpected),
+                )
+            model.eval()
+            return model
 
-    def load(self) -> None:
-        if self.cfg.ckpt_path and Path(self.cfg.ckpt_path).exists():
-            # TODO: 실제 런타임 로드(Torch/ONNX 등)
-            self._backend = object()
-        self._loaded = True
+        raise RuntimeError("아키텍처 정보(arch)가 없어 모델을 복원할 수 없음. timm arch 또는 nn.Module 직렬화를 사용하세요.")
 
-    def preprocess(self, img: Any) -> Any:
-        # TODO: 텐서 변환, 정규화 등
-        return img
+    raise RuntimeError("지원되지 않는 체크포인트 형식")
 
-    def infer_logits(self, x: Any) -> List[float]:
-        # 실제 추론. 현재는 입력 경로 해시 기반의 결정적 더미.
-        n = max(1, self.cfg.num_classes)
-        seed = ""
-        if isinstance(x, dict):
-            seed = str(x.get("path") or "")
-        h = _stable_hash(seed)
-        # 간단한 반복 난수로 로짓 생성
-        logits = []
-        cur = h or 123456789
-        for _ in range(n):
-            cur = (1103515245 * cur + 12345) & 0x7FFFFFFF
-            logits.append((cur % 1000) / 100.0)  # 0.00~9.99
-        return logits
+def _get_model_and_device(cfg: Dict[str, Any]) -> Tuple[nn.Module, torch.device, List[str]]: # type: ignore
+    global _MODEL_CACHE, _DEVICE_CACHE
 
-    def postprocess(self, probs: List[float], topk: int = 3) -> Tuple[int, List[Tuple[int, float]]]:
-        idx = sorted(range(len(probs)), key=lambda i: probs[i], reverse=True)
-        top = [(i, probs[i]) for i in idx[:topk]]
-        return (top[0][0], top)
+    mcfg = cfg["models"]["species"]
+    backend = str(mcfg["backend"]).lower()
+    device = torch.device(mcfg["device"])
+    labels = _load_labels(mcfg["label_path"], int(mcfg["num_classes"]))
 
-# ---------- 공개 API ----------
+    if _MODEL_CACHE is not None and _DEVICE_CACHE is not None:
+        return _MODEL_CACHE, _DEVICE_CACHE, labels
 
-_DEFAULT_MODEL: SpeciesModel | None = None
+    if backend == "dummy":
+        class _Dummy(nn.Module):
+            def __init__(self, n: int) -> None:
+                super().__init__()
+                self.nc = n
+            def forward(self, x: "Tensor") -> torch.Tensor: # type: ignore
+                return torch.zeros((x.shape[0], self.nc), dtype=torch.float32, device=x.device)
+        model = _Dummy(len(labels))
+    elif backend == "torch":
+        model = _load_torch_model(mcfg["ckpt_path"], len(labels))
+    elif backend in ("onnx", "tflite"):
+        raise NotImplementedError(f"backend '{backend}'는 species에서 미구현")
+    else:
+        raise ValueError(f"알 수 없는 backend: {backend}")
 
-def _ensure_model() -> SpeciesModel:
-    global _DEFAULT_MODEL
-    if _DEFAULT_MODEL is None:
-        ckpt = os.getenv("SPECIES_CKPT", "")
-        num_classes = int(os.getenv("SPECIES_NUM_CLASSES", "100") or "100")
-        _DEFAULT_MODEL = SpeciesModel(SpeciesModelConfig(num_classes=num_classes, ckpt_path=ckpt))
-        _DEFAULT_MODEL.load()
-    return _DEFAULT_MODEL
+    model = model.to(device).eval()
+    _MODEL_CACHE, _DEVICE_CACHE = model, device
+    return model, device, labels
 
-def infer(img: Any, meta: Dict, *, topk: int = 3) -> Dict:
-    """
-    입력: 전처리된 이미지 또는 패스스루 객체, meta 누적 딕셔너리.
-    출력: 라우터가 저장하는 표준 스키마(dict).
-    """
-    meta = dict(meta)
-    stages = list(meta.get("stages") or [])
-    stages.append("model:species")
-    meta["stages"] = stages
+# -----------------------------
+# Inference API
+# -----------------------------
+def run_species(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict[str, Any]:
+    if x.ndim != 3:
+        raise ValueError(f"CHW 텐서 기대, got {tuple(x.shape)}")
 
-    model = _ensure_model()
-    x = model.preprocess(img)
-    logits = model.infer_logits(x)
-    probs = _safe_softmax(logits)
-    cid, top = model.postprocess(probs, topk=topk)
-    name = _name_from_id(cid)
+    cfg = load_config()
+    model, device, labels = _get_model_and_device(cfg)
 
-    entry = _entry_from_id(cid) or {}
+    with torch.inference_mode():
+        xb = x.unsqueeze(0).to(device, non_blocking=True)  # [1, C, H, W]
+        logits = model(xb)                                 # [1, num_classes]
+        probs = torch.softmax(logits, dim=1)
+        conf, pred = torch.max(probs, dim=1)
+        k = min(int(topk), probs.shape[1])
+        pvals, inds = torch.topk(probs[0], k=k)
+
+    pred_idx = int(pred.item())
+
     return {
-        "ok": True,
-        "route": "species",
+        "stage": "infer",
+        "mode": "species",
+        "pred_class": pred_idx,
+        "pred_label": labels[pred_idx],
+        "confidence": float(conf.item()),
+        "topk": [
+            {"index": int(i.item()), "label": labels[int(i.item())], "prob": float(p.item())}
+            for p, i in zip(pvals, inds)
+        ],
         "meta": meta,
-        "prediction": {
-            "class_id": cid,
-            "class_name": name,
-            "score": float(probs[cid]),
-            "topk": [{"class_id": i, "class_name": _name_from_id(i), "score": float(p)} for i, p in top],
-            # dataset_map의 원본 필드 직접 노출
-            "common_name": entry.get("common_name"),
-            "labels": entry.get("labels"),
-            "raw_entry": entry or None,
-        },
-        "timing_ms": {"total": 0, "model": 0},
-        "version": "v0",
     }

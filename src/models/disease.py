@@ -1,225 +1,210 @@
 # src/models/disease.py
 from __future__ import annotations
-from dataclasses import dataclass
+
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
-import math
-import os
-import json
+from typing import Any, Dict, Tuple, Optional, List
+import logging, json
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 try:
     import yaml
 except Exception:
     yaml = None
 
-# ---------- 공통 유틸 ----------
+try:
+    import torch
+    import torch.nn as nn
+    from torch import Tensor
+except Exception:
+    torch = None
 
-def _safe_softmax(xs: List[float]) -> List[float]:
-    if not xs:
-        return []
-    m = max(xs)
-    exps = [math.exp(x - m) for x in xs]
-    s = sum(exps) or 1.0
-    return [e / s for e in exps]
+try:
+    import timm
+    _HAS_TIMM = True
+except Exception:
+    timm = None
+    _HAS_TIMM = False
 
-def _stable_hash(s: str) -> int:
-    h = 2166136261
-    for ch in s:
-        h ^= ord(ch)
-        h = (h * 16777619) & 0xFFFFFFFF
-    return h
 
-# ---------- 라벨 매핑 ----------
+# -----------------------------
+# Config (router style)
+# -----------------------------
+_CONFIG_PATHS = [
+    Path("config.yaml"),
+    Path("src/config.yaml"),
+    Path("/mnt/src/config.yaml"),
+]
 
-_DISEASE_MAP: Dict[int, str] | None = None
+_REQUIRED_KEYS: Tuple[Tuple[str, ...], ...] = (
+    ("models",),
+    ("models", "disease"),
+    ("models", "disease", "backend"),
+    ("models", "disease", "ckpt_path"),
+    ("models", "disease", "label_path"),
+    ("models", "disease", "num_classes"),
+    ("models", "disease", "device"),
+)
 
-def _load_disease_map() -> Dict[int, str]:
-    global _DISEASE_MAP
-    if _DISEASE_MAP is not None:
-        return _DISEASE_MAP
+def _need(cfg: Dict[str, Any], path: Tuple[str, ...]) -> Any:
+    cur = cfg
+    for k in path:
+        if not isinstance(cur, dict) or k not in cur:
+            dotted = ".".join(path)
+            raise KeyError(f"config 누락: {dotted}")
+        cur = cur[k]
+    return cur
 
-    mp: Dict[int, str] = {}
-    # 1순위: YAML
-    p_yml = Path("/mnt/data/dataset_map_disease.yaml")
-    if p_yml.exists() and yaml is not None:
-        obj = yaml.safe_load(p_yml.read_text(encoding="utf-8"))
-        # 예상 스키마:
-        # classes:
-        #   - id: 0
-        #     common_name: "Healthy"
-        #     disease_name: "None"
-        if isinstance(obj, dict) and "classes" in obj:
-            for it in obj["classes"]:
-                cid = int(it.get("id"))
-                name = str(
-                    it.get("disease_name")
-                    or it.get("common_name")
-                    or it.get("name")
-                    or f"disease_{cid}"
-                )
-                mp[cid] = name
-        else:
-            # 단순 dict{id: name}도 수용
-            if isinstance(obj, dict):
-                for k, v in obj.items():
-                    try:
-                        mp[int(k)] = str(v)
-                    except Exception:
-                        continue
-    # 2순위: JSON 백업
-    if not mp:
-        p_json = Path("/mnt/data/dataset_map_disease.json")
-        if p_json.exists():
-            obj = json.loads(p_json.read_text(encoding="utf-8"))
-            if "classes" in obj:
-                for it in obj["classes"]:
-                    cid = int(it.get("id"))
-                    name = str(it.get("disease_name") or it.get("name") or f"disease_{cid}")
-                    mp[cid] = name
-            else:
-                for k, v in obj.items():
-                    try:
-                        mp[int(k)] = str(v)
-                    except Exception:
-                        continue
+def load_config() -> Dict[str, Any]:
+    cfg_path = next((p for p in _CONFIG_PATHS if p.exists()), None)
+    if not cfg_path:
+        raise FileNotFoundError("config.yaml을 찾을 수 없음: " + ", ".join(map(str, _CONFIG_PATHS)))
+    with open(cfg_path, "r", encoding="utf-8") as f:
+        cfg = yaml.safe_load(f) or {}
+    for p in _REQUIRED_KEYS:
+        _need(cfg, p)
+    return cfg
 
-    _DISEASE_MAP = mp
-    return _DISEASE_MAP
+# -----------------------------
+# Labels
+# -----------------------------
+_LABELS_CACHE: Optional[List[str]] = None
 
-_DISEASE_ENTRY: dict[int, dict] | None = None
+def _load_labels(path: str, num_classes: int) -> List[str]:
+    global _LABELS_CACHE
+    if _LABELS_CACHE is not None:
+        return _LABELS_CACHE
 
-def _load_disease_entry() -> dict[int, dict]:
-    global _DISEASE_ENTRY
-    if _DISEASE_ENTRY is not None:
-        return _DISEASE_ENTRY
-    entries: dict[int, dict] = {}
+    fp = Path(path)
+    if not fp.exists():
+        raise FileNotFoundError(f"라벨 파일 없음: {fp}")
 
-    p_yml = Path("/mnt/data/dataset_map_disease.yaml")
-    if p_yml.exists() and yaml is not None:
-        obj = yaml.safe_load(p_yml.read_text(encoding="utf-8"))
-        if isinstance(obj, dict) and "classes" in obj:
-            for it in obj["classes"]:
-                try:
-                    entries[int(it["id"])] = dict(it)
-                except Exception:
-                    continue
-        elif isinstance(obj, dict):
-            for k, v in obj.items():
-                try:
-                    entries[int(k)] = {"id": int(k), "disease_name": str(v)}
-                except Exception:
-                    continue
+    with open(fp, "r", encoding="utf-8") as f:
+        obj = json.load(f)
+
+    # 허용 형태: ["rose", "tulip", ...] 또는 {"0":"rose","1":"tulip",...} 또는 {0:"rose",...}
+    if isinstance(obj, list):
+        labels = [str(x) for x in obj]
+    elif isinstance(obj, dict):
+        try:
+            items = sorted(((int(k), v) for k, v in obj.items()), key=lambda kv: kv[0])
+        except Exception:
+            raise ValueError("라벨 맵의 키는 0..N-1 정수여야 합니다.")
+        labels = [str(v) for _, v in items]
     else:
-        p_json = Path("/mnt/data/dataset_map_disease.json")
-        if p_json.exists():
-            obj = json.loads(p_json.read_text(encoding="utf-8"))
-            if isinstance(obj, dict) and "classes" in obj:
-                for it in obj["classes"]:
-                    try:
-                        entries[int(it["id"])] = dict(it)
-                    except Exception:
-                        continue
-            elif isinstance(obj, dict):
-                for k, v in obj.items():
-                    try:
-                        entries[int(k)] = {"id": int(k), "disease_name": str(v)}
-                    except Exception:
-                        continue
+        raise ValueError("라벨 파일 형식 오류: list 또는 dict(int->str) 필요")
 
-    _DISEASE_ENTRY = entries
-    return _DISEASE_ENTRY
+    if len(labels) != num_classes:
+        raise ValueError(f"num_classes({num_classes})와 라벨 수({len(labels)}) 불일치")
 
-def _name_from_id(cid: int) -> str:
-    mp = _load_disease_map()
-    return mp.get(cid, f"disease_{cid}")
+    _LABELS_CACHE = labels
+    return labels
 
+# -----------------------------
+# Model cache / loaders
+# -----------------------------
+_MODEL_CACHE: Optional[nn.Module] = None
+_DEVICE_CACHE: Optional[torch.device] = None # type: ignore
 
-def _entry_from_id(cid: int) -> dict | None:
-    return _load_disease_entry().get(cid)
+def _load_torch_model(ckpt_path: str, num_classes: int) -> nn.Module:
+    p = Path(ckpt_path)
+    if not p.exists():
+        raise FileNotFoundError(f"병충해 모델 체크포인트 없음: {p}")
 
-# ---------- 모델 래퍼 ----------
+    # 1) TorchScript
+    try:
+        m = torch.jit.load(str(p), map_location="cpu")
+        m.eval()
+        return m  # type: ignore[return-value]
+    except Exception:
+        pass
 
-from dataclasses import dataclass
+    # 2) PyTorch
+    obj = torch.load(str(p), map_location="cpu")
+    if isinstance(obj, nn.Module):
+        obj.eval()
+        return obj
 
-@dataclass
-class DiseaseModelConfig:
-    num_classes: int = 20   # 실제 클래스 수로 교체 예정
-    ckpt_path: str = ""     # 가중치 경로
+    if isinstance(obj, dict):
+        state = obj.get("model") or obj.get("state_dict") or obj
+        arch = obj.get("arch", None)
 
-class DiseaseModel:
-    def __init__(self, cfg: DiseaseModelConfig | None = None) -> None:
-        self.cfg = cfg or DiseaseModelConfig()
-        self._loaded = False
-        self._backend = None
+        if arch and _HAS_TIMM:
+            model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
+            missing, unexpected = model.load_state_dict(state, strict=False)
+            if missing or unexpected:
+                logger.info(
+                    "state_dict load mismatch | missing=%d unexpected=%d",
+                    len(missing),
+                    len(unexpected),
+                )
+            model.eval()
+            return model
 
-    def load(self) -> None:
-        if self.cfg.ckpt_path and Path(self.cfg.ckpt_path).exists():
-            # TODO: 실제 런타임 로드(Torch/ONNX 등)
-            self._backend = object()
-        self._loaded = True
+        raise RuntimeError("아키텍처 정보(arch)가 없어 모델을 복원할 수 없음.")
 
-    def preprocess(self, img: Any) -> Any:
-        # TODO: 텐서 변환, 정규화 등
-        return img
+    raise RuntimeError("지원되지 않는 체크포인트 형식")
 
-    def infer_logits(self, x: Any) -> List[float]:
-        n = max(1, self.cfg.num_classes)
-        seed = ""
-        if isinstance(x, dict):
-            seed = str(x.get("path") or "")
-        h = _stable_hash(seed[::-1])  # species와 분리 위해 역순 해시
-        logits = []
-        cur = h or 987654321
-        for _ in range(n):
-            cur = (1664525 * cur + 1013904223) & 0xFFFFFFFF
-            logits.append((cur % 1000) / 100.0)
-        return logits
+def _get_model_and_device(cfg: Dict[str, Any]) -> Tuple[nn.Module, torch.device, List[str]]: # type: ignore
+    global _MODEL_CACHE, _DEVICE_CACHE
 
-    def postprocess(self, probs: List[float], topk: int = 3) -> Tuple[int, List[Tuple[int, float]]]:
-        idx = sorted(range(len(probs)), key=lambda i: probs[i], reverse=True)
-        top = [(i, probs[i]) for i in idx[:topk]]
-        return (top[0][0], top)
+    mcfg = cfg["models"]["disease"]
+    backend = str(mcfg["backend"]).lower()
+    device = torch.device(mcfg["device"])
+    labels = _load_labels(mcfg["label_path"], int(mcfg["num_classes"]))
 
-# ---------- 공개 API ----------
+    if _MODEL_CACHE is not None and _DEVICE_CACHE is not None:
+        return _MODEL_CACHE, _DEVICE_CACHE, labels
 
-_DEFAULT_MODEL: DiseaseModel | None = None
+    if backend == "dummy":
+        class _Dummy(nn.Module):
+            def __init__(self, n: int) -> None:
+                super().__init__()
+                self.nc = n
+            def forward(self, x: "Tensor") -> torch.Tensor: # type: ignore
+                return torch.zeros((x.shape[0], self.nc), dtype=torch.float32, device=x.device)
+        model = _Dummy(len(labels))
+    elif backend == "torch":
+        model = _load_torch_model(mcfg["ckpt_path"], len(labels))
+    elif backend in ("onnx", "tflite"):
+        raise NotImplementedError(f"backend '{backend}'는 disease에서 미구현")
+    else:
+        raise ValueError(f"알 수 없는 backend: {backend}")
 
-def _ensure_model() -> DiseaseModel:
-    global _DEFAULT_MODEL
-    if _DEFAULT_MODEL is None:
-        ckpt = os.getenv("DISEASE_CKPT", "")
-        num_classes = int(os.getenv("DISEASE_NUM_CLASSES", "20") or "20")
-        _DEFAULT_MODEL = DiseaseModel(DiseaseModelConfig(num_classes=num_classes, ckpt_path=ckpt))
-        _DEFAULT_MODEL.load()
-    return _DEFAULT_MODEL
+    model = model.to(device).eval()
+    _MODEL_CACHE, _DEVICE_CACHE = model, device
+    return model, device, labels
 
-def infer(img: Any, meta: Dict, *, topk: int = 3) -> Dict:
-    """
-    병충해 모델 표준 인터페이스.
-    router의 --skip-morph 우회에서도 이 함수를 직접 호출한다.
-    """
-    meta = dict(meta)
-    stages = list(meta.get("stages") or [])
-    stages.append("model:disease")
-    meta["stages"] = stages
+# -----------------------------
+# Inference API
+# -----------------------------
+def run_disease_direct(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict[str, Any]:
+    if x.ndim != 3:
+        raise ValueError(f"CHW 텐서 기대, got {tuple(x.shape)}")
 
-    model = _ensure_model()
-    x = model.preprocess(img)
-    logits = model.infer_logits(x)
-    probs = _safe_softmax(logits)
-    cid, top = model.postprocess(probs, topk=topk)
-    name = _name_from_id(cid)
+    cfg = load_config()
+    model, device, labels = _get_model_and_device(cfg)
+
+    with torch.inference_mode():
+        xb = x.unsqueeze(0).to(device, non_blocking=True)  # [1, C, H, W]
+        logits = model(xb)                                 # [1, num_classes]
+        probs = torch.softmax(logits, dim=1)
+        conf, pred = torch.max(probs, dim=1)
+        k = min(int(topk), probs.shape[1])
+        pvals, inds = torch.topk(probs[0], k=k)
+
+    pred_idx = int(pred.item())
 
     return {
-        "ok": True,
-        "route": "disease",
+        "stage": "infer",
+        "mode": "disease",
+        "pred_class": pred_idx,
+        "pred_label": labels[pred_idx],
+        "confidence": float(conf.item()),
+        "topk": [
+            {"index": int(i.item()), "label": labels[int(i.item())], "prob": float(p.item())}
+            for p, i in zip(pvals, inds)
+        ],
         "meta": meta,
-        "prediction": {
-            "class_id": cid,
-            "class_name": name,
-            "score": float(probs[cid]),
-            "topk": [{"class_id": i, "class_name": _name_from_id(i), "score": float(p)} for i, p in top],
-        },
-        "timing_ms": {"total": 0, "model": 0},
-        "version": "v0",
     }

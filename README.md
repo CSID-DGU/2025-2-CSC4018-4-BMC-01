@@ -20,38 +20,32 @@
 
 ```
 dip_dev/
-├─ README.md
-├─ house_plants.json             # 종 메타데이터
+├─ outputs/                      # 추론 결과 JSON
 ├─ samples/
 │  ├─ plants/                    # 종 분류 입력
-│  │  └─ dataset_map_species.json
 │  └─ leaves/                    # 병충해 분류 입력
-│     └─ dataset_map_disease.yaml
-├─ outputs/                      # 추론 결과 JSON
 ├─ src/
-│  ├─ config.yaml                # 공통 설정(img_size, mean/std, 경로 등)
-│  ├─ router.py                  # 파일명 규칙 기반 ①/② 분기
 │  ├─ data/
 │  │   ├─ image.py               # 입출력, 리사이즈, 정규화, 텐서 변환
 │  │   └─ morphology.py          # 잎 전용 모폴로지 단계
-│  ├─ models/
-│  │   ├─ factory.py             
+│  ├─ models/            
 │  │   ├─ species.py             # 경로① 종 분류 모델
 │  │   └─ disease.py             # 경로② 병충해 분류 모델
-│  ├─ pipelines/
-│  │   ├─ pot_species.py         # 경로①: 리사이즈 → 종분류
-│  │   └─ leaf_disease.py        # 경로②: 리사이즈 → 모폴로지 → 병충해
-│  ├─ utils/
-│  │   ├─ postprocess.py         # softmax, top-k, 라벨 매핑
-│  │   └─ checkpoints.py         
-│  └─ io/
-│      ├─ label_map_species.json # index ↔ {common_name, ko_name}
-│      └─ label_map_disease.json # index ↔ {disease, ko_name}
-└─ scripts/
-   ├─ run_local.py                   # 단일 이미지 추론
-   ├─ batch_eval.py                  # 폴더 일괄 추론
-   ├─ train_species.py
-   └─ train_disease.py
+│  ├─ io/
+│  │   ├─ label_map_species.json # index ↔ {common_name, ko_name}
+│  │   └─ label_map_disease.json # index ↔ {disease, ko_name}
+│  ├─ train/
+│  │   ├─ checkpoints
+│  │   ├─ histories
+│  │   ├─ labels
+│  │   ├─ splits
+│  │   └─ train_classifier.py
+│  ├─ config.yaml                # 공통 설정(img_size, mean/std, 경로 등)
+│  └─ router.py                  # 파일명 규칙 기반 ①/② 분기
+├─ .gitignore
+├─ house_plants.json             # 종 메타데이터
+├─ run_local.py                  # 단일 이미지 추론
+└─ README.md
 ```
 
 ---

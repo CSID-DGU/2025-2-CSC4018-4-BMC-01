@@ -1,39 +1,73 @@
 {
-  "ok": true,
-  "route": "disease",
+  "stage": "infer",
+  "mode": "disease",
+  "pred_class": 0,
+  "pred_label": "Bacterial_spot",
+  "confidence": 0.8991685509681702,
+  "topk": [
+    {
+      "index": 0,
+      "label": "Bacterial_spot",
+      "prob": 0.8991685509681702
+    },
+    {
+      "index": 5,
+      "label": "Leaf_spot",
+      "prob": 0.018365157768130302
+    },
+    {
+      "index": 1,
+      "label": "Black_rot",
+      "prob": 0.013636295683681965
+    },
+    {
+      "index": 7,
+      "label": "Powdery_mildew",
+      "prob": 0.012142198160290718
+    },
+    {
+      "index": 9,
+      "label": "Viral_disease",
+      "prob": 0.01182080153375864
+    }
+  ],
   "meta": {
     "stage": "image",
     "mode": "disease",
-    "source_path": "samples\\img_leaf_0001.jpg",
-    "stages": [
-      "model:disease"
-    ]
-  },
-  "prediction": {
-    "class_id": 5,
-    "class_name": "disease_5",
-    "score": 0.40985069387026907,
-    "topk": [
-      {
-        "class_id": 5,
-        "class_name": "disease_5",
-        "score": 0.40985069387026907
+    "source_path": "C:\\Users\\junhy\\Documents\\GitHub\\2025-2-CSC4018-4-BMC-01\\samples\\img_leaf_0001.jpg",
+    "preprocess": {
+      "common": {
+        "img_size": [
+          488,
+          488
+        ],
+        "to_rgb": true,
+        "normalize": {
+          "enable": true,
+          "mean": [
+            0.485,
+            0.456,
+            0.406
+          ],
+          "std": [
+            0.229,
+            0.224,
+            0.225
+          ]
+        }
       },
-      {
-        "class_id": 10,
-        "class_name": "disease_10",
-        "score": 0.27199751550554807
+      "species": {
+        "enable": true,
+        "extra": {
+          "anchor": "top"
+        }
       },
-      {
-        "class_id": 8,
-        "class_name": "disease_8",
-        "score": 0.12977379963484528
+      "disease": {
+        "enable": true,
+        "extra": {
+          "anchor": "center"
+        }
       }
-    ]
-  },
-  "timing_ms": {
-    "total": 0,
-    "model": 0
-  },
-  "version": "v0"
+    }
+  }
 }

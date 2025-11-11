@@ -45,10 +45,8 @@ def default_transforms(img_size: int):
     mean = [0.485, 0.456, 0.406]
     std  = [0.229, 0.224, 0.225]
     train_tf = transforms.Compose([
-        # 멀리서 찍힌 상황 대응: 더 작은 스케일도 샘플링
         transforms.RandomResizedCrop(img_size, scale=(0.2, 1.0)),
         transforms.RandomHorizontalFlip(p=0.5),
-        # 원근/기울기 왜곡
         transforms.RandomPerspective(distortion_scale=0.2, p=0.2),
         transforms.RandomAffine(
             degrees=15, translate=(0.1, 0.1), scale=(0.85, 1.15), shear=10
@@ -56,11 +54,10 @@ def default_transforms(img_size: int):
         transforms.ColorJitter(0.3, 0.3, 0.3, 0.1),
         transforms.ToTensor(),
         transforms.Normalize(mean, std),
-        # 일부 가림/화분 개체 혼입 대응
         transforms.RandomErasing(p=0.25, scale=(0.02, 0.2), ratio=(0.3, 3.3)),
     ])
     val_tf = transforms.Compose([
-        transforms.Resize(int(img_size * 1.15)),
+        transforms.Resize(int(img_size * 1.1)),
         transforms.CenterCrop(img_size),
         transforms.ToTensor(),
         transforms.Normalize(mean, std),
@@ -207,10 +204,12 @@ def main():
             return float(step + 1) / warmup_steps
         progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
         return 0.5 * (1 + math.cos(math.pi * progress))
-    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+        optimizer, T_max=args.epochs
+    )
     scaler = torch.cuda.amp.GradScaler() if device.type == "cuda" else None
 
-    # 산출 경로
+    # output path
     ckpt_dir = (CKPT_DIR / task / args.arch)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     split_path = SPLIT_DIR / f"{task}_{args.arch}.split.json"
@@ -259,11 +258,11 @@ def main():
                 print(f"Early stopping at epoch {epoch}. Best val acc={best_val:.4f}")
                 break
 
-    # last ckpt
+    # checkpoint 저장
     save_checkpoint(model, args.arch, class_to_idx, args.img_size, mean, std,
                     hparams, history, best_val, ckpt_dir, is_best=False)
 
-    # 라벨맵 저장
+    # label 저장
     map_path = save_label_map_json(class_to_idx, task=task)
 
     # split 저장
