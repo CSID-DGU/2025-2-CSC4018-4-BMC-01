@@ -45,6 +45,26 @@ backend/
 - 사용자가 키우는 식물
 - 물주기 기록 및 일정
 
+## API 엔드포인트
+
+### 식물
+
+- `GET /api/plants` - 전체 식물 목록 (209개)
+- `GET /api/plants/<id>` - 특정 식물 조회
+- `GET /api/plants/search?q=<keyword>` - 식물 검색
+
+### 사용자
+
+- `POST /api/users` - 사용자 생성
+- `GET /api/users/<id>` - 사용자 조회
+
+### 사용자-식물
+
+- `POST /api/users/<id>/plants` - 식물 추가
+- `GET /api/users/<id>/plants` - 내 식물 목록
+- `PUT /api/user-plants/<id>/water` - 물주기 기록
+- `DELETE /api/user-plants/<id>` - 식물 삭제
+
 ## 개발 현황
 
 - [x] 프로젝트 초기 설정
@@ -53,5 +73,6 @@ backend/
 - [x] JSON 파싱 기능 구현
 - [x] 식물 데이터 삽입 (209개)
 - [x] CRUD 함수 구현 (사용자/식물 관리)
-- [ ] API 서버 구축
+- [x] API 서버 구축
 - [ ] 기상청 API 연동
+- [ ] AI 서버 연동
