@@ -2,6 +2,8 @@
 Flask API 서버
 """
 
+from weather import get_weather
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -151,6 +153,27 @@ def api_delete_user_plant(user_plant_id):
     try:
         delete_user_plant(DB_PATH, user_plant_id)
         return jsonify({"success": True, "message": "Plant deleted"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+# 기상청 API
+
+
+@app.route("/api/weather", methods=["GET"])
+def api_get_weather():
+    # 날씨 정보 (GPS 지원)
+    try:
+        # GPS 좌표 받기 (없으면 서울 기본값)
+        lat = request.args.get("lat", type=float, default=37.5665)
+        lon = request.args.get("lon", type=float, default=126.9780)
+
+        weather = get_weather(lat, lon)
+
+        if weather:
+            return jsonify({"success": True, "data": weather})
+        else:
+            return jsonify({"success": False, "error": "Weather unavailable"}), 503
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
