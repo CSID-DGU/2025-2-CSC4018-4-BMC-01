@@ -5,28 +5,46 @@
 ## 역할
 
 - 식물 정보 데이터베이스 관리
-- API 서버 구축
-- 기상청 API 연동
+- REST API 서버 구축
+- 기상청 단기예보 API 연동
+- AI 서버 연동 (예정)
 
 ## 기술 스택
 
-Python 3.13, SQLite3
+- **언어**: Python 3.13
+- **데이터베이스**: SQLite3
+- **웹 프레임워크**: Flask
+- **외부 API**: 기상청 단기예보 API
 
 ## 실행
 
 ```bash
+# 환경 설정
 conda create -n bmc python=3.13
 conda activate bmc
-pip install pandas numpy requests python-dotenv
+pip install flask flask-cors requests python-dotenv
+
+# API 서버 실행
+python src/app.py
+# http://localhost:5000
 ```
 
 ## 구조
 
 ```
 backend/
-├── database/    # DB 스키마 및 초기화
-├── data/        # 식물 데이터 (JSON)
-└── src/         # 소스 코드 (파싱, CRUD)
+├── database/          # DB 스키마 및 초기화
+│   ├── schema.sql
+│   ├── init_db.py
+│   └── plants.db
+├── data/              # 식물 데이터 (JSON)
+│   └── house_plants.json
+└── src/               # 소스 코드
+    ├── parser.py      # JSON 파싱
+    ├── insert_data.py # 데이터 삽입
+    ├── crud.py        # CRUD 함수
+    ├── weather.py     # 기상청 API
+    └── app.py         # Flask 서버
 ```
 
 ## 데이터베이스 스키마
@@ -65,6 +83,11 @@ backend/
 - `PUT /api/user-plants/<id>/water` - 물주기 기록
 - `DELETE /api/user-plants/<id>` - 식물 삭제
 
+### 날씨 정보
+
+- `GET /api/weather` - 날씨 조회 (기본: 서울)
+- `GET /api/weather?lat=<위도>&lon=<경도>` - GPS 위치별 날씨
+
 ## 개발 현황
 
 - [x] 프로젝트 초기 설정
@@ -74,5 +97,24 @@ backend/
 - [x] 식물 데이터 삽입 (209개)
 - [x] CRUD 함수 구현 (사용자/식물 관리)
 - [x] API 서버 구축
-- [ ] 기상청 API 연동
+- [x] 기상청 API 연동
 - [ ] AI 서버 연동
+
+## 주요 기능
+
+### 식물 데이터베이스
+
+- 209개 실내 식물 정보
+- 물주기, 온도, 습도, 빛 조건 등
+
+### 사용자 관리
+
+- 사용자별 식물 관리
+- 물주기 일정 자동 계산
+- 커스텀 물주기 주기 설정
+
+### 날씨 연동
+
+- 기상청 단기예보 API
+- GPS 좌표 → 격자 좌표 자동 변환
+- 온도, 습도, 강수확률 제공
