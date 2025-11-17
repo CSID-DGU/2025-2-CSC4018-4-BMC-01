@@ -11,14 +11,14 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /mnt/src
 COPY . /mnt/src
 
-# 4) Python 의존성 설치
+# 4) Python 패키지 설치
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 5) Cloud Run은 PORT 환경변수를 넘겨줌
+# 5) Cloud Run 이 넘겨주는 PORT 환경변수 기본값 지정
 ENV PORT=8080
 
-# 6) 컨테이너 포트
+# 6) 컨테이너가 외부에 열어둘 포트
 EXPOSE 8080
 
-# 7) FastAPI 서버 실행
+# 7) 컨테이너가 뜰 때 실행할 명령
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
