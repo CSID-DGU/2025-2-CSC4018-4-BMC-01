@@ -1,0 +1,8 @@
+# 샘플/학습용 이미지들
+outputs/
+samples/
+
+# 로컬 전용 설정/캐시
+__pycache__/
+*.log
+*.tmp
