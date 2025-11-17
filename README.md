@@ -42,9 +42,11 @@ dip_dev/
 │  │   └─ train_classifier.py    # 모델 학습 코드
 │  ├─ config.yaml                # 공통 규칙 설정(경로, 파라미터 값 등) 
 │  └─ router.py                  # 파일명 기반 ①/② 분기, 파이프라인 실행
-├─ .gitignore
+├─ app.py
+├─ Dockerfile
 ├─ house_plants.json             # 원예 식물 데이터시트
-└─ README.md
+├─ README.md
+└─ requirements.txt
 ```
 
 ---
