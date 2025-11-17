@@ -12,16 +12,8 @@ BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFc
 
 
 def convert_to_grid(lat, lon):
-    """
-    위경도를 기상청 격자 좌표로 변환
 
-    Args:
-        lat: 위도
-        lon: 경도
-
-    Returns:
-        tuple: (nx, ny)
-    """
+    # 위경도를 기상청 격자 좌표로 변환
     RE = 6371.00877
     GRID = 5.0
     SLAT1 = 30.0
@@ -63,11 +55,8 @@ def convert_to_grid(lat, lon):
 
 
 def get_base_time():
-    """
-    단기예보 기준 시간 계산
 
-    발표 시각: 02:10, 05:10, 08:10, 11:10, 14:10, 17:10, 20:10, 23:10
-    """
+    # 단기예보 기준 시간 계산
     now = datetime.now()
 
     base_times = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
@@ -84,13 +73,8 @@ def get_base_time():
 
 
 def get_weather(lat=37.5665, lon=126.9780):
-    """
-    단기예보 조회
 
-    Args:
-        lat: 위도 (기본: 서울)
-        lon: 경도 (기본: 서울)
-    """
+    # 단기예보 조회
     try:
         # 위경도를 격자 좌표로 변환
         nx, ny = convert_to_grid(lat, lon)
