@@ -88,7 +88,10 @@ dip_dev/
 }
 ```
 
-## 📝 라이선스 · 데이터
+## 📝 API 테스트
 
-- 외부 데이터·가중치 라이선스는 원본을 따른다.
-- 대용량 가중치의 경우 Git LFS 사용 권장. 설치: https://git-lfs.github.com
+```
+curl -X POST \
+  -F "file=@samples/plants/your_plant_image.jpg" \
+  https://smartpot-api-xxxxx-asia-northeast3.run.app/infer
+```
