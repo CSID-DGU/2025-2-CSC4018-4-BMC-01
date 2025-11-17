@@ -7,7 +7,7 @@ from repositories import UserPlantRepository, PlantRepository
 
 
 class UserPlantService:
-    # 사용자-식물 관계 비즈니스 로직 계층"""
+    # 사용자-식물 관계 비즈니스 로직 계층
 
     def __init__(self, user_plant_repository: UserPlantRepository = None, plant_repository: PlantRepository = None):
         self.user_plant_repo = user_plant_repository or UserPlantRepository()
