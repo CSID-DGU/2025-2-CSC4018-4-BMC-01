@@ -9,7 +9,6 @@ from fastapi.responses import JSONResponse
 from src.router import route, load_config
 
 app = FastAPI()
-
 CFG = load_config()
 
 UPLOAD_DIR = Path("/tmp/uploads")
@@ -27,9 +26,12 @@ async def infer(file: UploadFile = File(...)):
     if allowed and ext not in allowed:
         raise HTTPException(status_code=400, detail=f"허용되지 않는 확장자: {ext}")
 
-    # 2) 임시 파일로 저장
-    tmp_name = f"{uuid.uuid4().hex}{ext}"
+    # 2) 임시 파일로 저장 (원본 파일명 유지 + uuid 부여)
+    original_stem = Path(file.filename).stem
+    safe_stem = original_stem.replace(" ", "_")
+    tmp_name = f"{safe_stem}_{uuid.uuid4().hex}{ext}"
     tmp_path = UPLOAD_DIR / tmp_name
+
     with tmp_path.open("wb") as f:
         shutil.copyfileobj(file.file, f)
 

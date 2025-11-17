@@ -94,6 +94,8 @@ dip_dev/
 
 ```
 curl -X POST \
-  -F "file=@samples/plants/your_plant_image.jpg" \
-  https://smartpot-api-xxxxx-asia-northeast3.run.app/infer
+  -F "file=@samples/bacterical_spot_leaf.jpg" \
+  https://smartpot-api-551846265142.asia-northeast3.run.app/infer
+
+curl -X POST -F "file=@samples/bacterical_spot_leaf.jpg" https://smartpot-api-551846265142.asia-northeast3.run.app/infer
 ```
