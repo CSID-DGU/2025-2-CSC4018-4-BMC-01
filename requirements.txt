@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+
+PyYAML
+pillow
+numpy
+torch
+timm
+
+# 기타 사용하는 것들 (morphology 사용시 opencv-python 추가)
