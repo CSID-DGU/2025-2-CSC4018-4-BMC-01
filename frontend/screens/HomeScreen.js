@@ -17,11 +17,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
-/* [ Storage ] */
+/* [ Storage & Services ] */
 import {
   fetchPlants,
   updateWaterDate,
 } from "../utils/Storage";
+import { weatherService } from "../src/services";
 
 export default function HomeScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
@@ -52,13 +53,13 @@ export default function HomeScreen({ navigation }) {
   /* ---------------- 날씨 안내 문구 ---------------- */
   const generateWeatherMessage = (t) => {
     if (t == null) return "";
-    if (t >= 27) return "🔥 더운 날씨! 물 자주 확인 추천!";
-    if (t >= 20) return "🌿 따뜻한 날씨! 관리하기 좋은 환경입니다.";
-    if (t >= 10) return "🍃 선선한 날씨! 햇빛은 적당히~";
-    return "❄ 많이 추워요! 실내 보온 필요!";
+    if (t >= 27) return "더운 날씨! 물 자주 확인 추천!";
+    if (t >= 20) return "따뜻한 날씨! 관리하기 좋은 환경입니다.";
+    if (t >= 10) return "선선한 날씨! 햇빛은 적당히~";
+    return "많이 추워요! 실내 보온 필요!";
   };
 
-  /* ---------------- 날씨 API ---------------- */
+  /* ---------------- 날씨 API (백엔드 경유) ---------------- */
   const loadWeather = async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -71,24 +72,30 @@ export default function HomeScreen({ navigation }) {
       let loc = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = loc.coords;
 
+      // 위치 이름 가져오기
       let geo = await Location.reverseGeocodeAsync({ latitude, longitude });
       if (geo.length > 0) {
         const g = geo[0];
-        setLocationText(`${g.region} ${g.city}`);
+        setLocationText(`${g.region || ''} ${g.city || g.district || ''}`);
       }
 
-      const apiKey = "bb181b8c9659e3cdc779155d99dd236a";
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=kr`;
+      // 백엔드 날씨 API 호출
+      const weather = await weatherService.getWeather(latitude, longitude);
 
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data?.main?.temp != null) {
-        const t = Math.round(data.main.temp);
+      if (weather?.temperature != null) {
+        const t = Math.round(weather.temperature);
         setTempValue(t);
         setWeatherText(`현재온도: ${t}°C`);
+      } else if (weather?.temp != null) {
+        // 기상청 API 응답 형식
+        const t = Math.round(weather.temp);
+        setTempValue(t);
+        setWeatherText(`현재온도: ${t}°C`);
+      } else {
+        setWeatherText("날씨 정보 없음");
       }
     } catch (err) {
+      console.log("Weather Error:", err);
       setWeatherText("날씨 정보 오류");
     }
   };
@@ -125,7 +132,13 @@ export default function HomeScreen({ navigation }) {
   /* ---------------- 슬라이드 ---------------- */
   const renderSlide = ({ item }) => (
     <View style={styles.slideBox}>
-      <Image source={{ uri: item.image }} style={styles.slideImg} />
+      {item.image ? (
+        <Image source={{ uri: item.image }} style={styles.slideImg} />
+      ) : (
+        <View style={[styles.slideImg, styles.noImage]}>
+          <Text style={styles.noImageText}>No Image</Text>
+        </View>
+      )}
       <Text style={styles.slideName}>{item.name}</Text>
     </View>
   );
@@ -152,11 +165,11 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#FAFAFA" }}
-      edges={["top", "bottom", "left", "right"]}   // ★ A안
+      edges={["top", "bottom", "left", "right"]}
     >
       <ScrollView
         style={styles.container}
-        contentContainerStyle={{ paddingBottom: 40 }}   // 하단 여백 강화
+        contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
         {/* ----------------- 날씨 ----------------- */}
@@ -169,19 +182,23 @@ export default function HomeScreen({ navigation }) {
 
         {/* ----------------- 슬라이드 ----------------- */}
         <Text style={styles.sectionTitle}>내 화분</Text>
-        <FlatList
-          data={plants}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(i) => i.id.toString()}
-          renderItem={renderSlide}
-          style={{ marginBottom: 20 }}
-        />
+        {plants.length > 0 ? (
+          <FlatList
+            data={plants}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(i) => i.id.toString()}
+            renderItem={renderSlide}
+            style={{ marginBottom: 20 }}
+          />
+        ) : (
+          <Text style={styles.emptyText}>등록된 화분이 없습니다.</Text>
+        )}
 
         {/* ----------------- 물주기 ----------------- */}
         <Text style={styles.sectionTitle}>물주기</Text>
         {mustWaterPlants.length === 0 ? (
-          <Text style={styles.doneText}>🌿 모든 화분에 물을 다 줬어요!</Text>
+          <Text style={styles.doneText}>모든 화분에 물을 다 줬어요!</Text>
         ) : (
           <FlatList
             data={mustWaterPlants}
@@ -200,7 +217,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FAFAFA",
-    paddingHorizontal: 20   // 좌우 여백 강화
+    paddingHorizontal: 20
   },
 
   weatherBox: {
@@ -233,6 +250,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 100,
     borderRadius: 10
+  },
+
+  noImage: {
+    backgroundColor: "#E8E8E8",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  noImageText: {
+    color: "#999",
+    fontSize: 12
   },
 
   slideName: {
@@ -271,5 +299,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#777",
     fontWeight: "600"
+  },
+
+  emptyText: {
+    textAlign: "center",
+    color: "#999",
+    marginBottom: 20
   }
 });

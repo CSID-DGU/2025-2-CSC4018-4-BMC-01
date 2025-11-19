@@ -35,6 +35,13 @@ class UserPlantService:
             raise ValueError(f"식물을 찾을 수 없습니다: {user_plant_id}")
         return True
 
+    def update_plant(self, user_plant_id: int, nickname: str = None, watering_cycle: int = None, last_watered: str = None) -> bool:
+        """사용자 식물 정보 수정"""
+        success = self.user_plant_repo.update(user_plant_id, nickname, watering_cycle, last_watered)
+        if not success:
+            raise ValueError(f"식물을 찾을 수 없습니다: {user_plant_id}")
+        return True
+
     def remove_plant(self, user_plant_id: int) -> None:
         """사용자 식물 삭제"""
         self.user_plant_repo.delete(user_plant_id)

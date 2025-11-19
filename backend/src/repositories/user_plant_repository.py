@@ -102,6 +102,54 @@ class UserPlantRepository:
         conn.close()
         return True
 
+    def update(self, user_plant_id: int, nickname: str = None, watering_cycle: int = None, last_watered: str = None) -> bool:
+        # 사용자 식물 정보 수정
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        # 현재 정보 가져오기
+        cursor.execute("SELECT * FROM user_plants WHERE id = ?", (user_plant_id,))
+        row = cursor.fetchone()
+
+        if not row:
+            conn.close()
+            return False
+
+        # 업데이트할 필드만 변경
+        updates = []
+        params = []
+
+        if nickname is not None:
+            updates.append("nickname = ?")
+            params.append(nickname)
+
+        if watering_cycle is not None:
+            updates.append("watering_cycle = ?")
+            params.append(watering_cycle)
+
+        if last_watered is not None:
+            updates.append("last_watered = ?")
+            params.append(last_watered)
+            # next_watering 계산
+            from datetime import datetime
+            last_date = datetime.strptime(last_watered, "%Y-%m-%d").date()
+            cycle = watering_cycle if watering_cycle else row[4]  # watering_cycle column
+            next_date = last_date + timedelta(days=cycle or 7)
+            updates.append("next_watering = ?")
+            params.append(next_date)
+
+        if not updates:
+            conn.close()
+            return True
+
+        params.append(user_plant_id)
+        query = f"UPDATE user_plants SET {', '.join(updates)} WHERE id = ?"
+
+        cursor.execute(query, params)
+        conn.commit()
+        conn.close()
+        return True
+
     def delete(self, user_plant_id: int) -> None:
         # 사용자 식물 삭제
         conn = sqlite3.connect(self.db_path)

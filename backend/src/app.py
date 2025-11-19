@@ -138,6 +138,23 @@ def api_update_watering(user_plant_id):
         return jsonify({"success": False, "error": str(e)}), 500
 
 
+@app.route("/api/user-plants/<int:user_plant_id>", methods=["PUT"])
+def api_update_user_plant(user_plant_id):
+    # 사용자 식물 정보 수정
+    try:
+        data = request.get_json()
+        nickname = data.get("nickname")
+        watering_cycle = data.get("watering_cycle")
+        last_watered = data.get("last_watered")
+
+        user_plant_service.update_plant(user_plant_id, nickname, watering_cycle, last_watered)
+        return jsonify({"success": True, "message": "Plant updated"})
+    except ValueError as e:
+        return jsonify({"success": False, "error": str(e)}), 404
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
 @app.route("/api/user-plants/<int:user_plant_id>", methods=["DELETE"])
 def api_delete_user_plant(user_plant_id):
     # 사용자 식물 삭제

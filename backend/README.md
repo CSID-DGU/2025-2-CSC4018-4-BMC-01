@@ -57,6 +57,7 @@ src/
 
 - `POST /api/users/<id>/plants` - 식물 추가
 - `GET /api/users/<id>/plants` - 내 식물 목록
+- `PUT /api/user-plants/<id>` - 식물 정보 수정
 - `PUT /api/user-plants/<id>/water` - 물주기 기록
 - `DELETE /api/user-plants/<id>` - 식물 삭제
 
