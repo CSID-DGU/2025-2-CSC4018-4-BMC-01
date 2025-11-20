@@ -46,14 +46,24 @@ CREATE TABLE
   IF NOT EXISTS user_plants (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    plant_id INTEGER NOT NULL,
+    plant_id INTEGER,
     nickname TEXT,
+    image TEXT,
+    -- AI 분석 결과 필드
+    species_label TEXT,
+    species_label_ko TEXT,
+    disease TEXT,
+    -- 식물 관리 정보 (AI 분석 후 매칭된 정보)
+    tempmax_celsius REAL,
+    tempmin_celsius REAL,
+    light_info TEXT,
+    watering_info TEXT,
+    -- 물주기 관리
     last_watered DATE,
     next_watering DATE,
     watering_cycle INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (plant_id) REFERENCES plants (id)
+    FOREIGN KEY (user_id) REFERENCES users (id)
   );
 
 -- 인덱스

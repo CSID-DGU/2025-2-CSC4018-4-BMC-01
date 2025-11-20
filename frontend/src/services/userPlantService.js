@@ -15,11 +15,21 @@ export const userPlantService = {
   },
 
   // 식물 추가
-  addPlant: async (plantId, nickname = null, wateringCycle = null) => {
+  addPlant: async (
+    plantId,
+    nickname = null,
+    image = null,
+    speciesLabel = null,
+    speciesLabelKo = null,
+    wateringCycle = null
+  ) => {
     const userId = await userService.getCurrentUserId();
     const response = await api.post(`/users/${userId}/plants`, {
       plant_id: plantId,
       nickname,
+      image,
+      species_label: speciesLabel,
+      species_label_ko: speciesLabelKo,
       watering_cycle: wateringCycle,
     });
     return response.data;
@@ -39,7 +49,10 @@ export const userPlantService = {
 
   // 식물 삭제
   deletePlant: async (userPlantId) => {
+    console.log('[userPlantService] 삭제 요청:', userPlantId);
+    console.log('[userPlantService] 삭제 URL:', `/user-plants/${userPlantId}`);
     const response = await api.delete(`/user-plants/${userPlantId}`);
+    console.log('[userPlantService] 삭제 응답:', response);
     return response;
   },
 };

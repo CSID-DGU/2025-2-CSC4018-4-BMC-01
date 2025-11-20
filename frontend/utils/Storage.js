@@ -3,22 +3,32 @@
   기능: 식물 데이터 API 연동 + 이미지 로컬 저장
 */
 
+import { Platform } from "react-native";
 import * as FileSystem from "expo-file-system/legacy";
 import { userPlantService } from "../src/services";
 
 /* ============================
     내부 저장소 경로 생성
 ============================ */
-const PLANT_DIR = FileSystem.documentDirectory + "plants/";
-const LEAF_DIR = FileSystem.documentDirectory + "leaf/";
+const PLANT_DIR = FileSystem.documentDirectory ? FileSystem.documentDirectory + "plants/" : null;
+const LEAF_DIR = FileSystem.documentDirectory ? FileSystem.documentDirectory + "leaf/" : null;
 
-// 폴더 생성
+// 폴더 생성 (웹 환경에서는 건너뜀)
 async function ensureDirs() {
-  const plantInfo = await FileSystem.getInfoAsync(PLANT_DIR);
-  if (!plantInfo.exists) await FileSystem.makeDirectoryAsync(PLANT_DIR);
+  if (Platform.OS === 'web') {
+    console.log('[Storage] 웹 환경: 디렉토리 생성 건너뜀');
+    return;
+  }
 
-  const leafInfo = await FileSystem.getInfoAsync(LEAF_DIR);
-  if (!leafInfo.exists) await FileSystem.makeDirectoryAsync(LEAF_DIR);
+  if (PLANT_DIR) {
+    const plantInfo = await FileSystem.getInfoAsync(PLANT_DIR);
+    if (!plantInfo.exists) await FileSystem.makeDirectoryAsync(PLANT_DIR);
+  }
+
+  if (LEAF_DIR) {
+    const leafInfo = await FileSystem.getInfoAsync(LEAF_DIR);
+    if (!leafInfo.exists) await FileSystem.makeDirectoryAsync(LEAF_DIR);
+  }
 }
 
 ensureDirs();
@@ -45,6 +55,23 @@ export const generateLeafImageName = () => {
 
 // plant 이미지 저장
 export const saveImageToStorage = async (uri, fileName) => {
+  if (Platform.OS === 'web') {
+    console.log('[Storage] 웹 환경: 이미지 base64 변환', uri.substring(0, 50));
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = () => resolve(uri);
+        reader.readAsDataURL(blob);
+      });
+    } catch (e) {
+      console.log("saveImageToStorage (웹) Error:", e);
+      return uri;
+    }
+  }
+
   await ensureDirs();
   const dest = PLANT_DIR + fileName;
 
@@ -59,6 +86,23 @@ export const saveImageToStorage = async (uri, fileName) => {
 
 // leaf 이미지 저장
 export const saveLeafImageToStorage = async (uri, fileName) => {
+  if (Platform.OS === 'web') {
+    console.log('[Storage] 웹 환경: leaf 이미지 base64 변환', uri.substring(0, 50));
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = () => resolve(uri);
+        reader.readAsDataURL(blob);
+      });
+    } catch (e) {
+      console.log("saveLeafImageToStorage (웹) Error:", e);
+      return uri;
+    }
+  }
+
   await ensureDirs();
   const dest = LEAF_DIR + fileName;
 
@@ -81,12 +125,12 @@ export const fetchPlants = async () => {
     const plants = await userPlantService.getMyPlants();
     // API 응답을 기존 형식에 맞게 변환
     return plants.map(plant => ({
-      id: plant.user_plant_id,
+      id: plant.id,
       plantId: plant.plant_id,
-      name: plant.nickname || plant.plant_name,
+      name: plant.nickname || plant.species_label_ko || plant.common_name,
       image: plant.image || null,
       waterDate: plant.last_watered,
-      nextWater: plant.next_water,
+      nextWater: plant.next_watering,
       wateringCycle: plant.watering_cycle,
       plantImageName: plant.plantImageName || null,
       leafPhotos: plant.leafPhotos || [],

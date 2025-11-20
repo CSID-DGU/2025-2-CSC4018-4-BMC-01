@@ -14,15 +14,20 @@ import {
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchPlants } from "../utils/Storage";
+import userPlantService from "../src/services/userPlantService";
 
 export default function MyPlantListScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
 
   /* ------------------- 식물 목록 로드 ------------------- */
   const loadPlantData = async () => {
-    const list = await fetchPlants();
-    setPlants(list);
+    try {
+      const list = await userPlantService.getMyPlants();
+      setPlants(list);
+    } catch (error) {
+      console.error('식물 목록 로드 실패:', error);
+      setPlants([]);
+    }
   };
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export default function MyPlantListScreen({ navigation }) {
         resizeMode="cover"
       />
 
-      <Text style={styles.cardName}>{item.name}</Text>
+      <Text style={styles.cardName}>{item.nickname || item.species_label_ko || '이름 없음'}</Text>
     </TouchableOpacity>
   );
 
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
 
   cardImg: {
     width: "100%",
-    height: 120,
+    aspectRatio: 1,  // 정사각형
     borderRadius: 12,
     marginBottom: 10
   },
