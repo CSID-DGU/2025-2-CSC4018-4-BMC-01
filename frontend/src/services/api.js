@@ -53,10 +53,7 @@ export const api = {
     body: body ? JSON.stringify(body) : undefined,
   }),
 
-  delete: (endpoint) => {
-    console.log('[API] DELETE 요청:', endpoint);
-    return request(endpoint, { method: 'DELETE' });
-  },
+  delete: (endpoint) => request(endpoint, { method: 'DELETE' }),
 };
 
 export default api;

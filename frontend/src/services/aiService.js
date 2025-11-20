@@ -13,11 +13,6 @@ import { API_URL } from '../config';
  * @returns {Promise<Object>} - AI 분석 결과 + plants DB 정보
  */
 export const analyzeSpecies = async (imageUri, originalFileName = null) => {
-  console.log('🔵 [analyzeSpecies] 시작');
-  console.log('🔵 이미지 URI:', imageUri);
-  console.log('🔵 원본 파일명:', originalFileName);
-  console.log('🔵 API URL:', API_URL);
-
   try {
     // FormData 생성
     const formData = new FormData();
@@ -40,16 +35,11 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
       filename = `plant_${filename}`;
     }
 
-    console.log('🔵 사용할 파일명:', filename);
-    console.log('🔵 파일 타입:', type);
-
     // React Native Web의 경우 blob URL을 File 객체로 변환
     if (imageUri.startsWith('blob:')) {
-      console.log('🔵 Blob URL 감지, File 객체로 변환 중...');
       const blobResponse = await fetch(imageUri);
       const blob = await blobResponse.blob();
       const file = new File([blob], filename, { type: type });
-      console.log('🔵 File 객체 생성 완료:', file.name, file.size, 'bytes');
       formData.append('file', file);
     } else {
       // React Native (모바일)의 경우
@@ -61,8 +51,6 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
     }
 
     const fullUrl = `${API_URL}/ai/analyze`;
-    console.log('🔵 전체 요청 URL:', fullUrl);
-    console.log('🔵 요청 전송 중...');
 
     // API 요청
     // 주의: FormData 사용 시 Content-Type을 명시하면 안 됨 (브라우저가 자동으로 boundary 설정)
@@ -71,14 +59,9 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
       body: formData,
     });
 
-    console.log('🔵 응답 상태 코드:', response.status);
-    console.log('🔵 응답 OK:', response.ok);
-
     const data = await response.json();
-    console.log('🔵 응답 데이터:', JSON.stringify(data, null, 2));
 
     if (data.success) {
-      console.log('✅ 분석 성공!');
       return {
         success: true,
         speciesLabel: data.species_label,
@@ -87,7 +70,6 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
         plantInfo: data.plant_info, // DB에서 찾은 식물 정보 (plant_id, watering_days 등)
       };
     } else {
-      console.log('❌ 분석 실패:', data.error);
       throw new Error(data.error || '식물 분석에 실패했습니다.');
     }
   } catch (error) {
@@ -194,8 +176,6 @@ export const diagnoseDisease = async (userPlantId, imageUri, filename) => {
 
     const match = /\.(\w+)$/.exec(filename);
     const type = match ? `image/${match[1]}` : 'image/jpeg';
-
-    console.log('[diagnoseDisease] 사용할 파일명:', filename);
 
     // React Native Web의 경우 blob URL을 File 객체로 변환
     if (imageUri.startsWith('blob:')) {

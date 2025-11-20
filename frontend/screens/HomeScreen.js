@@ -62,9 +62,7 @@ export default function HomeScreen({ navigation }) {
   /* ---------------- 날씨 API (백엔드 경유) ---------------- */
   const loadWeather = async () => {
     try {
-      console.log("[HomeScreen] 위치 권한 요청 중...");
       let { status } = await Location.requestForegroundPermissionsAsync();
-      console.log("[HomeScreen] 위치 권한 상태:", status);
 
       if (status !== "granted") {
         setLocationText("위치 권한 없음");
@@ -72,14 +70,11 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      console.log("[HomeScreen] 현재 위치 가져오는 중...");
       let loc = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = loc.coords;
-      console.log("[HomeScreen] 위치:", latitude, longitude);
 
       // 위치 이름 가져오기 (Nominatim 사용)
       try {
-        console.log("[HomeScreen] Nominatim reverseGeocode 시도...");
         const response = await fetch(
           `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ko`,
           {
@@ -89,16 +84,13 @@ export default function HomeScreen({ navigation }) {
           }
         );
         const data = await response.json();
-        console.log("[HomeScreen] Nominatim 결과:", data);
 
         if (data && data.address) {
           const addr = data.address;
           // 한국 주소 형식: 시/도 + 시/군/구
           const locationStr = `${addr.city || addr.province || addr.state || ''} ${addr.borough || addr.suburb || addr.town || ''}`.trim();
-          console.log("[HomeScreen] 위치 문자열:", locationStr);
           setLocationText(locationStr || data.display_name?.split(',')[0] || "위치 확인됨");
         } else {
-          console.log("[HomeScreen] Nominatim 주소 없음");
           setLocationText(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
         }
       } catch (geoError) {
@@ -122,7 +114,7 @@ export default function HomeScreen({ navigation }) {
         setWeatherText("날씨 정보 없음");
       }
     } catch (err) {
-      console.log("Weather Error:", err);
+      console.error("Weather Error:", err);
       setWeatherText("날씨 정보 오류");
     }
   };

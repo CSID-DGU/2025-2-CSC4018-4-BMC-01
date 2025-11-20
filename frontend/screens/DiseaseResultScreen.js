@@ -20,7 +20,6 @@ import * as ImagePicker from "expo-image-picker";
 
 /* Storage */
 import {
-  generateLeafImageName,
   saveLeafImageToStorage,
   addLeafPhoto
 } from "../utils/Storage";
@@ -51,15 +50,11 @@ export default function DiseaseResultScreen({ navigation, route }) {
 
     const localUri = r.assets[0].uri;
     const originalFileName = r.assets[0].fileName || `leaf_${Date.now()}.jpg`;
-    console.log("[DiseaseResult] 촬영된 이미지 URI:", localUri);
-    console.log("[DiseaseResult] 원본 파일명:", originalFileName);
 
     // leaf_ 프리픽스가 없으면 추가 (AI 라우팅용)
     const fileName = originalFileName.startsWith('leaf_')
       ? originalFileName
       : `leaf_${originalFileName}`;
-
-    console.log("[DiseaseResult] 사용할 파일명:", fileName);
 
     // 이미지 미리보기용으로 저장 (나중에 사용할 수도 있음)
     const savedUri = await saveLeafImageToStorage(localUri, fileName);
@@ -70,7 +65,6 @@ export default function DiseaseResultScreen({ navigation, route }) {
     setImageUri(localUri);  // 미리보기용 - 원본 URI 사용
 
     // AI 분석 시작 - 원본 URI와 파일명 전달
-    console.log("[DiseaseResult] AI 분석 시작, URI:", localUri, "파일명:", fileName);
     await analyzeImage(localUri, fileName);
   };
 

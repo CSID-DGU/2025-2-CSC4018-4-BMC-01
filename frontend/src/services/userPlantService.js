@@ -49,10 +49,7 @@ export const userPlantService = {
 
   // 식물 삭제
   deletePlant: async (userPlantId) => {
-    console.log('[userPlantService] 삭제 요청:', userPlantId);
-    console.log('[userPlantService] 삭제 URL:', `/user-plants/${userPlantId}`);
     const response = await api.delete(`/user-plants/${userPlantId}`);
-    console.log('[userPlantService] 삭제 응답:', response);
     return response;
   },
 };

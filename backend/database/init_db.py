@@ -4,8 +4,12 @@
 - schema.sql 실행하여 테이블 생성
 """
 
+import logging
 import sqlite3
-import os  # 파일 경로 처리
+import os
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def init_database():
@@ -17,7 +21,7 @@ def init_database():
     # 기존 DB 삭제
     if os.path.exists(db_path):
         os.remove(db_path)
-        print(f"기존 DB 삭제: {db_path}")
+        logger.info(f"기존 DB 삭제: {db_path}")
 
     # SQLite 연결
     conn = sqlite3.connect(db_path)
@@ -34,8 +38,8 @@ def init_database():
     conn.commit()
     conn.close()
 
-    print(f"DB 초기화 완료: {db_path}")
-    print(f"생성된 테이블: plants")
+    logger.info(f"DB 초기화 완료: {db_path}")
+    logger.info(f"생성된 테이블: plants")
 
     return db_path
 

@@ -2,12 +2,19 @@
 Flask API 서버
 """
 
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from services import PlantService, UserService, UserPlantService, WeatherService, AIService
 from config import Config
 
+# 로깅 설정
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -147,8 +154,8 @@ def api_update_user_plant(user_plant_id):
     # 사용자 식물 정보 수정
     try:
         data = request.get_json()
-        print(f"[UPDATE] 식물 수정 요청: user_plant_id={user_plant_id}")
-        print(f"[UPDATE] 받은 데이터: {list(data.keys())}")
+        logger.info(f"식물 수정 요청: user_plant_id={user_plant_id}")
+        logger.debug(f"받은 데이터: {list(data.keys())}")
 
         nickname = data.get("nickname")
         watering_cycle = data.get("watering_cycle")
@@ -156,28 +163,28 @@ def api_update_user_plant(user_plant_id):
         image = data.get("image")
 
         if image:
-            print(f"[UPDATE] 이미지 업데이트: {image[:50]}...")
+            logger.debug(f"이미지 업데이트: {image[:50]}...")
 
         user_plant_service.update_plant(user_plant_id, nickname, watering_cycle, last_watered, image)
         return jsonify({"success": True, "message": "Plant updated"})
     except ValueError as e:
-        print(f"[UPDATE] 업데이트 실패 (ValueError): {e}")
+        logger.warning(f"업데이트 실패 (ValueError): {e}")
         return jsonify({"success": False, "error": str(e)}), 404
     except Exception as e:
-        print(f"[UPDATE] 업데이트 실패 (Exception): {e}")
+        logger.error(f"업데이트 실패: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 @app.route("/api/user-plants/<int:user_plant_id>", methods=["DELETE"])
 def api_delete_user_plant(user_plant_id):
     # 사용자 식물 삭제
-    print(f"[DELETE] 식물 삭제 요청: user_plant_id={user_plant_id}")
+    logger.info(f"식물 삭제 요청: user_plant_id={user_plant_id}")
     try:
         user_plant_service.remove_plant(user_plant_id)
-        print(f"[DELETE] 식물 삭제 완료: user_plant_id={user_plant_id}")
+        logger.info(f"식물 삭제 완료: user_plant_id={user_plant_id}")
         return jsonify({"success": True, "message": "Plant deleted"})
     except Exception as e:
-        print(f"[DELETE] 식물 삭제 실패: {e}")
+        logger.error(f"식물 삭제 실패: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
 
@@ -259,47 +266,45 @@ def api_identify_species():
 @app.route("/api/ai/diagnose-disease", methods=["POST"])
 def api_diagnose_disease():
     # 병충해 판별 (mode="disease")
-    print("[DISEASE] 병충해 분석 요청 시작")
+    logger.info("병충해 분석 요청 시작")
     try:
         # 파일 업로드 확인
         if "file" not in request.files:
-            print("[DISEASE] 오류: 파일 없음")
+            logger.warning("파일 없음")
             return jsonify({"success": False, "error": "No file provided"}), 400
 
         file = request.files["file"]
         if file.filename == "":
-            print("[DISEASE] 오류: 파일명 없음")
+            logger.warning("파일명 없음")
             return jsonify({"success": False, "error": "Empty filename"}), 400
 
         # 폼 데이터에서 파라미터 가져오기
         user_plant_id = request.form.get("user_plant_id", type=int)
-        print(f"[DISEASE] user_plant_id: {user_plant_id}, file: {file.filename}")
+        logger.info(f"user_plant_id: {user_plant_id}, file: {file.filename}")
 
         if not user_plant_id:
-            print("[DISEASE] 오류: user_plant_id 없음")
+            logger.warning("user_plant_id 없음")
             return jsonify({"success": False, "error": "user_plant_id required"}), 400
 
         # AI 분석 및 병충해 정보 저장
-        print(f"[DISEASE] AI 분석 시작...")
+        logger.info("AI 분석 시작...")
         result = ai_service.diagnose_disease(user_plant_id, file)
-        print(f"[DISEASE] AI 분석 결과: {result.get('success')}")
+        logger.info(f"AI 분석 결과: {result.get('success')}")
 
         if result.get("success"):
             return jsonify(result)
         else:
-            print(f"[DISEASE] AI 분석 실패: {result.get('error')}")
+            logger.error(f"AI 분석 실패: {result.get('error')}")
             return jsonify(result), 500
 
     except Exception as e:
-        print(f"[DISEASE] 예외 발생: {e}")
-        import traceback
-        traceback.print_exc()
+        logger.error(f"예외 발생: {e}", exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
 
 
 # ========== 서버 실행 ==========
 
 if __name__ == "__main__":
-    print("Flask 서버 시작")
-    print(f"DB 경로: {Config.DB_PATH}")
+    logger.info("Flask 서버 시작")
+    logger.info(f"DB 경로: {Config.DB_PATH}")
     app.run(debug=Config.FLASK_DEBUG, host=Config.FLASK_HOST, port=Config.FLASK_PORT)

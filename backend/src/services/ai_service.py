@@ -3,9 +3,12 @@ AI Service - 식물 종류 및 병충해 판별
 Google Cloud AI API와 통신하여 이미지 분석
 """
 
+import logging
 import requests
-from typing import Optional, Tuple
+from typing import Optional
 from repositories import PlantRepository, UserPlantRepository
+
+logger = logging.getLogger(__name__)
 
 
 class AIService:
@@ -47,13 +50,13 @@ class AIService:
             # Google Cloud AI API에 맞는 형식으로 전송
             files = {"file": (image_file.filename, file_content, image_file.content_type)}
 
-            print(f"[DEBUG] AI API 요청 전송: {self.AI_API_URL}")
-            print(f"[DEBUG] 파일명: {image_file.filename}, 크기: {len(file_content)} bytes")
+            logger.debug(f"AI API 요청 전송: {self.AI_API_URL}")
+            logger.debug(f"파일명: {image_file.filename}, 크기: {len(file_content)} bytes")
 
             response = requests.post(self.AI_API_URL, files=files, timeout=30)
 
-            print(f"[DEBUG] AI API 응답 코드: {response.status_code}")
-            print(f"[DEBUG] AI API 응답 내용: {response.text[:200]}")
+            logger.debug(f"AI API 응답 코드: {response.status_code}")
+            logger.debug(f"AI API 응답 내용: {response.text[:200]}")
 
             if response.status_code == 200:
                 result = response.json()
@@ -70,7 +73,7 @@ class AIService:
         except requests.exceptions.Timeout:
             return {"success": False, "error": "AI API timeout"}
         except Exception as e:
-            print(f"[ERROR] AI 분석 중 예외 발생: {e}")
+            logger.error(f"AI 분석 중 예외 발생: {e}")
             return {"success": False, "error": str(e)}
 
     def analyze_species_only(self, image_file) -> dict:

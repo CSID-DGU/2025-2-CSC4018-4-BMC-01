@@ -35,19 +35,9 @@ export default function PlantDetailScreen({ navigation, route }) {
   // route.params가 변경될 때 currentPlant 업데이트
   useEffect(() => {
     if (route.params?.plant) {
-      console.log("route.params 변경 감지, 식물 데이터 업데이트");
       setCurrentPlant(route.params.plant);
     }
   }, [route.params?.plant]);
-
-  // 디버깅: 식물 데이터 확인
-  console.log("=== PlantDetailScreen 데이터 ===");
-  console.log("plant_id:", currentPlant?.plant_id);
-  console.log("tempmax_celsius:", currentPlant?.tempmax_celsius);
-  console.log("tempmin_celsius:", currentPlant?.tempmin_celsius);
-  console.log("light_info:", currentPlant?.light_info);
-  console.log("watering_info:", currentPlant?.watering_info);
-  console.log("image:", currentPlant?.image?.substring(0, 50) + '...');
 
   if (!currentPlant) return null;
 
@@ -92,23 +82,16 @@ export default function PlantDetailScreen({ navigation, route }) {
 
   /* ---------------- 삭제 ---------------- */
   const handleDelete = async () => {
-    console.log("삭제 버튼 클릭, plant ID:", currentPlant.id);
-
     // 웹 환경에서는 window.confirm 사용
     if (Platform.OS === 'web') {
       const confirmed = window.confirm("정말 삭제하시겠습니까?");
-      console.log("삭제 확인:", confirmed);
 
       if (!confirmed) {
-        console.log("삭제 취소됨");
         return;
       }
 
-      console.log("삭제 진행");
       try {
-        console.log("API 요청 전송:", currentPlant.id);
-        const result = await userPlantService.deletePlant(currentPlant.id);
-        console.log("API 응답:", result);
+        await userPlantService.deletePlant(currentPlant.id);
         window.alert("화분이 삭제되었습니다.");
         navigation.goBack();
       } catch (error) {
@@ -126,11 +109,8 @@ export default function PlantDetailScreen({ navigation, route }) {
             text: "삭제",
             style: "destructive",
             onPress: async () => {
-              console.log("삭제 확인 버튼 클릭");
               try {
-                console.log("API 요청 전송:", currentPlant.id);
-                const result = await userPlantService.deletePlant(currentPlant.id);
-                console.log("API 응답:", result);
+                await userPlantService.deletePlant(currentPlant.id);
                 Alert.alert("삭제 완료", "화분이 삭제되었습니다.");
                 navigation.goBack();
               } catch (error) {
@@ -147,7 +127,6 @@ export default function PlantDetailScreen({ navigation, route }) {
   /* ---------------- 이미지 영구 저장 (PlantEditorScreen과 동일) ---------------- */
   const saveImagePermanently = async (tempUri) => {
     if (Platform.OS === 'web') {
-      console.log('웹 환경: 이미지를 base64로 변환', tempUri);
       try {
         const response = await fetch(tempUri);
         const blob = await response.blob();
@@ -155,7 +134,6 @@ export default function PlantDetailScreen({ navigation, route }) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onloadend = () => {
-            console.log('base64 변환 완료:', reader.result.substring(0, 50) + '...');
             resolve(reader.result);
           };
           reader.onerror = reject;
@@ -171,7 +149,6 @@ export default function PlantDetailScreen({ navigation, route }) {
       const fileName = `plant_${Date.now()}.jpg`;
       const permanentUri = `${FileSystem.documentDirectory}${fileName}`;
       await FileSystem.copyAsync({ from: tempUri, to: permanentUri });
-      console.log('이미지 영구 저장:', permanentUri);
       return permanentUri;
     } catch (error) {
       console.error('이미지 저장 실패:', error);

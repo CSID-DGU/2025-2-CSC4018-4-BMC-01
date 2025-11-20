@@ -54,7 +54,6 @@ export default function PlantEditorScreen({ navigation }) {
   const saveImagePermanently = async (tempUri) => {
     // 웹 환경에서는 base64로 변환하여 저장
     if (Platform.OS === 'web') {
-      console.log('웹 환경: 이미지를 base64로 변환', tempUri);
       try {
         // blob URL을 fetch하여 base64로 변환
         const response = await fetch(tempUri);
@@ -63,7 +62,6 @@ export default function PlantEditorScreen({ navigation }) {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onloadend = () => {
-            console.log('base64 변환 완료:', reader.result.substring(0, 50) + '...');
             resolve(reader.result); // data:image/jpeg;base64,... 형태
           };
           reader.onerror = reject;
@@ -84,7 +82,6 @@ export default function PlantEditorScreen({ navigation }) {
         to: permanentUri
       });
 
-      console.log('이미지 영구 저장:', permanentUri);
       return permanentUri;
     } catch (error) {
       console.error('이미지 저장 실패:', error);
@@ -102,9 +99,6 @@ export default function PlantEditorScreen({ navigation }) {
     if (!r.canceled) {
       const uri = r.assets[0].uri;
       const fileName = r.assets[0].fileName || 'plant_photo.jpg'; // 원본 파일명 추출
-
-      console.log('📸 원본 파일명:', fileName);
-      console.log('📸 URI:', uri);
 
       setImageUri(uri);
       setImageFileName(fileName);
@@ -136,9 +130,6 @@ export default function PlantEditorScreen({ navigation }) {
       const uri = r.assets[0].uri;
       const fileName = r.assets[0].fileName || 'plant_photo.jpg'; // 원본 파일명 추출
 
-      console.log('📸 원본 파일명:', fileName);
-      console.log('📸 URI:', uri);
-
       setImageUri(uri);
       setImageFileName(fileName);
       setPickerVisible(false);
@@ -154,24 +145,17 @@ export default function PlantEditorScreen({ navigation }) {
 
   /* ------------------- AI 식물 종류 분석 ------------------- */
   const analyzeImageWithAI = async (uri, fileName) => {
-    console.log("🔍 [AI 분석 시작]");
-    console.log("📸 이미지 URI:", uri);
-    console.log("📸 원본 파일명:", fileName);
-
     setIsAnalyzing(true);
     setAiResult(null);
 
     try {
-      console.log("📡 API 요청 시작...");
       const result = await analyzeSpecies(uri, fileName);
-      console.log("✅ API 응답 성공:", result);
 
       setAiResult(result);
 
       // AI가 판별한 한글 이름을 기본값으로 설정
       if (result.speciesLabelKo) {
         setNickname(result.speciesLabelKo);
-        console.log("🌱 식물명 설정:", result.speciesLabelKo);
       }
 
       // 분석 완료 알림
@@ -201,7 +185,6 @@ export default function PlantEditorScreen({ navigation }) {
         ]
       );
     } finally {
-      console.log("🏁 [AI 분석 종료]");
       setIsAnalyzing(false);
     }
   };
