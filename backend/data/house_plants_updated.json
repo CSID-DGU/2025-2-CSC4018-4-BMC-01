@@ -4981,4 +4981,20 @@
     "ai_label_en": "",
     "ai_label_ko": ""
   }
+  /*,
+  {
+    "id": 210,
+    "tempmax": {
+      "celsius": 32,
+    },
+    "tempmin": {
+      "celsius": 10,
+    },
+    "ideallight": "6 or more hours of direct sunlight per day.",
+    "toleratedlight": "Direct sunlight.",
+    "watering": "Keep moist between watering. Water when soil is half dry.",
+    "wateringperiod": "10",
+    "ai_label_en": "bougainvillea",
+    "ai_label_ko": "부겐빌레아"
+  }*/
 ]
