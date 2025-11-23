@@ -6,6 +6,7 @@
     - Storage.js 기반의 통합 모델을 사용하여 리스트 구성
     - 식물이 1개인 경우에도 2열 그리드 유지 (UI 안정성 확보)
     - 즐겨찾기(favorite) 확장용 구조를 포함 (향후 대표식물 기능)
+    - ★ 새 화분 추가 버튼(+ 버튼) 추가 (PlantEditorScreen 이동)
 
   데이터 흐름:
     fetchPlants() → Storage.js에서 API 데이터 + 로컬 메타데이터(WateringPeriod, favorite 등)
@@ -115,6 +116,7 @@ export default function MyPlantListScreen({ navigation }) {
       화면 렌더링
       - SafeAreaView: 상단/하단 노치 대응
       - 오류/빈 목록 안내 메시지 포함
+      - ★ 오른쪽 상단 + 버튼 → PlantEditorScreen 이동
   ----------------------------------------------------------- */
   return (
     <SafeAreaView
@@ -122,7 +124,19 @@ export default function MyPlantListScreen({ navigation }) {
       edges={["top", "bottom", "left", "right"]}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>내 화분</Text>
+
+        {/* ------------------ 상단 헤더: 제목 + + 버튼 ------------------ */}
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>내 화분</Text>
+
+          {/* ★ 새 화분 추가 버튼 */}
+          <TouchableOpacity
+            style={styles.addBtn}
+            onPress={() => navigation.navigate("PlantEditor")}
+          >
+            <Text style={styles.addBtnText}>＋</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* 식물 목록 로드 실패 시 */}
         {loadError && (
@@ -160,10 +174,33 @@ const styles = StyleSheet.create({
     backgroundColor: "#FAFAFA",
   },
 
+  /* ----------------- 제목 + + 버튼 ----------------- */
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 18,
+  },
+
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 18,
+  },
+
+  addBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#8CCB7F",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  addBtnText: {
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "600",
+    marginTop: -1
   },
 
   /* 2열 정렬 */
@@ -172,13 +209,13 @@ const styles = StyleSheet.create({
     marginBottom: SPACING,
   },
 
-  /* 식물 카드 스타일 */
+  /* 식물 카드 */
   card: {
     width: CARD_WIDTH,
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 12,
-    elevation: 2, // 안드로이드 그림자
+    elevation: 2,
   },
 
   cardImage: {
@@ -187,7 +224,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  /* 이미지 없는 경우 */
   noImage: {
     backgroundColor: "#E8E8E8",
     justifyContent: "center",
@@ -199,14 +235,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  /* 식물 이름 */
   cardTitle: {
     fontSize: 16,
     fontWeight: "600",
     marginTop: 10,
   },
 
-  /* 즐겨찾기 표시 (향후 대표식물 기능 확장) */
   favoriteMark: {
     marginTop: 6,
     color: "#F5D742",
