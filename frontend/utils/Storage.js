@@ -141,22 +141,16 @@ export const fetchPlants = async () => {
 
       /* ---------------------------
          최근 물 준 날짜 (프론트 관리)
-         - recordWatering 호출 직후 프론트에서 formatDate 처리
-         - 백엔드 last_watered 값 사용 가능하지만
-           현재 API에서는 일관되지 않아 프론트 기준 사용 O
       ---------------------------- */
       const waterDate = p.last_watered || null;
 
       /* ---------------------------
          물주는 주기 (기본값 7)
-         - 로컬 meta에서 가져옴
-         - 추후 백엔드 WateringPeriod 필드 도입 예정
       ---------------------------- */
       const WateringPeriod = m.WateringPeriod ?? 7;
 
       /* ---------------------------
          nextWater 계산
-         waterDate + WateringPeriod
       ---------------------------- */
       let nextWater = null;
       if (waterDate) {
@@ -167,32 +161,21 @@ export const fetchPlants = async () => {
 
       /* ---------------------------
          최종 식물 데이터 구조
-         - API + 프론트 메타 + 날짜 계산
       ---------------------------- */
       return {
         id: p.id,
         plantId: p.plant_id,
-
-        // 표시용 이름
         name:
           p.nickname ||
           p.species_label_ko ||
           p.common_name ||
           "이름 없음",
-
         image: p.image || null,
-
         waterDate,
         nextWater,
-
-        // 물주는 방법 (정보성 필드)
         wateringMethod: p.watering_info ?? null,
-
-        // 프론트 확장 필드
         WateringPeriod,
         favorite: m.favorite ?? false,
-
-        // 병충해 분석을 위한 잎사귀 이미지 리스트
         leafPhotos: p.leafPhotos || [],
       };
     });
@@ -217,18 +200,14 @@ export const fetchPlants = async () => {
 -------------------------------------------------- */
 export const updateWaterDate = async (plantId) => {
   try {
-    // 백엔드에 물 준 기록 남김
     await userPlantService.recordWatering(plantId);
 
-    // 사용자 지정 주기(WateringPeriod)
     const meta = await loadMeta();
     const WateringPeriod = meta[plantId]?.WateringPeriod ?? 7;
 
-    // 오늘 날짜
     const now = new Date();
     const waterDate = formatDate(now);
 
-    // 다음 물 줄 날짜
     const next = new Date(now);
     next.setDate(now.getDate() + WateringPeriod);
     const nextWater = formatDate(next);
@@ -237,5 +216,25 @@ export const updateWaterDate = async (plantId) => {
   } catch (e) {
     console.log("updateWaterDate Error:", e);
     throw e;
+  }
+};
+
+/* -------------------------------------------------
+   ★ [추가] favorite 토글 기능
+-------------------------------------------------- */
+export const toggleFavorite = async (plantId) => {
+  try {
+    const meta = await loadMeta();
+
+    if (!meta[plantId]) meta[plantId] = {};
+
+    const prev = meta[plantId].favorite ?? false;
+    meta[plantId].favorite = !prev;
+
+    await saveMeta(meta);
+    return meta[plantId].favorite;
+  } catch (err) {
+    console.log("toggleFavorite Error:", err);
+    return false;
   }
 };

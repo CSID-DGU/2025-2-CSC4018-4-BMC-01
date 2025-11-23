@@ -45,11 +45,6 @@ import { weatherService } from "../src/services";
 export default function HomeScreen({ navigation }) {
   /* ----------------------------------------------------------
       상태값
-      plants: 식물 목록
-      weatherText: 온도 관련 문구
-      locationText: 위치 표시 (시/도 + 시/군/구)
-      dateText: 화면 최상단 날짜/시간
-      tempValue: 온도 값 (문구 생성용)
   ----------------------------------------------------------- */
   const [plants, setPlants] = useState([]);
   const [weatherText, setWeatherText] = useState("날씨 정보를 불러오는 중...");
@@ -60,7 +55,6 @@ export default function HomeScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       [UI] 날짜/시간 갱신
-      - 앱 실행 시 / 홈 탭 재진입 시 업데이트
   ----------------------------------------------------------- */
   const updateDateTime = () => {
     const now = new Date();
@@ -77,8 +71,7 @@ export default function HomeScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       [데이터] 식물 목록 불러오기
-      - fetchPlants()는 Storage.js에서
-        API + 로컬 meta(favorite, WateringPeriod) + 날짜계산(nextWater)까지 포함
+      - fetchPlants(): favorite, WateringPeriod 반영 완료된 모델
   ----------------------------------------------------------- */
   const loadPlantData = async () => {
     const list = await fetchPlants();
@@ -98,13 +91,9 @@ export default function HomeScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       [날씨] 현재 위치 기반 정보 로드
-      - expo-location: 좌표 획득
-      - Nominatim: 좌표 → 주소 변환
-      - weatherService: 백엔드 경유 기상청 API 호출
   ----------------------------------------------------------- */
   const loadWeather = async () => {
     try {
-      // 위치 권한 요청
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setLocationText("위치 권한 없음");
@@ -112,14 +101,10 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      // 현재 좌표
       let loc = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = loc.coords;
 
-      /* -----------------------------------------
-         좌표 → 주소 변환 (Nominatim)
-         - 한국 주소 형식: 시/도 + 시/군/구
-      ------------------------------------------ */
+      /* 좌표 → 주소 변환 */
       try {
         const response = await fetch(
           `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=ko`,
@@ -144,10 +129,7 @@ export default function HomeScreen({ navigation }) {
         setLocationText(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
       }
 
-      /* -----------------------------------------
-         기상청 API 응답 (백엔드 weatherService 경유)
-         weather.temperature 또는 weather.temp 사용
-      ------------------------------------------ */
+      /* 날씨 가져오기 */
       const weather = await weatherService.getWeather(latitude, longitude);
 
       if (weather?.temperature != null) {
@@ -155,7 +137,6 @@ export default function HomeScreen({ navigation }) {
         setTempValue(t);
         setWeatherText(`현재온도: ${t}°C`);
       } else if (weather?.temp != null) {
-        // 일부 기상청 API 응답 형식 temp 사용
         const t = Math.round(weather.temp);
         setTempValue(t);
         setWeatherText(`현재온도: ${t}°C`);
@@ -170,8 +151,6 @@ export default function HomeScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       [동작] 물 주기 처리
-      - updateWaterDate(): API + 프론트 날짜 계산(nextWater) 처리
-      - 처리 후 plant 리스트 재로딩
   ----------------------------------------------------------- */
   const giveWater = async (plant) => {
     await updateWaterDate(plant.id);
@@ -179,7 +158,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   /* ----------------------------------------------------------
-      초기 로드: 날짜/날씨/식물
+      초기 로드
   ----------------------------------------------------------- */
   useEffect(() => {
     updateDateTime();
@@ -199,17 +178,19 @@ export default function HomeScreen({ navigation }) {
   }, [navigation]);
 
   /* ----------------------------------------------------------
-      오늘 물 줘야 하는 화분 필터링
-      - nextWater 값이 오늘보다 이전 or null → 물주기 필요
+      [중요] 대표식물(favorite=true)만 필터링
   ----------------------------------------------------------- */
+  const favoritePlants = plants.filter((p) => p.favorite === true);
+
+  /* ----------------- 물주기 리스트 필터 ------------------ */
   const today = new Date().toISOString().split("T")[0];
-  const mustWaterPlants = plants.filter((p) => {
+  const mustWaterPlants = favoritePlants.filter((p) => {
     if (!p.nextWater) return true;
     return p.nextWater <= today;
   });
 
   /* ----------------------------------------------------------
-      [UI] 슬라이드 렌더링
+      [UI] 슬라이드 렌더링 (대표식물만 표시)
   ----------------------------------------------------------- */
   const renderSlide = ({ item }) => (
     <View style={styles.slideBox}>
@@ -225,7 +206,7 @@ export default function HomeScreen({ navigation }) {
   );
 
   /* ----------------------------------------------------------
-      [UI] 물주기 리스트 렌더링
+      [UI] 물주기 렌더링
   ----------------------------------------------------------- */
   const renderWaterItem = ({ item }) => (
     <View style={styles.waterBox}>
@@ -266,11 +247,12 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.msgText}>{generateWeatherMessage(tempValue)}</Text>
         </View>
 
-        {/* ----------------- 슬라이드 ----------------- */}
-        <Text style={styles.sectionTitle}>내 화분</Text>
-        {plants.length > 0 ? (
+        {/* ----------------- 대표식물 슬라이드 ----------------- */}
+        <Text style={styles.sectionTitle}>대표 식물</Text>
+
+        {favoritePlants.length > 0 ? (
           <FlatList
-            data={plants}
+            data={favoritePlants}
             horizontal
             showsHorizontalScrollIndicator={false}
             keyExtractor={(i) => i.id.toString()}
@@ -278,13 +260,21 @@ export default function HomeScreen({ navigation }) {
             style={{ marginBottom: 20 }}
           />
         ) : (
-          <Text style={styles.emptyText}>등록된 화분이 없습니다.</Text>
+          /* --------------- B 타입 박스 --------------- */
+          <TouchableOpacity
+            style={styles.emptyFavoriteBox}
+            onPress={() => navigation.navigate("Plants")}
+          >
+            <Text style={styles.emptyFavoriteText}>대표식물을 선택해주세요</Text>
+            <Text style={styles.emptyFavoriteSub}>내 화분 목록으로 이동하기</Text>
+          </TouchableOpacity>
         )}
 
         {/* ----------------- 물주기 ----------------- */}
         <Text style={styles.sectionTitle}>물주기</Text>
+
         {mustWaterPlants.length === 0 ? (
-          <Text style={styles.doneText}>모든 화분에 물을 다 줬어요!</Text>
+          <Text style={styles.doneText}>모든 대표식물에 물을 다 줬어요!</Text>
         ) : (
           <FlatList
             data={mustWaterPlants}
@@ -324,6 +314,31 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
 
+  /* ------------------ 대표식물 없음 B타입 박스 ------------------ */
+  emptyFavoriteBox: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    paddingVertical: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#E0E0E0"
+  },
+
+  emptyFavoriteText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#444"
+  },
+
+  emptyFavoriteSub: {
+    fontSize: 13,
+    marginTop: 6,
+    color: "#777"
+  },
+
+  /* ------------------ 슬라이드 ------------------ */
   slideBox: {
     width: 160,
     backgroundColor: "#FFF",
@@ -355,6 +370,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 
+  /* ------------------ 물주기 ------------------ */
   waterBox: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -385,11 +401,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#777",
     fontWeight: "600"
-  },
-
-  emptyText: {
-    textAlign: "center",
-    color: "#999",
-    marginBottom: 20
   }
 });

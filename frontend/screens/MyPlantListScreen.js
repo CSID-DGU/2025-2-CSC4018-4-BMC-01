@@ -31,7 +31,7 @@ import {
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchPlants } from "../utils/Storage";
+import { fetchPlants, toggleFavorite } from "../utils/Storage";
 
 /* ----------------------------------------------------------
     화면 너비 기반 Layout 계산
@@ -81,35 +81,54 @@ export default function MyPlantListScreen({ navigation }) {
   }, []);
 
   /* ----------------------------------------------------------
+      ★ favorite 토글 핸들러
+      - 별 버튼 누르면 toggleFavorite 호출
+      - meta 저장 후, 리스트 재로딩
+  ----------------------------------------------------------- */
+  const handleToggleFavorite = async (plantId) => {
+    await toggleFavorite(plantId);
+    loadPlantData();
+  };
+
+  /* ----------------------------------------------------------
       개별 식물 카드 렌더링
       - 2열 그리드 구조 유지
       - navigation: PlantDetail 으로 plant 객체 전달
-      - favorite 속성은 향후 대표식물 기능 확장용
+      - favorite 속성 표시 및 토글 버튼 추가
   ----------------------------------------------------------- */
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        navigation.navigate("PlantDetail", { plant: item })
-      }
-    >
-      {/* 식물 대표 이미지 */}
-      {item.image ? (
-        <Image source={{ uri: item.image }} style={styles.cardImage} />
-      ) : (
-        <View style={[styles.cardImage, styles.noImage]}>
-          <Text style={styles.noImageText}>No Image</Text>
-        </View>
-      )}
+    <View style={styles.cardContainer}>
+      {/* ⭐ 즐겨찾기 토글 버튼 */}
+      <TouchableOpacity
+        style={styles.favoriteBtn}
+        onPress={() => handleToggleFavorite(item.id)}
+      >
+        <Text style={styles.favoriteBtnText}>
+          {item.favorite ? "⭐" : "☆"}
+        </Text>
+      </TouchableOpacity>
 
-      {/* 식물 이름 */}
-      <Text style={styles.cardTitle} numberOfLines={1}>
-        {item.name}
-      </Text>
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate("PlantDetail", { plant: item })
+        }
+      >
+        {/* 식물 대표 이미지 */}
+        {item.image ? (
+          <Image source={{ uri: item.image }} style={styles.cardImage} />
+        ) : (
+          <View style={[styles.cardImage, styles.noImage]}>
+            <Text style={styles.noImageText}>No Image</Text>
+          </View>
+        )}
 
-      {/* 즐겨찾기(대표식물) 표시 */}
-      {item.favorite && <Text style={styles.favoriteMark}>⭐</Text>}
-    </TouchableOpacity>
+        {/* 식물 이름 */}
+        <Text style={styles.cardTitle} numberOfLines={1}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 
   /* ----------------------------------------------------------
@@ -153,10 +172,10 @@ export default function MyPlantListScreen({ navigation }) {
             data={plants}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
-            numColumns={2}                   // 2열 고정
-            columnWrapperStyle={styles.row} // 행 정렬
+            numColumns={2}
+            columnWrapperStyle={styles.row}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 20 }} // 하단 여백
+            contentContainerStyle={{ paddingBottom: 20 }}
           />
         )}
       </View>
@@ -200,7 +219,21 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 24,
     fontWeight: "600",
-    marginTop: -1
+    marginTop: -1,
+  },
+
+  /* ⭐ 우측 상단 favorite 토글 버튼 */
+  favoriteBtn: {
+    position: "absolute",
+    zIndex: 10,
+    right: 6,
+    top: 6,
+    padding: 4,
+  },
+
+  favoriteBtnText: {
+    fontSize: 22,
+    color: "#F5D742",
   },
 
   /* 2열 정렬 */
@@ -209,9 +242,13 @@ const styles = StyleSheet.create({
     marginBottom: SPACING,
   },
 
+  /* 카드 컨테이너 (⭐버튼 포함) */
+  cardContainer: {
+    width: CARD_WIDTH,
+  },
+
   /* 식물 카드 */
   card: {
-    width: CARD_WIDTH,
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 12,
@@ -239,12 +276,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginTop: 10,
-  },
-
-  favoriteMark: {
-    marginTop: 6,
-    color: "#F5D742",
-    fontSize: 18,
   },
 
   /* 안내 메시지 */
