@@ -1,6 +1,8 @@
 /*
   파일명: App.js
-  기능: 앱 최상단 구조 (SafeAreaProvider 적용)
+  목적:
+    - 앱 최상단 구조 설정
+    - SafeAreaProvider + NavigationContainer 적용
 */
 
 import React from "react";

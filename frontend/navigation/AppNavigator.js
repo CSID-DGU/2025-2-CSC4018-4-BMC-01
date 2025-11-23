@@ -1,6 +1,11 @@
 /*
   파일명: AppNavigator.js
-  기능: 전체 네비게이션 + 이모티콘 탭 아이콘
+  기능: 전체 네비게이션 + 하단 탭 라우팅
+  스택 구조:
+    - Home
+    - Plants (MyPlantList, PlantDetail, PlantEditor, DiseaseResult)
+    - Calendar
+    - Settings (2차에서 Report로 대체 예정)
 */
 
 import React from "react";
@@ -20,7 +25,13 @@ import SettingsScreen from "../screens/SettingsScreen";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-/* ----------------------- 내 화분 스택 ----------------------- */
+/* -------------------------------------------------
+   내 화분 스택
+   - MyPlantList
+   - PlantDetail
+   - PlantEditor
+   - DiseaseResult
+-------------------------------------------------- */
 function PlantStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -32,7 +43,9 @@ function PlantStack() {
   );
 }
 
-/* ----------------------- 전체 탭 ----------------------- */
+/* -------------------------------------------------
+   전체 탭 네비게이터
+-------------------------------------------------- */
 export default function AppNavigator() {
   return (
     <Tab.Navigator
