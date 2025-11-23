@@ -134,12 +134,3 @@ export const updateWaterDate = async (id) => {
     throw error;
   }
 };
-
-/* ============================
-    잎 사진 저장 기능 (병충해)
-    - 로컬 저장만 유지 (AI 서버 연동 시 수정 예정)
-============================ */
-
-export const addLeafPhoto = async (plantId, fileName, finalUri) => {
-  // TODO: AI 서버 연동 시 구현
-};
