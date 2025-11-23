@@ -4,8 +4,14 @@
   스택 구조:
     - Home
     - Plants (MyPlantList, PlantDetail, PlantEditor, DiseaseResult)
-    - Calendar
-    - Settings (2차에서 Report로 대체 예정)
+    - Report
+    - Calendar (CalendarMain, NotificationSetting)
+
+  변경사항:
+    ✔ SettingsScreen 제거됨
+    ✔ ReportScreen 추가됨
+    ✔ CalendarStack 생성 (알림 설정 화면 포함)
+    ✔ 하단 탭 순서: Home → Plants → Report → Calendar
 */
 
 import React from "react";
@@ -18,9 +24,12 @@ import HomeScreen from "../screens/HomeScreen";
 import MyPlantListScreen from "../screens/MyPlantListScreen";
 import PlantDetailScreen from "../screens/PlantDetailScreen";
 import PlantEditorScreen from "../screens/PlantEditorScreen";
-import CalendarScreen from "../screens/CalendarScreen";
 import DiseaseResultScreen from "../screens/DiseaseResultScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import CalendarScreen from "../screens/CalendarScreen";
+
+/* 신규 추가 스크린 */
+import NotificationSettingScreen from "../screens/NotificationSettingScreen";
+import ReportScreen from "../screens/ReportScreen"; // 레포트 탭 신규
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -44,6 +53,24 @@ function PlantStack() {
 }
 
 /* -------------------------------------------------
+   캘린더 스택
+   - CalendarMain
+   - NotificationSetting
+   (알림 설정 화면 포함)
+-------------------------------------------------- */
+function CalendarStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CalendarMain" component={CalendarScreen} />
+      <Stack.Screen
+        name="NotificationSetting"
+        component={NotificationSettingScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/* -------------------------------------------------
    전체 탭 네비게이터
 -------------------------------------------------- */
 export default function AppNavigator() {
@@ -61,6 +88,7 @@ export default function AppNavigator() {
         }
       }}
     >
+      {/* ------------------ 홈 ------------------ */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -70,6 +98,7 @@ export default function AppNavigator() {
         }}
       />
 
+      {/* ------------------ 내 화분 ------------------ */}
       <Tab.Screen
         name="Plants"
         component={PlantStack}
@@ -79,21 +108,23 @@ export default function AppNavigator() {
         }}
       />
 
+      {/* ------------------ 레포트 ------------------ */}
       <Tab.Screen
-        name="Calendar"
-        component={CalendarScreen}
+        name="Report"
+        component={ReportScreen}
         options={{
-          title: "캘린더",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📅</Text>
+          title: "레포트",
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📊</Text>
         }}
       />
 
+      {/* ------------------ 캘린더 ------------------ */}
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Calendar"
+        component={CalendarStack}
         options={{
-          title: "설정",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>⚙️</Text>
+          title: "캘린더",
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📅</Text>
         }}
       />
     </Tab.Navigator>
