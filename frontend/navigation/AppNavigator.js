@@ -106,6 +106,13 @@ export default function AppNavigator() {
           title: "내 화분",
           tabBarIcon: () => <Text style={{ fontSize: 22 }}>🪴</Text>
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            // 탭을 누를 때 스택을 루트로 리셋
+            e.preventDefault();
+            navigation.navigate("Plants", { screen: "MyPlantList" });
+          }
+        })}
       />
 
       {/* ------------------ 레포트 ------------------ */}
@@ -126,6 +133,13 @@ export default function AppNavigator() {
           title: "캘린더",
           tabBarIcon: () => <Text style={{ fontSize: 22 }}>📅</Text>
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            // 탭을 누를 때 스택을 루트로 리셋
+            e.preventDefault();
+            navigation.navigate("Calendar", { screen: "CalendarMain" });
+          }
+        })}
       />
     </Tab.Navigator>
   );

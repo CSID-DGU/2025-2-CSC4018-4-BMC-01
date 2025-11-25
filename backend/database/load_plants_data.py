@@ -38,49 +38,42 @@ def load_plants_with_ai_labels():
 
     # 데이터 삽입
     for plant in labeled_plants:
-        # common 이름 처리 (배열을 문자열로)
-        common_names = plant.get('common', [])
-        common_name = ', '.join(common_names) if common_names else plant.get('latin', 'Unknown')
-
         # 온도 정보
         tempmax = plant.get('tempmax', {})
         tempmin = plant.get('tempmin', {})
 
-        # insects 처리 (배열을 문자열로)
-        insects = plant.get('insects', [])
-        insects_str = ', '.join(insects) if isinstance(insects, list) else str(insects)
-
-        # use 처리 (배열을 문자열로)
-        use_category = plant.get('use', [])
-        use_str = ', '.join(use_category) if isinstance(use_category, list) else str(use_category)
+        # wateringperiod를 문자열에서 정수로 변환
+        wateringperiod = plant.get('wateringperiod')
+        if wateringperiod:
+            try:
+                wateringperiod = int(wateringperiod)
+            except (ValueError, TypeError):
+                wateringperiod = None
 
         cursor.execute("""
             INSERT INTO plants (
-                id, latin_name, common_name, family, category,
-                origin, climate,
-                temp_max_celsius, temp_min_celsius,
-                ideal_light, tolerated_light,
-                watering_desc,
-                insects, use_category
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                id,
+                tempmax_celsius, tempmin_celsius,
+                ideallight, toleratedlight, watering, wateringperiod,
+                ai_label_en, ai_label_ko,
+                ideallight_ko, toleratedlight_ko, watering_ko
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             plant.get('id'),
-            plant.get('latin', ''),
-            common_name,
-            plant.get('family', ''),
-            plant.get('category', ''),
-            plant.get('origin', ''),
-            plant.get('climate', ''),
-            tempmax.get('celsius'),
-            tempmin.get('celsius'),
+            tempmax.get('celsius') if tempmax else None,
+            tempmin.get('celsius') if tempmin else None,
             plant.get('ideallight', ''),
             plant.get('toleratedlight', ''),
             plant.get('watering', ''),
-            insects_str,
-            use_str
+            wateringperiod,
+            plant.get('ai_label_en', ''),
+            plant.get('ai_label_ko', ''),
+            plant.get('ideallight_ko', ''),
+            plant.get('toleratedlight_ko', ''),
+            plant.get('watering_ko', '')
         ))
 
-        logger.debug(f'추가: ID {plant.get("id")} - {plant.get("latin")} (한글: {plant.get("ai_label_ko")})')
+        logger.debug(f'추가: ID {plant.get("id")} - {plant.get("ai_label_en")} (한글: {plant.get("ai_label_ko")})')
 
     conn.commit()
     conn.close()

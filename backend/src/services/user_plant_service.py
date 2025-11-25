@@ -31,8 +31,10 @@ class UserPlantService:
                 return {
                     'tempmax_celsius': plant.get('tempmax', {}).get('celsius'),
                     'tempmin_celsius': plant.get('tempmin', {}).get('celsius'),
-                    'light_info': plant.get('ideallight'),
-                    'watering_info': plant.get('watering')
+                    'ideallight': plant.get('ideallight'),
+                    'toleratedlight': plant.get('toleratedlight'),
+                    'watering': plant.get('watering'),
+                    'wateringperiod': int(plant.get('wateringperiod', 7))
                 }
         return None
 
@@ -42,9 +44,9 @@ class UserPlantService:
         plant_id: int = None,
         nickname: str = None,
         image: str = None,
-        species_label: str = None,
-        species_label_ko: str = None,
-        watering_cycle: int = None,
+        ai_label_en: str = None,
+        ai_label_ko: str = None,
+        wateringperiod: int = None,
     ) -> dict:
         """사용자에게 식물 추가"""
         # plant_id가 있는 경우에만 식물 존재 여부 확인
@@ -55,8 +57,8 @@ class UserPlantService:
 
         # AI 라벨이 있는 경우 관리 정보 찾기
         care_info = None
-        if species_label_ko:
-            care_info = self._get_care_info_by_label(species_label_ko)
+        if ai_label_ko:
+            care_info = self._get_care_info_by_label(ai_label_ko)
 
         # 관리 정보 저장 (AI 라벨이 있고 매칭되는 정보가 있을 때만)
         user_plant_id = self.user_plant_repo.save(
@@ -64,13 +66,14 @@ class UserPlantService:
             plant_id=plant_id,
             nickname=nickname,
             image=image,
-            species_label=species_label,
-            species_label_ko=species_label_ko,
-            watering_cycle=watering_cycle,
+            ai_label_en=ai_label_en,
+            ai_label_ko=ai_label_ko,
+            wateringperiod=wateringperiod or (care_info['wateringperiod'] if care_info else None),
             tempmax_celsius=care_info['tempmax_celsius'] if care_info else None,
             tempmin_celsius=care_info['tempmin_celsius'] if care_info else None,
-            light_info=care_info['light_info'] if care_info else None,
-            watering_info=care_info['watering_info'] if care_info else None
+            ideallight=care_info['ideallight'] if care_info else None,
+            toleratedlight=care_info['toleratedlight'] if care_info else None,
+            watering=care_info['watering'] if care_info else None
         )
 
         return {"id": user_plant_id}
@@ -86,9 +89,9 @@ class UserPlantService:
             raise ValueError(f"식물을 찾을 수 없습니다: {user_plant_id}")
         return True
 
-    def update_plant(self, user_plant_id: int, nickname: str = None, watering_cycle: int = None, last_watered: str = None, image: str = None) -> bool:
+    def update_plant(self, user_plant_id: int, nickname: str = None, wateringperiod: int = None, last_watered: str = None, image: str = None) -> bool:
         """사용자 식물 정보 수정"""
-        success = self.user_plant_repo.update(user_plant_id, nickname=nickname, image=image, watering_cycle=watering_cycle, last_watered=last_watered)
+        success = self.user_plant_repo.update(user_plant_id, nickname=nickname, image=image, wateringperiod=wateringperiod, last_watered=last_watered)
         if not success:
             raise ValueError(f"식물을 찾을 수 없습니다: {user_plant_id}")
         return True

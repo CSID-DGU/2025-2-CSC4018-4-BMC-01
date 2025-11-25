@@ -39,14 +39,14 @@ class PlantRepository:
         return Plant.from_dict(dict(row)) if row else None
 
     def search(self, keyword: str) -> List[Plant]:
-        # 키워드로 식물 검색
+        # 키워드로 식물 검색 (한글/영문 AI 라벨로 검색)
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         query = """
-            SELECT * FROM plants 
-            WHERE common_name LIKE ? OR latin_name LIKE ?
+            SELECT * FROM plants
+            WHERE ai_label_ko LIKE ? OR ai_label_en LIKE ?
         """
         search_term = f"%{keyword}%"
         cursor.execute(query, (search_term, search_term))

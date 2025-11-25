@@ -69,12 +69,12 @@ ensureDirs();
 -------------------------------------------------- */
 const META_KEY = "PLANT_META_DATA";
 
-const loadMeta = async () => {
+export const loadMeta = async () => {
   const raw = await AsyncStorage.getItem(META_KEY);
   return raw ? JSON.parse(raw) : {};
 };
 
-const saveMeta = async (obj) => {
+export const saveMeta = async (obj) => {
   await AsyncStorage.setItem(META_KEY, JSON.stringify(obj));
 };
 
@@ -155,7 +155,7 @@ export const fetchPlants = async () => {
       const m = meta[p.id] || {};
 
       const waterDate = p.last_watered || null;
-      const WateringPeriod = m.WateringPeriod ?? 7;
+      const WateringPeriod = m.WateringPeriod ?? p.wateringperiod ?? 7;
 
       let nextWater = null;
       if (waterDate) {
@@ -164,18 +164,14 @@ export const fetchPlants = async () => {
         nextWater = formatDate(dt);
       }
 
+      // 원본 API 데이터를 모두 유지하면서 추가 필드만 병합
       return {
-        id: p.id,
-        plantId: p.plant_id,
-        name:
-          p.nickname ||
-          p.species_label_ko ||
-          p.common_name ||
-          "이름 없음",
-        image: p.image || null,
+        ...p, // 모든 API 필드 유지 (nickname, ai_label_ko, last_watered, next_watering, watering, wateringperiod, tempmax_celsius, ideallight 등)
+        // 호환성을 위한 추가 필드
+        name: p.nickname || p.ai_label_ko || "이름 없음",
         waterDate,
         nextWater,
-        wateringMethod: p.watering_info ?? null,
+        wateringMethod: p.watering ?? null,
         WateringPeriod,
         favorite: m.favorite ?? false,
         leafPhotos: p.leafPhotos || []

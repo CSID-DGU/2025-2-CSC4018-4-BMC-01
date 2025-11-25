@@ -112,13 +112,13 @@ def api_add_user_plant(user_id):
         plant_id = data.get("plant_id")  # None 가능
         nickname = data.get("nickname")
         image = data.get("image")
-        species_label = data.get("species_label")
-        species_label_ko = data.get("species_label_ko")
-        watering_cycle = data.get("watering_cycle")
+        ai_label_en = data.get("ai_label_en")
+        ai_label_ko = data.get("ai_label_ko")
+        wateringperiod = data.get("wateringperiod")
 
         # plant_id는 선택적 (None일 수 있음)
         result = user_plant_service.add_plant(
-            user_id, plant_id, nickname, image, species_label, species_label_ko, watering_cycle
+            user_id, plant_id, nickname, image, ai_label_en, ai_label_ko, wateringperiod
         )
         return jsonify({"success": True, "data": result}), 201
     except ValueError as e:
@@ -158,14 +158,14 @@ def api_update_user_plant(user_plant_id):
         logger.debug(f"받은 데이터: {list(data.keys())}")
 
         nickname = data.get("nickname")
-        watering_cycle = data.get("watering_cycle")
+        wateringperiod = data.get("wateringperiod")
         last_watered = data.get("last_watered")
         image = data.get("image")
 
         if image:
             logger.debug(f"이미지 업데이트: {image[:50]}...")
 
-        user_plant_service.update_plant(user_plant_id, nickname, watering_cycle, last_watered, image)
+        user_plant_service.update_plant(user_plant_id, nickname, wateringperiod, last_watered, image)
         return jsonify({"success": True, "message": "Plant updated"})
     except ValueError as e:
         logger.warning(f"업데이트 실패 (ValueError): {e}")

@@ -64,10 +64,10 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
     if (data.success) {
       return {
         success: true,
-        speciesLabel: data.species_label,
-        speciesLabelKo: data.species_label_ko,
+        aiLabelEn: data.ai_label_en,
+        aiLabelKo: data.ai_label_ko,
         confidence: data.confidence,
-        plantInfo: data.plant_info, // DB에서 찾은 식물 정보 (plant_id, watering_days 등)
+        plantInfo: data.plant_info, // DB에서 찾은 식물 정보 (plant_id, wateringperiod 등)
       };
     } else {
       throw new Error(data.error || '식물 분석에 실패했습니다.');

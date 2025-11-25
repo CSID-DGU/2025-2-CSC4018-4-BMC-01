@@ -19,18 +19,18 @@ export const userPlantService = {
     plantId,
     nickname = null,
     image = null,
-    speciesLabel = null,
-    speciesLabelKo = null,
-    wateringCycle = null
+    aiLabelEn = null,
+    aiLabelKo = null,
+    wateringPeriod = null
   ) => {
     const userId = await userService.getCurrentUserId();
     const response = await api.post(`/users/${userId}/plants`, {
       plant_id: plantId,
       nickname,
       image,
-      species_label: speciesLabel,
-      species_label_ko: speciesLabelKo,
-      watering_cycle: wateringCycle,
+      ai_label_en: aiLabelEn,
+      ai_label_ko: aiLabelKo,
+      wateringperiod: wateringPeriod,
     });
     return response.data;
   },

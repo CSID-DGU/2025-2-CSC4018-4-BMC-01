@@ -15,7 +15,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
-  Modal
+  Modal,
+  Platform
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -80,7 +81,11 @@ export default function DiseaseResultScreen({ navigation, route }) {
   const pickFromCamera = async () => {
     const perm = await ImagePicker.requestCameraPermissionsAsync();
     if (!perm.granted) {
-      alert("카메라 권한을 허용해주세요.");
+      if (Platform.OS === "web") {
+        window.alert("카메라 권한을 허용해주세요.");
+      } else {
+        Alert.alert("권한 필요", "카메라 권한을 허용해주세요.");
+      }
       return;
     }
 
@@ -101,7 +106,11 @@ export default function DiseaseResultScreen({ navigation, route }) {
   /* AI 분석 + 이미지 저장 */
   const handleAnalyze = async (localUri, fileName) => {
     if (!plant?.id) {
-      Alert.alert("오류", "식물 정보가 없습니다.");
+      if (Platform.OS === "web") {
+        window.alert("식물 정보가 없습니다.");
+      } else {
+        Alert.alert("오류", "식물 정보가 없습니다.");
+      }
       return;
     }
 
@@ -129,16 +138,26 @@ export default function DiseaseResultScreen({ navigation, route }) {
         confidence: analysis.aiResult?.confidence
       });
 
-      Alert.alert(
-        "분석 완료",
-        `진단: ${analysis.disease}\n신뢰도: ${(analysis.aiResult.confidence * 100).toFixed(1)}%`
-      );
+      if (Platform.OS === "web") {
+        window.alert(
+          `분석 완료\n진단: ${analysis.disease}\n신뢰도: ${(analysis.aiResult.confidence * 100).toFixed(1)}%`
+        );
+      } else {
+        Alert.alert(
+          "분석 완료",
+          `진단: ${analysis.disease}\n신뢰도: ${(analysis.aiResult.confidence * 100).toFixed(1)}%`
+        );
+      }
     } catch (error) {
       console.error("❌ AI 분석 오류:", error);
       console.error("❌ message:", error.message);
       console.error("❌ full:", JSON.stringify(error, null, 2));
 
-      Alert.alert("오류", error.message || "분석 실패");
+      if (Platform.OS === "web") {
+        window.alert(error.message || "분석 실패");
+      } else {
+        Alert.alert("오류", error.message || "분석 실패");
+      }
     } finally {
       setIsAnalyzing(false);
     }
@@ -258,8 +277,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   previewBox: {
-    width: "100%",
-    height: 250,
+    width: "70%",
+    aspectRatio: 1.2,
+    alignSelf: "center",
     backgroundColor: "#EEE",
     borderRadius: 15,
     justifyContent: "center",
@@ -269,7 +289,8 @@ const styles = StyleSheet.create({
   previewImg: {
     width: "100%",
     height: "100%",
-    borderRadius: 15
+    borderRadius: 15,
+    resizeMode: "cover"
   },
   previewText: {
     color: "#666"

@@ -97,25 +97,27 @@ class AIService:
         pred_label_ko = ai_result.get("pred_label_ko")
 
         # plants DB에서 검색
-        plants = self.plant_repo.search(pred_label)
+        plants = self.plant_repo.search(pred_label_ko)  # 한글 라벨로 검색
 
         plant_info = None
         if plants:
             plant = plants[0]
             plant_info = {
                 "plant_id": plant.id,
-                "common_name": plant.common_name,
-                "latin_name": plant.latin_name,
-                "watering_days": plant.watering_days or 7,
-                "ideal_light": plant.ideal_light,
-                "temp_min_celsius": plant.temp_min,
-                "temp_max_celsius": plant.temp_max,
+                "ai_label_en": plant.ai_label_en,
+                "ai_label_ko": plant.ai_label_ko,
+                "wateringperiod": plant.wateringperiod or 7,
+                "ideallight": plant.ideallight,
+                "toleratedlight": plant.toleratedlight,
+                "watering": plant.watering,
+                "tempmin_celsius": plant.tempmin_celsius,
+                "tempmax_celsius": plant.tempmax_celsius,
             }
 
         return {
             "success": True,
-            "species_label": pred_label,
-            "species_label_ko": pred_label_ko,
+            "ai_label_en": pred_label,
+            "ai_label_ko": pred_label_ko,
             "confidence": ai_result.get("confidence"),
             "plant_info": plant_info,  # DB에서 찾은 식물 정보 (없으면 None)
         }
@@ -143,18 +145,18 @@ class AIService:
         pred_label = ai_result.get("pred_label")
         pred_label_ko = ai_result.get("pred_label_ko")
 
-        # plants DB에서 검색 (latin_name 또는 common_name으로)
-        plants = self.plant_repo.search(pred_label)
+        # plants DB에서 검색 (한글 라벨로)
+        plants = self.plant_repo.search(pred_label_ko)
 
         if plants:
             # 찾은 식물 사용
             plant = plants[0]
             plant_id = plant.id
-            watering_cycle = plant.watering_days or 7
+            wateringperiod = plant.wateringperiod or 7
         else:
             # 못 찾으면 plant_id=None 사용
             plant_id = None
-            watering_cycle = 7
+            wateringperiod = 7
 
         # user_plant 생성
         user_plant_id = self.user_plant_repo.save(
@@ -162,9 +164,9 @@ class AIService:
             plant_id=plant_id,
             nickname=nickname or pred_label_ko,
             image=image_path,
-            species_label=pred_label,
-            species_label_ko=pred_label_ko,
-            watering_cycle=watering_cycle,
+            ai_label_en=pred_label,
+            ai_label_ko=pred_label_ko,
+            wateringperiod=wateringperiod,
         )
 
         # 생성된 정보 조회

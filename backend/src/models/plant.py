@@ -11,61 +11,49 @@ class Plant:
     # 식물 정보 도메인 객체
 
     id: int
-    latin_name: str
-    common_name: str
-    family: Optional[str] = None
-    category: Optional[str] = None
-    origin: Optional[str] = None
-    climate: Optional[str] = None
-    temp_min: Optional[float] = None
-    temp_max: Optional[float] = None
-    ideal_light: Optional[str] = None
-    tolerated_light: Optional[str] = None
-    watering_desc: Optional[str] = None
-    watering_days: Optional[int] = None
-    watering_amount: Optional[str] = None
-    insects: Optional[str] = None
-    use_category: Optional[str] = None
+    tempmax_celsius: Optional[float] = None
+    tempmin_celsius: Optional[float] = None
+    ideallight: Optional[str] = None
+    toleratedlight: Optional[str] = None
+    watering: Optional[str] = None
+    wateringperiod: Optional[int] = None
+    ai_label_en: Optional[str] = None
+    ai_label_ko: Optional[str] = None
+    ideallight_ko: Optional[str] = None
+    toleratedlight_ko: Optional[str] = None
+    watering_ko: Optional[str] = None
 
     @classmethod
     def from_dict(cls, data: dict):
         # 딕셔너리에서 Plant 객체 생성
         return cls(
             id=data.get("id"),
-            latin_name=data.get("latin_name"),
-            common_name=data.get("common_name"),
-            family=data.get("family"),
-            category=data.get("category"),
-            origin=data.get("origin"),
-            climate=data.get("climate"),
-            temp_min=data.get("temp_min_celsius"),
-            temp_max=data.get("temp_max_celsius"),
-            ideal_light=data.get("ideal_light"),
-            tolerated_light=data.get("tolerated_light"),
-            watering_desc=data.get("watering_desc"),
-            watering_days=data.get("watering_days"),
-            watering_amount=data.get("watering_amount"),
-            insects=data.get("insects"),
-            use_category=data.get("use_category"),
+            tempmax_celsius=data.get("tempmax_celsius"),
+            tempmin_celsius=data.get("tempmin_celsius"),
+            ideallight=data.get("ideallight"),
+            toleratedlight=data.get("toleratedlight"),
+            watering=data.get("watering"),
+            wateringperiod=data.get("wateringperiod"),
+            ai_label_en=data.get("ai_label_en"),
+            ai_label_ko=data.get("ai_label_ko"),
+            ideallight_ko=data.get("ideallight_ko"),
+            toleratedlight_ko=data.get("toleratedlight_ko"),
+            watering_ko=data.get("watering_ko"),
         )
 
     def to_dict(self) -> dict:
         # Plant 객체를 딕셔너리로 변환 (JSON 응답용)
         return {
             "id": self.id,
-            "latin_name": self.latin_name,
-            "common_name": self.common_name,
-            "family": self.family,
-            "category": self.category,
-            "origin": self.origin,
-            "climate": self.climate,
-            "temp_min": self.temp_min,
-            "temp_max": self.temp_max,
-            "ideal_light": self.ideal_light,
-            "tolerated_light": self.tolerated_light,
-            "watering_desc": self.watering_desc,
-            "watering_days": self.watering_days,
-            "watering_amount": self.watering_amount,
-            "insects": self.insects,
-            "use_category": self.use_category,
+            "tempmax_celsius": self.tempmax_celsius,
+            "tempmin_celsius": self.tempmin_celsius,
+            "ideallight": self.ideallight,
+            "toleratedlight": self.toleratedlight,
+            "watering": self.watering,
+            "wateringperiod": self.wateringperiod,
+            "ai_label_en": self.ai_label_en,
+            "ai_label_ko": self.ai_label_ko,
+            "ideallight_ko": self.ideallight_ko,
+            "toleratedlight_ko": self.toleratedlight_ko,
+            "watering_ko": self.watering_ko,
         }

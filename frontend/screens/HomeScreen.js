@@ -12,7 +12,7 @@
     - expo-location (사용자 위치 좌표)
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -20,7 +20,9 @@ import {
   ScrollView,
   FlatList,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  Platform
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -42,6 +44,9 @@ import {
 */
 import { weatherService } from "../src/services";
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const CARD_WIDTH = SCREEN_WIDTH - 40; // 좌우 패딩 20씩
+
 export default function HomeScreen({ navigation }) {
   /* ----------------------------------------------------------
       상태값
@@ -52,6 +57,8 @@ export default function HomeScreen({ navigation }) {
   const [dateText, setDateText] = useState("");
 
   const [tempValue, setTempValue] = useState(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const flatListRef = useRef(null);
 
   /* ----------------------------------------------------------
       [UI] 날짜/시간 갱신
@@ -182,15 +189,15 @@ export default function HomeScreen({ navigation }) {
   ----------------------------------------------------------- */
   const favoritePlants = plants.filter((p) => p.favorite === true);
 
-  /* ----------------- 물주기 리스트 필터 ------------------ */
+  /* ----------------- 물주기 리스트 필터 (모든 식물 대상) ------------------ */
   const today = new Date().toISOString().split("T")[0];
-  const mustWaterPlants = favoritePlants.filter((p) => {
+  const mustWaterPlants = plants.filter((p) => {
     if (!p.nextWater) return true;
     return p.nextWater <= today;
   });
 
   /* ----------------------------------------------------------
-      [UI] 슬라이드 렌더링 (대표식물만 표시)
+      [UI] 슬라이드 렌더링 (대표식물만 표시 - 큰 카드)
   ----------------------------------------------------------- */
   const renderSlide = ({ item }) => (
     <View style={styles.slideBox}>
@@ -201,9 +208,50 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.noImageText}>No Image</Text>
         </View>
       )}
-      <Text style={styles.slideName}>{item.name}</Text>
+      <View style={styles.slideInfo}>
+        <Text style={styles.slideName}>{item.name}</Text>
+        <Text style={styles.slideDetail}>
+          {item.waterDate ? `마지막 물 준 날: ${item.waterDate}` : "물 준 기록 없음"}
+        </Text>
+        {item.nextWater && (
+          <Text style={styles.slideDetail}>
+            다음 물 줄 날: {item.nextWater}
+          </Text>
+        )}
+      </View>
     </View>
   );
+
+  /* ----------------------------------------------------------
+      슬라이드 스크롤 이벤트 핸들러
+  ----------------------------------------------------------- */
+  const onScroll = (event) => {
+    const slideSize = CARD_WIDTH;
+    const offset = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offset / slideSize);
+    setCurrentSlideIndex(index);
+  };
+
+  /* ----------------------------------------------------------
+      화살표 버튼 클릭 핸들러 (웹 호환)
+  ----------------------------------------------------------- */
+  const goToNextSlide = () => {
+    if (currentSlideIndex < favoritePlants.length - 1) {
+      const nextIndex = currentSlideIndex + 1;
+      const offset = nextIndex * CARD_WIDTH;
+      flatListRef.current?.scrollToOffset({ offset, animated: true });
+      setCurrentSlideIndex(nextIndex);
+    }
+  };
+
+  const goToPrevSlide = () => {
+    if (currentSlideIndex > 0) {
+      const prevIndex = currentSlideIndex - 1;
+      const offset = prevIndex * CARD_WIDTH;
+      flatListRef.current?.scrollToOffset({ offset, animated: true });
+      setCurrentSlideIndex(prevIndex);
+    }
+  };
 
   /* ----------------------------------------------------------
       [UI] 물주기 렌더링
@@ -251,14 +299,58 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.sectionTitle}>대표 식물</Text>
 
         {favoritePlants.length > 0 ? (
-          <FlatList
-            data={favoritePlants}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(i) => i.id.toString()}
-            renderItem={renderSlide}
-            style={{ marginBottom: 20 }}
-          />
+          <View style={styles.carouselContainer}>
+            <FlatList
+              ref={flatListRef}
+              data={favoritePlants}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(i) => i.id.toString()}
+              renderItem={renderSlide}
+              snapToInterval={CARD_WIDTH}
+              decelerationRate="fast"
+              onScroll={onScroll}
+              scrollEventThrottle={16}
+              contentContainerStyle={{ paddingRight: 20 }}
+            />
+
+            {/* 화살표 버튼 */}
+            {currentSlideIndex < favoritePlants.length - 1 && (
+              <TouchableOpacity
+                style={styles.rightArrow}
+                onPress={goToNextSlide}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.arrowText}>▶</Text>
+              </TouchableOpacity>
+            )}
+
+            {currentSlideIndex > 0 && (
+              <TouchableOpacity
+                style={styles.leftArrow}
+                onPress={goToPrevSlide}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.arrowText}>◀</Text>
+              </TouchableOpacity>
+            )}
+
+            {/* 페이지 인디케이터 */}
+            {favoritePlants.length > 1 && (
+              <View style={styles.pagination}>
+                {favoritePlants.map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.dot,
+                      currentSlideIndex === index && styles.activeDot
+                    ]}
+                  />
+                ))}
+              </View>
+            )}
+          </View>
         ) : (
           /* --------------- B 타입 박스 --------------- */
           <TouchableOpacity
@@ -271,10 +363,10 @@ export default function HomeScreen({ navigation }) {
         )}
 
         {/* ----------------- 물주기 ----------------- */}
-        <Text style={styles.sectionTitle}>물주기</Text>
+        <Text style={styles.sectionTitle}>오늘 물 줄 식물</Text>
 
         {mustWaterPlants.length === 0 ? (
-          <Text style={styles.doneText}>모든 대표식물에 물을 다 줬어요!</Text>
+          <Text style={styles.doneText}>오늘 물 줄 식물이 없어요!</Text>
         ) : (
           <FlatList
             data={mustWaterPlants}
@@ -338,36 +430,128 @@ const styles = StyleSheet.create({
     color: "#777"
   },
 
-  /* ------------------ 슬라이드 ------------------ */
+  /* ------------------ 슬라이드 캐러셀 ------------------ */
+  carouselContainer: {
+    position: "relative",
+    marginBottom: 30
+  },
+
   slideBox: {
-    width: 160,
+    width: CARD_WIDTH,
     backgroundColor: "#FFF",
-    padding: 12,
-    borderRadius: 15,
-    marginRight: 15
+    borderRadius: 20,
+    overflow: "hidden",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8
   },
 
   slideImg: {
     width: "100%",
-    height: 100,
-    borderRadius: 10
+    aspectRatio: 1,
+    backgroundColor: "#E8E8E8",
+    resizeMode: "cover"
   },
 
   noImage: {
-    backgroundColor: "#E8E8E8",
     justifyContent: "center",
     alignItems: "center"
   },
 
   noImageText: {
     color: "#999",
-    fontSize: 12
+    fontSize: 14
+  },
+
+  slideInfo: {
+    padding: 20
   },
 
   slideName: {
-    marginTop: 10,
-    fontWeight: "600",
-    fontSize: 16
+    fontWeight: "700",
+    fontSize: 22,
+    marginBottom: 8
+  },
+
+  slideDetail: {
+    fontSize: 14,
+    color: "#777",
+    marginTop: 4
+  },
+
+  /* 화살표 */
+  rightArrow: {
+    position: "absolute",
+    right: 20,
+    top: "35%",
+    backgroundColor: "rgba(255,255,255,0.5)",
+    borderRadius: 25,
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    ...(Platform.OS === "web" ? {
+      cursor: "pointer",
+      backdropFilter: "blur(4px)"
+    } : {
+      elevation: 3
+    }),
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4
+  },
+
+  leftArrow: {
+    position: "absolute",
+    left: 0,
+    top: "35%",
+    backgroundColor: "rgba(255,255,255,0.5)",
+    borderRadius: 25,
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    ...(Platform.OS === "web" ? {
+      cursor: "pointer",
+      backdropFilter: "blur(4px)"
+    } : {
+      elevation: 3
+    }),
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4
+  },
+
+  arrowText: {
+    fontSize: 20,
+    color: "#555"
+  },
+
+  /* 페이지 인디케이터 */
+  pagination: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 15
+  },
+
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#CCC",
+    marginHorizontal: 4
+  },
+
+  activeDot: {
+    backgroundColor: "#8CCB7F",
+    width: 10,
+    height: 10,
+    borderRadius: 5
   },
 
   /* ------------------ 물주기 ------------------ */

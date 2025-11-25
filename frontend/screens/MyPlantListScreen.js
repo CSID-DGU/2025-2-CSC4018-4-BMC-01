@@ -257,8 +257,9 @@ const styles = StyleSheet.create({
 
   cardImage: {
     width: "100%",
-    height: 105,
+    aspectRatio: 1,
     borderRadius: 10,
+    resizeMode: "cover"
   },
 
   noImage: {

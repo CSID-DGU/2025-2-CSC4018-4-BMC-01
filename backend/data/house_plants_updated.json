@@ -1,4984 +1,1838 @@
 [
   {
-    "id": 0,
-    "latin": "Aeschynanthus lobianus",
-    "family": "Gesneriaceae",
-    "common": [
-      "Lipstick"
-    ],
-    "category": "Hanging",
-    "origin": "Java",
-    "climate": "Tropical",
+    "id": 301,
     "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
+      "celsius": 21
     },
     "tempmin": {
-      "celsius": 14,
-      "fahrenheit": 57.2
+      "celsius": -20
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Can be a bit dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Aphid",
-      "Thrips"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Flower",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water moderately. Allow soil to dry slightly between waterings.",
+    "wateringperiod": "7",
+    "ai_label_en": "alpine_sea_holly",
+    "ai_label_ko": "에린지움",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "물은 적당히 주시고, 물 주기 사이에 흙이 약간 마르도록 해주세요"
   },
   {
-    "id": 1,
-    "latin": "Adiantum raddianum",
-    "family": "Polypodiaceae",
-    "common": [
-      "Maindenhair",
-      "Delta maidenhair"
-    ],
-    "category": "Fern",
-    "origin": "Brazil",
-    "climate": "Tropical",
+    "id": 302,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 86
+      "celsius": 26
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": 18
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Aphid",
-      "Snail"
-    ],
-    "diseases": "Gray mold",
-    "use": [
-      "Potted plant",
-      "Ground cover",
-      "Table top"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Low light to bright indirect.",
+    "watering": "Water when top soil is dry. Keep soil moist but not soggy.",
+    "wateringperiod": "7",
+    "ai_label_en": "anthurium",
+    "ai_label_ko": "안스리움",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "약한 빛부터 밝은 간접광까지 견딜 수 있어요",
+    "watering_ko": "흙 표면이 마르면 물을 주시고, 흙을 촉촉하게 유지하되 질척이지 않게 해주세요"
   },
   {
-    "id": 2,
-    "latin": "Aechmea fatsiata",
-    "family": "Bromeliaceae",
-    "common": [
-      "Silver vase"
-    ],
-    "category": "Bromeliad",
-    "origin": "Brazil",
-    "climate": "Tropical humid",
+    "id": 303,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
+      "celsius": 21
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": -4
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Change water in the vase regularly.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Flower",
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade in hot climates.",
+    "watering": "Water regularly. Keep soil moist but well-drained.",
+    "wateringperiod": "7",
+    "ai_label_en": "artichoke",
+    "ai_label_ko": "아티초크",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "더운 지역에서는 반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고, 흙을 촉촉하게 유지하되 배수가 잘 되게 해주세요"
   },
   {
-    "id": 3,
-    "latin": "Agave angustilolia Marginata",
-    "family": "Amaryllidaceae",
-    "common": [
-      "Variegated Carabbean Agave",
-      "Century plant"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": " India",
-    "climate": "Tropical",
+    "id": 304,
     "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
+      "celsius": 18
     },
     "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
+      "celsius": 10
     },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Morning sun with afternoon shade.",
+    "watering": "Keep soil evenly moist. Do not let dry out.",
+    "wateringperiod": "3",
+    "ai_label_en": "azalea",
+    "ai_label_ko": "철쭉",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "오전 햇빛과 오후 그늘이 좋아요",
+    "watering_ko": "흙을 고르게 촉촉하게 유지하고, 마르지 않게 해주세요"
   },
   {
-    "id": 4,
-    "latin": "Aechmea ramosa",
-    "family": "Bromeliaceae",
-    "common": [
-      "Coral berry"
-    ],
-    "category": "Bromeliad",
-    "origin": "Brazil",
-    "climate": "Subtropical",
+    "id": 305,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
+      "celsius": 32
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": 10
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Change water in the vase regularly.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Flower",
-      "Table top",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Bright filtered light.",
+    "toleratedlight": "Bright indirect to partial shade.",
+    "watering": "Soak in water for 10 minutes twice a week.",
+    "wateringperiod": "4",
+    "ai_label_en": "ball_moss",
+    "ai_label_ko": "모스볼",
+    "ideallight_ko": "밝게 여과된 빛이 좋아요",
+    "toleratedlight_ko": "밝은 간접광부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "일주일에 두 번 10분간 물에 담가주세요"
   },
   {
-    "id": 7,
-    "latin": "Adiantum hispidulum",
-    "family": "Polypodiaceae",
-    "common": [
-      "Rosy Maidenhair",
-      "Autralian maidenhair"
-    ],
-    "category": "Fern",
-    "origin": "Australia & New Guinea",
-    "climate": "Tropical",
+    "id": 306,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
+      "celsius": 26
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": -20
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Aphid",
-      "Snail"
-    ],
-    "diseases": "Gray mold",
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade in hot climates.",
+    "watering": "Water often when young. Moderate when established.",
+    "wateringperiod": "5",
+    "ai_label_en": "balloon_flower",
+    "ai_label_ko": "도라지",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "더운 지역에서는 반그늘이 좋아요",
+    "watering_ko": "어릴 때는 자주 물을 주시고, 자리잡으면 적당히 주세요"
   },
   {
-    "id": 9,
-    "latin": "Aglaonema",
-    "family": "Araceae",
-    "common": [
-      "Chinese Evergreen",
-      "Amelia"
-    ],
-    "category": "Aglaonema",
-    "origin": "Hybrid",
-    "climate": "Tropical",
+    "id": 307,
     "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
+      "celsius": 21
     },
     "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
+      "celsius": 4
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Secondary",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Bright direct light (6 hours daily).",
+    "toleratedlight": "Bright light.",
+    "watering": "Water regularly. Allow soil to dry slightly.",
+    "wateringperiod": "4",
+    "ai_label_en": "barbeton_daisy",
+    "ai_label_ko": "거베라",
+    "ideallight_ko": "하루 6시간 밝은 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 빛이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고, 흙이 약간 마르도록 해주세요"
   },
   {
-    "id": 12,
-    "latin": "Aglaonema",
-    "family": "Araceae",
-    "common": [
-      "Chinese Evergreen",
-      "Jewel of India"
-    ],
-    "category": "Aglaonema",
-    "origin": "Hybrid",
-    "climate": "Tropical",
+    "id": 308,
     "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
+      "celsius": 30
     },
     "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
+      "celsius": -30
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water deeply occasionally once established.",
+    "wateringperiod": "14",
+    "ai_label_en": "bearded_iris",
+    "ai_label_ko": "독일붓꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "자리잡은 후에는 가끔 깊게 물을 주세요"
   },
   {
-    "id": 17,
-    "latin": "Aglaonema",
-    "family": "Araceae",
-    "common": [
-      "Chinese Evergreen",
-      "Rapsody in Green"
-    ],
-    "category": "Aglaonema",
-    "origin": "Hybrid",
-    "climate": "Tropical",
+    "id": 309,
     "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
+      "celsius": 30
     },
     "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
+      "celsius": -28
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Primary",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun (6+ hours).",
+    "toleratedlight": "Partial sun (4-6 hours).",
+    "watering": "Keep soil moist but not waterlogged.",
+    "wateringperiod": "4",
+    "ai_label_en": "bee_balm",
+    "ai_label_ko": "모나르다",
+    "ideallight_ko": "하루에 6시간 이상 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "하루 4~6시간 햇빛이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지하되 물이 고이지 않게 해주세요"
   },
   {
-    "id": 19,
-    "latin": "Agave verschaffeltii",
-    "family": "Amaryllidaceae",
-    "common": [
-      "Blue Agave",
-      "Century plant"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Mexico",
-    "climate": "Arid Tropical",
+    "id": 310,
     "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
+      "celsius": 30
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": 15
     },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 24,
-    "latin": "Aglaonema",
-    "family": "Araceae",
-    "common": [
-      "Chinese Evergreen",
-      "Maria Chirstina"
-    ],
-    "category": "Aglaonema",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 25,
-    "latin": "Alocasia nebula Imperialis",
-    "family": "Araceae",
-    "common": [
-      "Elephant ear"
-    ],
-    "category": "Other",
-    "origin": "Cultivar",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Colors / Forms",
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 28,
-    "latin": "Allamanda nerifolia",
-    "family": "Apocynaceae",
-    "common": [
-      "Golden Trumpet"
-    ],
-    "category": "Flower",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale",
-      "Spider mite"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Flower"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 31,
-    "latin": "Aglaonema",
-    "family": "Araceae",
-    "common": [
-      "Chinese Evergreen",
-      "Emerald Star"
-    ],
-    "category": "Aglaonema",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Secondary",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 33,
-    "latin": "Aspidistra elatior",
-    "family": "Liliaceae",
-    "common": [
-      "Cast iron plant"
-    ],
-    "category": "Foliage plant",
-    "origin": "China",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Ground cover",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 34,
-    "latin": "Anthurium superbum",
-    "family": "Araceae",
-    "common": [
-      "Bronze Anthurium"
-    ],
-    "category": "Anthurium",
-    "origin": "Ecuador",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Colors / Forms",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 35,
-    "latin": "Caryota mitis",
-    "family": "Palmae",
-    "common": [
-      "Fish tail palm"
-    ],
-    "category": "Palm",
-    "origin": " India",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 36,
-    "latin": "Codiaeum petra",
-    "family": "Euphorbiaceae",
-    "common": [
-      "Croton"
-    ],
-    "category": "Foliage plant",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 37,
-    "latin": "Cereus peruvianus",
-    "family": "Cactaceae",
-    "common": [
-      "Tree Cereus"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Brazil",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when dry or when soil is half dry.",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 38,
-    "latin": "Blechnum gibbum",
-    "family": "Polypodiaceae",
-    "common": [
-      "Miniature tree fern",
-      "Dwarf tree fern"
-    ],
-    "category": "Fern",
-    "origin": "New Calidonia",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 39,
-    "latin": "Chamaedorea elegans",
-    "family": "Arecaceae",
-    "common": [
-      "Bella palm",
-      "Neanthebella palm",
-      "Dwarf palm",
-      "Parlor palm"
-    ],
-    "category": "Palm",
-    "origin": "Mexico",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 40,
-    "latin": "Calathea veitchiana",
-    "family": "Marantaceae",
-    "common": [
-      "Medallion Calathea"
-    ],
-    "category": "Foliage plant",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 41,
-    "latin": "Calathea pictura Argentea",
-    "family": "Marantaceae",
-    "common": [
-      "Silver Calathea"
-    ],
-    "category": "Foliage plant",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 42,
-    "latin": "Bougainvillea",
-    "family": "Nyctaginaceae",
-    "common": [
-      "Bougainvillia",
-      "Paper flower"
-    ],
-    "category": "Flower",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Colors / Forms",
-      "Primary"
-    ],
-    "ai_label_en": "bougainvillea",
-    "ai_label_ko": "부겐빌레아"
-  },
-  {
-    "id": 43,
-    "latin": " Chamaedorea seifrizii",
-    "family": "Arecaceae",
-    "common": [
-      "Bamboo palm",
-      "Reed Palm"
-    ],
-    "category": "Palm",
-    "origin": "Mexico",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 44,
-    "latin": " Alocasia X amazonica",
-    "family": "Araceae",
-    "common": [
-      "Elephant ear"
-    ],
-    "category": "Other",
-    "origin": "Hybrid",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Colors / Forms",
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 45,
-    "latin": "Anthurium X",
-    "family": "Araceae",
-    "common": [
-      "Tailflower",
-      "Wax flower"
-    ],
-    "category": "Anthurium",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 22,
-      "fahrenheit": 71.6
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Aphid"
-    ],
-    "diseases": [
-      "Erwinia",
-      "Crown rot"
-    ],
-    "use": [
-      "Flower",
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 46,
-    "latin": "Anthurium hookeri",
-    "family": "Araceae",
-    "common": [
-      "Bird nest Anthurium",
-      "Cabbage Anthurium"
-    ],
-    "category": "Anthurium",
-    "origin": "Guyana",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Mealy bug",
-      "Snail",
-      "Aphid"
-    ],
-    "diseases": [
-      "Erwinia",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 47,
-    "latin": "Cissus rhombifolia",
-    "family": "Vitaceae",
-    "common": [
-      "Grape Ivy",
-      "Ellen Danica"
-    ],
-    "category": "Hanging",
-    "origin": "Cultivar",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": "Mealy bug",
-    "diseases": [
-      "Downy mildiou",
-      "Powdery"
-    ],
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 48,
-    "latin": "Cereus peruvianus Monstrosus",
-    "family": "Cactaceae",
-    "common": [
-      "Monster cactus"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Brazil",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when dry or when soil is half dry.",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 49,
-    "latin": "Chamaedorea erumpens",
-    "family": "Arecaceae",
-    "common": [
-      "Bamboo palm"
-    ],
-    "category": "Palm",
-    "origin": "Honduras",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 50,
-    "latin": "Calathea stromata",
-    "family": "Marantaceae",
-    "common": [
-      "Stromante"
-    ],
-    "category": "Foliage plant",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 51,
-    "latin": "Codiaeum",
-    "family": "Euphorbiaceae",
-    "common": [
-      "Croton"
-    ],
-    "category": "Foliage plant",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Secondary",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 52,
-    "latin": "Calathea rufibarba",
-    "family": "Marantaceae",
-    "common": [
-      "Velvet Calathea"
-    ],
-    "category": "Foliage plant",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 54,
-    "latin": "Crassula argentea",
-    "family": "Crasssulaceae",
-    "common": [
-      "Jade Plant"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "South Africa",
-    "climate": "Subtropical arid",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 55
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 55,
-    "latin": "Alocasias X Amazonica",
-    "family": "Araceae",
-    "common": [
-      "Elephant ear"
-    ],
-    "category": "Other",
-    "origin": "Hybrid",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Phytophtora",
-      "Crown rot"
-    ],
-    "use": [
-      "Colors / Forms",
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 57,
-    "latin": "Anthurium schlechtendalii",
-    "family": "Araceae",
-    "common": [
-      "Bird nest Anthurium",
-      "Cabbage Anthurium"
-    ],
-    "category": "Anthurium",
-    "origin": "Costa rica",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Aphid"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Colors / Forms",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 58,
-    "latin": "Chamaedorea metallica",
-    "family": "Arecaceae",
-    "common": [
-      "Miniature fishtail",
-      "Steel palm"
-    ],
-    "category": "Palm",
-    "origin": "Mexico",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 60,
-    "latin": "Calathea ornata Rosea lineata",
-    "family": "Marantaceae",
-    "common": [
-      "Stiped calathea"
-    ],
-    "category": "Foliage plant",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 61,
-    "latin": "Asplenium nidus",
-    "family": "Aspleniaceae",
-    "common": [
-      "Birdnest fern"
-    ],
-    "category": "Fern",
-    "origin": "Asia",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 62,
-    "latin": "Anthurium hookeri",
-    "family": "Araceae",
-    "common": [
-      "Bird nest Anthurium",
-      "Cabbage Anthurium"
-    ],
-    "category": "Anthurium",
-    "origin": "Guyana",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Mealy bug",
-      "Snail",
-      "Aphid"
-    ],
-    "diseases": [
-      "Erwinia",
-      "Crown rot"
-    ],
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 63,
-    "latin": "Chlorophytum comosum",
-    "family": "Liliaceae",
-    "common": [
-      "Spider plant"
-    ],
-    "category": "Hanging",
-    "origin": "Central Africa",
-    "climate": "Tropical to subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 64,
-    "latin": "Didymochlaena truncatula",
-    "family": "Dryopteridaceae",
-    "common": [
-      "Tree Maindenhair fern"
-    ],
-    "category": "Fern",
-    "origin": "South America",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 65,
-    "latin": "Dieffenbachia",
-    "family": "Araceae",
-    "common": [
-      "Dumcane",
-      "Tropic Mary Ann"
-    ],
-    "category": "Dieffenbachia",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Fusarium",
-      "Erwinia"
-    ],
-    "use": [
-      "Table top",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 66,
-    "latin": "Dieffenbachia",
-    "family": "Araceae",
-    "common": [
-      "Dumcane",
-      "Star Bright"
-    ],
-    "category": "Dieffenbachia",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Fusarium",
-      "Erwinia"
-    ],
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 67,
-    "latin": "Dracaena marginata",
-    "family": "Liliaceae",
-    "common": [
-      "Madagascar dragon tree",
-      "Tricolor"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale",
-      "Spider mite"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 68,
-    "latin": "Dracaena fragrans Massangeana",
-    "family": "Liliaceae",
-    "common": [
-      "Cornstalk plant"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 69,
-    "latin": "Dracaena deremensis",
-    "family": "Liliaceae",
-    "common": [
-      "Janet Craig"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 70,
-    "latin": "Cryptanthus Rose Eliane",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Can be dry between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 71,
-    "latin": "Dracaena reflexa",
-    "family": "Liliaceae",
-    "common": [
-      "Yellow Malaysian Dracaena",
-      "Song of India"
-    ],
-    "category": "Dracaena",
-    "origin": " India",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 73,
-    "latin": "Dracaena reflexa",
-    "family": "Liliaceae",
-    "common": [
-      "Malaysian Dracaena",
-      "Song of Jamaica"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 74,
-    "latin": "Cycas revoluta",
-    "family": "Cycadaceae",
-    "common": [
-      "Sago palm",
-      "King sago"
-    ],
-    "category": "Palm",
-    "origin": "Japan",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "Prefers bright, indirect sunlight.",
-    "toleratedlight": "/",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 76,
-    "latin": "Ctenanthe lubbersiana",
-    "family": "Marantaceae",
-    "common": [
-      "Phrynium"
-    ],
-    "category": "Foliage plant",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 77,
-    "latin": "Dracaena reflexa",
-    "family": "Liliaceae",
-    "common": [
-      "Malaysian Dracaena"
-    ],
-    "category": "Dracaena",
-    "origin": "Madagascar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 79,
-    "latin": "Cyrtomium falcatum",
-    "family": "Dryopteridaceae",
-    "common": [
-      "Holly-fern"
-    ],
-    "category": "Fern",
-    "origin": "Asia",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 81,
-    "latin": "Davallia trichomannoides",
-    "family": "Davalliaceae",
-    "common": [
-      "Rabbits foot",
-      "Squirrels foot"
-    ],
-    "category": "Fern",
-    "origin": "Canaries",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 82,
-    "latin": "Dracaena deremensis",
-    "family": "Liliaceae",
-    "common": [
-      "Lisa Dracaena",
-      "Lisa"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 83,
-    "latin": "Dracaena marginata",
-    "family": "Liliaceae",
-    "common": [
-      "Madagascar dragon tree"
-    ],
-    "category": "Dracaena",
-    "origin": "Madagascar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale",
-      "Spider mite"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 85,
-    "latin": "Dracaena deremensis",
-    "family": "Liliaceae",
-    "common": [
-      "Striped Dracaena",
-      "Lemon Lime"
-    ],
-    "category": "Dracaena",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 88,
-    "latin": "Ficus elastica",
-    "family": "Moraceae",
-    "common": [
-      "Rubber plant",
-      "Tineke"
-    ],
-    "category": "Ficus",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 89,
-    "latin": "Dypsis lutescens",
-    "family": "Arecaceae",
-    "common": [
-      "Areca palm",
-      "Butterfly palm"
-    ],
-    "category": "Palm",
-    "origin": "Madagascar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 90,
-    "latin": "Epiphyllum",
-    "family": "Cactaceae",
-    "common": [
-      "Orchid cactus"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 91,
-    "latin": "Echinocactus grusonii",
-    "family": "Cactaceae",
-    "common": [
-      "Golden Barrel"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Central Mexico",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 40,
-      "fahrenheit": 104
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "/",
-    "watering": "Water only when dry. Must be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale",
-      "Spider mite"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 92,
-    "latin": "Euphorbia milii",
-    "family": "Euphorbiaceae",
-    "common": [
-      "Christ thorn",
-      "Crown of thorns"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Madagascar",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "White fly"
-    ],
-    "diseases": [
-      "Downy mildiou",
-      "Gray mold"
-    ],
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 93,
-    "latin": "Epipremnum aureum",
-    "family": "Araceae",
-    "common": [
-      "White Pothos",
-      "Marble Queen"
-    ],
-    "category": "Hanging",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": [
-      "Pythium"
-    ],
-    "use": [
-      "Hanging",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 94,
-    "latin": "Guzmania",
-    "family": "Bromeliaceae",
-    "common": [
-      "Guzmania",
-      "Guzmania Sunnytime"
-    ],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Change water in the vase regularly.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "bromelia",
-    "ai_label_ko": "아나나스"
-  },
-  {
-    "id": 95,
-    "latin": "Ficus maclellandii",
-    "family": "Moraceae",
-    "common": [
-      "Willow fig tree",
-      "Amstel King"
-    ],
-    "category": "Ficus",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 97,
-    "latin": "Ficus benjamina",
-    "family": "Moraceae",
-    "common": [
-      "Weeping fig"
-    ],
-    "category": "Ficus",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 98,
-    "latin": "Fatsia japonica",
-    "family": "Araliaceae",
-    "common": [
-      "Japanese Aralia"
-    ],
-    "category": "Aralia",
-    "origin": "Japan",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 99,
-    "latin": "Euphorbia ammack",
-    "family": "Euphorbiaceae",
-    "common": [
-      "Variegated Euphorbia"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Africa",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Must be dry between watering. Water only when dry.",
-    "insects": [
-      "Mealy bug",
-      "White fly"
-    ],
-    "diseases": "Downy mildiou",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 100,
-    "latin": "Ficus pumila",
-    "family": "Moraceae",
-    "common": [
-      "Creeping fig",
-      "Curl"
-    ],
-    "category": "Ficus",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 102,
-    "latin": "Ficus elastica",
-    "family": "Moraceae",
-    "common": [
-      "Rubber plant",
-      "Robusta"
-    ],
-    "category": "Ficus",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 103,
-    "latin": "Hedera canariensis",
-    "family": "Araliaceae",
-    "common": [
-      "Algerian ivy",
-      "Montgomery ivy"
-    ],
-    "category": "Hanging",
-    "origin": "Canaries",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 105,
-    "latin": "Ficus lyrata",
-    "family": "Moraceae",
-    "common": [
-      "Fidleleaf fig"
-    ],
-    "category": "Ficus",
-    "origin": "Ouest Africa",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 106,
-    "latin": "Euphorbia ingens",
-    "family": "Euphorbiaceae",
-    "common": [
-      "Giant Candelabra tree"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "South Africa",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "Downy mildiou",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 114,
-    "latin": "Euphorbia drupifera",
-    "family": "Euphorbiaceae",
-    "common": [],
-    "category": "Cactus And Succulent",
-    "origin": "Guinea",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "Downy mildiou",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 115,
-    "latin": "Hedera helix",
-    "family": "Araliaceae",
-    "common": [
-      "English ivy",
-      "Gold Baby"
-    ],
-    "category": "Hanging",
-    "origin": "Cultivar",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 116,
-    "latin": "Maranta leuconeura erythroneura",
-    "family": "Marantaceae",
-    "common": [
-      "Herringbone",
-      "Pink praying plant"
-    ],
-    "category": "Hanging",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Table top"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 118,
-    "latin": "Monstera deliciosa",
-    "family": "Araceae",
-    "common": [
-      "Splitleaf Philodendron",
-      "Mexican Breadfruit"
-    ],
-    "category": "Philodendron",
-    "origin": "Central America",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 119,
-    "latin": "Mandevilla X",
-    "family": "Apocynaceae",
-    "common": [],
-    "category": "Flower",
-    "origin": "Hybrid",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Aphid"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Flower",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 120,
-    "latin": "Peperomia obtusifolia",
-    "family": "Piperaceae",
-    "common": [
-      "Baby rubber plant",
-      "Pepper face"
-    ],
-    "category": "Other",
-    "origin": "Venezuela",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 121,
-    "latin": "Ophiopogon japonicus",
-    "family": "Liliaceae",
-    "common": [
-      "Snakes beard"
-    ],
-    "category": "Grass",
-    "origin": "Japan",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 122,
-    "latin": "Hedychium coronarium",
-    "family": "Zingiberaceae",
-    "common": [
-      "Butterfly Ginger",
-      "White Ginger"
-    ],
-    "category": "Flower",
-    "origin": "China",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Flower",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 124,
-    "latin": "Pellaea falcata",
-    "family": "Sinopteridaceae",
-    "common": [],
-    "category": "Fern",
-    "origin": "Australia & New Guinea",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 25,
-      "fahrenheit": 77
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Ground cover",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 126,
-    "latin": "Hoya carnosa Exotica",
-    "family": "Asclepiadaceae",
-    "common": [
-      "Wax plant"
-    ],
-    "category": "Hanging",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Mealy bug",
-      "Thrips"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Table top"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 127,
-    "latin": "Nerium oleander",
-    "family": "Apocynaceae",
-    "common": [
-      "Oleander",
-      "Rose bay"
-    ],
-    "category": "Flower",
-    "origin": "Mediterranean",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Scale",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "garden_phlox",
-    "ai_label_ko": "풀협죽도"
-  },
-  {
-    "id": 128,
-    "latin": "Pachypodium geayi",
-    "family": "Apocynaceae",
-    "common": [
-      "Madagascar Palm"
-    ],
-    "category": "Cactus And Succulent",
-    "origin": "Madagascar",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 129,
-    "latin": "Licuala spinosa",
-    "family": "Arecaceae",
-    "common": [
-      "Spiny licuala palm"
-    ],
-    "category": "Palm",
-    "origin": "Malaysia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 130,
-    "latin": "Philodendron",
-    "family": "Araceae",
-    "common": [
-      "Red Philodendron",
-      "Imperial Red"
-    ],
-    "category": "Philodendron",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Table top",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 131,
-    "latin": "Neoregelia Flandria",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Colors / Forms"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 132,
-    "latin": "Liriope muscari Variegata",
-    "family": "Liliaceae",
-    "common": [
-      "Variegated lily turf"
-    ],
-    "category": "Foliage plant",
-    "origin": "Japan",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Direct sunlight",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Ground cover",
-      "Table top"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 133,
-    "latin": "Philodendron micans",
-    "family": "Araceae",
-    "common": [
-      "Velvet leaf vine"
-    ],
-    "category": "Philodendron",
-    "origin": "Dominica",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Hanging",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 135,
-    "latin": "Neoregelia Victoria Pink",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Colors / Forms"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 136,
-    "latin": "Nolina recurvata",
-    "family": "Agavaceae",
-    "common": [
-      "Elephant foot",
-      "Pony tail"
-    ],
-    "category": "Foliage plant",
-    "origin": "Mexico",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 32,
-      "fahrenheit": 89.6
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Scale",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Primary",
-      "Potted plant"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 138,
-    "latin": "Phalaenopsis X",
-    "family": "Orchidaceae",
-    "common": [],
-    "category": "Flower",
-    "origin": "Hybrid",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": [
-      "Thrips",
-      "Aphid"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Secondary"
-    ],
-    "ai_label_en": "moon_orchid",
-    "ai_label_ko": "호접란"
-  },
-  {
-    "id": 139,
-    "latin": "Hyophorbe verschaffeltii",
-    "family": "Arecaceae",
-    "common": [
-      "Spindle palm"
-    ],
-    "category": "Palm",
-    "origin": "Rodrigue Island",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 140,
-    "latin": "Hedera helix",
-    "family": "Araliaceae",
-    "common": [
-      "English ivy"
-    ],
-    "category": "Topiairy",
-    "origin": "Cultivar",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Ground cover"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 142,
-    "latin": "Medinilla magnifica",
-    "family": "Melastomataceae",
-    "common": [
-      "Rose grape"
-    ],
-    "category": "Flower",
-    "origin": "Philippines",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Flower"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 143,
-    "latin": "Hibiscus rosa sinensis",
-    "family": "Malvaceae",
-    "common": [
-      "Chinese hibiscus"
-    ],
-    "category": "Flower",
-    "origin": "Asia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "White fly"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Flower",
-      "Secondary"
-    ],
-    "ai_label_en": "hibiscus",
-    "ai_label_ko": "히비스커스"
-  },
-  {
-    "id": 144,
-    "latin": "Nephrolepis exaltata var",
-    "family": "Nephrolepidaceae",
-    "common": [
-      "Boston fern",
-      "Sword fern"
-    ],
-    "category": "Fern",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 145,
-    "latin": "Howea forsteriana",
-    "family": "Arecaceae",
-    "common": [
-      "Kentia palm",
-      "Paradise palm"
-    ],
-    "category": "Palm",
-    "origin": "South Pacific",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 147,
-    "latin": "Homalomena",
-    "family": "Araceae",
-    "common": [
-      "Emerald Gem"
-    ],
-    "category": "Foliage plant",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 149,
-    "latin": "Pandorea jasminoides",
-    "family": "Bignoniaceae",
-    "common": [
-      "Bower plant",
-      "Bower of beauty"
-    ],
-    "category": "Flower",
-    "origin": "Australia",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 150,
-    "latin": "Neoregelia carolinae var.",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Colors / Forms"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 151,
-    "latin": "Radermachera sinica",
-    "family": "Bignoniaceae",
-    "common": [
-      "China doll"
-    ],
-    "category": "Other",
-    "origin": "China",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 152,
-    "latin": "Pteris cretica Parkeri",
-    "family": "Pteridaceae",
-    "common": [
-      "Cretan brake"
-    ],
-    "category": "Fern",
-    "origin": "Cultivar",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 153,
-    "latin": "Polystichum tsus simense",
-    "family": "Dryopteridaceae",
-    "common": [
-      "Korean rock fern",
-      "Tsu sima holly fern"
-    ],
-    "category": "Fern",
-    "origin": "Korea",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": -5,
-      "fahrenheit": 23
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 154,
-    "latin": "Polystichum polyblepharum",
-    "family": "Dryopteridaceae",
-    "common": [
-      "Japanese tassel fern"
-    ],
-    "category": "Fern",
-    "origin": "Japan",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": -5,
-      "fahrenheit": 23
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 155,
-    "latin": "Ravenea rivularis",
-    "family": "Arecaceae",
-    "common": [
-      "Majesty palm"
-    ],
-    "category": "Palm",
-    "origin": "Madagascar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 156,
-    "latin": "Polyscias scutellaria",
-    "family": "Araliaceae",
-    "common": [
-      "Fabian Aralia",
-      "Red Aralia"
-    ],
-    "category": "Aralia",
-    "origin": "Asia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 157,
-    "latin": "Pteris cretica Albo lineata",
-    "family": "Pteridaceae",
-    "common": [
-      "Silver Ribbon Fern"
-    ],
-    "category": "Fern",
-    "origin": "Cultivar",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 158,
-    "latin": "Platycerium bifurcatum",
-    "family": "Polypodiaceae",
-    "common": [
-      "Staghorn fern"
-    ],
-    "category": "Fern",
-    "origin": "Australia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 5,
-      "fahrenheit": 41
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 159,
-    "latin": "Philodendron Xanadu",
-    "family": "Araceae",
-    "common": [],
-    "category": "Philodendron",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 160,
-    "latin": "Polyscias pinnatta",
-    "family": "Araliaceae",
-    "common": [
-      "Balfour aralia",
-      "Aralia Balfouriana",
-      "Lemon Lime"
-    ],
-    "category": "Aralia",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 161,
-    "latin": "Philodendron Tatei Congo",
-    "family": "Araceae",
-    "common": [],
-    "category": "Philodendron",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Table top",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 162,
-    "latin": "Sansevieria trifasciata Laurentii",
-    "family": "Liliaceae",
-    "common": [
-      "Snake plant"
-    ],
-    "category": "Sansevieria",
-    "origin": "South Africa",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 163,
-    "latin": "Philodendron pinnatifidum",
-    "family": "Araceae",
-    "common": [
-      "Fernleaf Philodendron"
-    ],
-    "category": "Philodendron",
-    "origin": "Venezuela",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 164,
-    "latin": "Podocarpus gracilior",
-    "family": "Podocarpaceae",
-    "common": [
-      "African fern pine",
-      "Buddhist pine"
-    ],
-    "category": "Foliage plant",
-    "origin": "Central Africa",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 165,
-    "latin": "Sansevieria trifasciata Hahnii",
-    "family": "Liliaceae",
-    "common": [
-      "Birdnest sansevieria",
-      "Snake plant"
-    ],
-    "category": "Sansevieria",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 166,
-    "latin": "Sansevieria trifasciata",
-    "family": "Liliaceae",
-    "common": [
-      "Snake plant"
-    ],
-    "category": "Sansevieria",
-    "origin": "South Africa",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 167,
-    "latin": "Polyscias crispata",
-    "family": "Araliaceae",
-    "common": [
-      "Chicken gizard aralia"
-    ],
-    "category": "Aralia",
-    "origin": "Malaysia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 168,
-    "latin": "Phoenix roebellinii",
-    "family": "Palmae",
-    "common": [
-      "Pignee Date palm"
-    ],
-    "category": "Palm",
-    "origin": "Vietnam",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 170,
-    "latin": "Polyscias fruticosa Elegans",
-    "family": "Araliaceae",
-    "common": [
-      "Ming Aralia",
-      "Parsley panax"
-    ],
-    "category": "Aralia",
-    "origin": "Malaysia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 171,
-    "latin": "Philodendron selloum",
-    "family": "Araceae",
-    "common": [
-      "Lacy tree philodendron"
-    ],
-    "category": "Philodendron",
-    "origin": "Brazil",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 172,
-    "latin": "Pteris ensiformis Evergemiensis",
-    "family": "Pteridaceae",
-    "common": [
-      "Silver Lace Fern"
-    ],
-    "category": "Fern",
-    "origin": "Asia",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "/",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 173,
-    "latin": "Rhapis excelsa",
-    "family": "Arecaceae",
-    "common": [
-      "Lady palm"
-    ],
-    "category": "Palm",
-    "origin": "China",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 175,
-    "latin": "Philodendron scandens oxycardium",
-    "family": "Araceae",
-    "common": [
-      "Parlor ivy",
-      "Sweetheart plant",
-      "Heartleaf philodendron",
-      "Cordatum vine"
-    ],
-    "category": "Philodendron",
-    "origin": "Central America",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 18,
-      "fahrenheit": 64.4
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "Mealy bug",
-    "diseases": "Erwinia",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 176,
-    "latin": "Veitchia merrillii",
-    "family": "Arecaceae",
-    "common": [
-      "Adonidia",
-      "Christmas palm",
-      "Manila palm"
-    ],
-    "category": "Palm",
-    "origin": "Philippines",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 177,
-    "latin": "Spathiphyllum Lynise",
-    "family": "Araceae",
-    "common": [
-      "Peace lily"
-    ],
-    "category": "Spathiphyllum",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Thrips"
-    ],
-    "diseases": "Phytophtora",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 178,
-    "latin": "Spathiphyllum Ceres",
-    "family": "Araceae",
-    "common": [
-      "Peace lily"
-    ],
-    "category": "Spathiphyllum",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Thrips"
-    ],
-    "diseases": "Phytophtora",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 179,
-    "latin": "Vriesea splendens",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Venezuela",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 180,
-    "latin": "Trichilia dregei",
-    "family": "Miliaceae",
-    "common": [
-      "Cape mahogany",
-      "Christmas bells"
-    ],
-    "category": "Other",
-    "origin": "Zimbabwe",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 181,
-    "latin": "Vriesea Ginger",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 182,
-    "latin": "Vriesea Charlotte",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 183,
-    "latin": "Syngonium podophyllum",
-    "family": "Araceae",
-    "common": [
-      "African evergreen",
-      "Arrowhead vine",
-      "Goosefoot plant",
-      "White Lightning"
-    ],
-    "category": "Hanging",
-    "origin": "Cultivar",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": [
-      "Crown rot",
-      "Erwinia"
-    ],
-    "use": [
-      "Hanging",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 184,
-    "latin": "Syagrus schizophylla",
-    "family": "Arecaceae",
-    "common": [
-      "Parrot palm"
-    ],
-    "category": "Palm",
-    "origin": "Brazil",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 185,
-    "latin": "Tillandsia cyanea",
-    "family": "Bromeliaceae",
-    "common": [
-      "Pink quill"
-    ],
-    "category": "Bromeliad",
-    "origin": "Ecuador",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 186,
-    "latin": "Vriesea Christiane",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 187,
-    "latin": "Tillandsia Creation",
-    "family": "Bromeliaceae",
-    "common": [],
-    "category": "Bromeliad",
-    "origin": "Hybrid",
-    "climate": "Tropical humid",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Change water regularly in the vase. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 188,
-    "latin": "Xanthosoma lindenii",
-    "family": "Araceae",
-    "common": [
-      " Indian kale"
-    ],
-    "category": "Foliage plant",
-    "origin": "Colombia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 189,
-    "latin": "Schefflera elegantissima",
-    "family": "Araliaceae",
-    "common": [
-      "False aralia"
-    ],
-    "category": "Aralia",
-    "origin": "New Calidonia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Can dry between watering",
-    "insects": [
-      "Spider mite",
-      "Mealy bug",
-      "Scale"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 190,
-    "latin": "Spathiphyllum Sensation",
-    "family": "Araceae",
-    "common": [
-      "Peace lily"
-    ],
-    "category": "Spathiphyllum",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 15,
-      "fahrenheit": 59
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Must not be dry between watering",
-    "insects": [
-      "Mealy bug",
-      "Thrips"
-    ],
-    "diseases": "Phytophtora",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 192,
-    "latin": "Sedum morganianum",
-    "family": "Crasssulaceae",
-    "common": [
-      "Burro tail"
-    ],
-    "category": "Hanging",
-    "origin": "Mexico",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 8,
-      "fahrenheit": 46.4
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 195,
-    "latin": "Scindapsus pictus argyraeus",
-    "family": "Araceae",
-    "common": [
-      "Picta Philodendron",
-      "Satin pothos",
-      "Devils ivy"
-    ],
-    "category": "Hanging",
-    "origin": "Indonisia",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "Mealy bug",
-    "diseases": "N/A",
-    "use": [
-      "Hanging",
-      "Tertiary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 196,
-    "latin": "Xanthorrhoea arborea",
-    "family": "Liliaceae",
-    "common": [
-      "Grass tree"
-    ],
-    "category": "Other",
-    "origin": "Australia",
-    "climate": "Arid Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "/",
-    "watering": "Water only when the soil is dry. Must be dry between watering",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Primary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 197,
-    "latin": "Schefflera arboricola Trinette",
-    "family": "Araliaceae",
-    "common": [
-      "Yellow Hawaiian elf",
-      "Yellow parasol plant"
-    ],
-    "category": "Schefflera",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 198,
-    "latin": "Schefflera actinophylla Amate",
-    "family": "Araliaceae",
-    "common": [
-      "Umbella plant"
-    ],
-    "category": "Schefflera",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 28,
-      "fahrenheit": 82.4
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 200,
-    "latin": "Sansevieria trifasciata var",
-    "family": "Liliaceae",
-    "common": [
-      "Snake plant"
-    ],
-    "category": "Sansevieria",
-    "origin": "Cultivar",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 35,
-      "fahrenheit": 95
-    },
-    "tempmin": {
-      "celsius": 10,
-      "fahrenheit": 50
-    },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Water when soil is half dry. Can be dry between watering.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 202,
-    "latin": "Schefflera arboricola",
-    "family": "Araliaceae",
-    "common": [
-      "Hawaiian elf",
-      "Parasol plant"
-    ],
-    "category": "Schefflera",
-    "origin": "Taiwan",
-    "climate": "Tropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Aphid",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
-  },
-  {
-    "id": 206,
-    "latin": "Strelitzia nicolai",
-    "family": "Strelitziaceae",
-    "common": [
-      "White bird of paradise"
-    ],
-    "category": "Foliage plant",
-    "origin": "South Africa",
-    "climate": "Subtropical",
-    "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
-    },
-    "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
-    },
-    "ideallight": "6 or more hours of direct sunlight per day.",
-    "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": [
-      "Spider mite",
-      "Mealy bug"
-    ],
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Tertiary"
-    ],
+    "ideallight": "Bright indirect to full sun (5+ hours).",
+    "toleratedlight": "Bright indirect light.",
+    "watering": "Water when top soil is dry. Keep moist but not soggy.",
+    "wateringperiod": "7",
     "ai_label_en": "bird_of_paradise",
-    "ai_label_ko": "극락조화"
+    "ai_label_ko": "극락조화",
+    "ideallight_ko": "밝은 간접광이나 하루 5시간 이상의 햇빛을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 간접광이 좋아요",
+    "watering_ko": "흙 표면이 마르면 물을 주시고, 흙을 촉촉하게 유지하되 질척이지 않게 해주세요"
   },
   {
-    "id": 207,
-    "latin": "Zamioculcas zamifolia",
-    "family": "Araceae",
-    "common": [
-      "Zz plant"
-    ],
-    "category": "Foliage plant",
-    "origin": "South Africa",
-    "climate": "Tropical",
+    "id": 311,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
+      "celsius": 30
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": -10
     },
-    "ideallight": "Bright light",
-    "toleratedlight": "Diffused",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "N/A",
-    "use": [
-      "Table top",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "ideallight": "Full sun (6+ hours).",
+    "toleratedlight": "Full sun.",
+    "watering": "Water regularly. Allow slight drying between waterings.",
+    "wateringperiod": "4",
+    "ai_label_en": "bishop_of_llandaff",
+    "ai_label_ko": "달리아(비숍 오브 랜다프)",
+    "ideallight_ko": "하루에 6시간 이상 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고, 물 주기 사이에 약간 마르도록 해주세요"
   },
   {
-    "id": 208,
-    "latin": "Yucca elephantipes",
-    "family": "Liliaceae",
-    "common": [
-      "Spineless yucca",
-      "Palm lily"
-    ],
-    "category": "Dracaena",
-    "origin": "Mexico",
-    "climate": "Subtropical",
+    "id": 312,
     "tempmax": {
-      "celsius": 30,
-      "fahrenheit": 20
+      "celsius": 30
     },
     "tempmin": {
-      "celsius": 12,
-      "fahrenheit": 53.6
+      "celsius": -23
     },
-    "ideallight": "6 or more hours of direct sunlight per day.",
+    "ideallight": "Full sun (6+ hours).",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water weekly. Drought tolerant once established.",
+    "wateringperiod": "7",
+    "ai_label_en": "black_eyed_susan",
+    "ai_label_ko": "루드베키아",
+    "ideallight_ko": "하루에 6시간 이상 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "일주일에 한 번 물을 주세요. 자리잡으면 건조에 강해요"
+  },
+  {
+    "id": 313,
+    "tempmax": {
+      "celsius": 29
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly. Moderate drought tolerance.",
+    "wateringperiod": "7",
+    "ai_label_en": "blackberry_lily",
+    "ai_label_ko": "범부채",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주세요. 어느 정도 건조를 견딜 수 있어요"
+  },
+  {
+    "id": 314,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun (6-8 hours).",
+    "toleratedlight": "Full sun.",
+    "watering": "Let soil dry between waterings. Drought tolerant.",
+    "wateringperiod": "7",
+    "ai_label_en": "blanket_flower",
+    "ai_label_ko": "천인국",
+    "ideallight_ko": "하루에 6~8시간 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "watering_ko": "물 주기 사이에 흙이 마르도록 하세요. 건조에 강해요"
+  },
+  {
+    "id": 315,
+    "tempmax": {
+      "celsius": 24
+    },
+    "tempmin": {
+      "celsius": 15
+    },
+    "ideallight": "Full sun to partial shade (6-8 hours).",
+    "toleratedlight": "Bright diffused light.",
+    "watering": "Keep soil consistently moist but not soggy.",
+    "wateringperiod": "5",
+    "ai_label_en": "bolero_deep_blue",
+    "ai_label_ko": "리시안셔스",
+    "ideallight_ko": "하루 6~8시간 햇빛이 잘 드는 곳이나 반그늘에 두어주세요",
+    "toleratedlight_ko": "밝게 확산된 빛이 좋아요",
+    "watering_ko": "흙을 계속 촉촉하게 유지하되 질척이지 않게 해주세요"
+  },
+  {
+    "id": 316,
+    "tempmax": {
+      "celsius": 38
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun (6+ hours).",
+    "toleratedlight": "Bright direct light.",
+    "watering": "Let soil dry between waterings. Drought tolerant.",
+    "wateringperiod": "10",
+    "ai_label_en": "bougainvillea",
+    "ai_label_ko": "부겐빌레아",
+    "ideallight_ko": "하루에 6시간 이상 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "물 주기 사이에 흙이 마르도록 하세요. 건조에 강해요"
+  },
+  {
+    "id": 317,
+    "tempmax": {
+      "celsius": 26
+    },
+    "tempmin": {
+      "celsius": 16
+    },
+    "ideallight": "Bright indirect to partial sun.",
+    "toleratedlight": "Bright light.",
+    "watering": "Water when top 2cm soil is dry. Keep slightly moist.",
+    "wateringperiod": "7",
+    "ai_label_en": "bromelia",
+    "ai_label_ko": "아나나스",
+    "ideallight_ko": "밝은 간접광이나 부분적인 햇빛을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 빛이 좋아요",
+    "watering_ko": "흙 표면 2cm가 마르면 물을 주시고, 약간 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 318,
+    "tempmax": {
+      "celsius": 24
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun (6 hours).",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly. Allow slight drying between waterings.",
+    "wateringperiod": "5",
+    "ai_label_en": "buttercup",
+    "ai_label_ko": "미나리아재비",
+    "ideallight_ko": "하루에 6시간 정도 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고, 물 주기 사이에 약간 마르도록 해주세요"
+  },
+  {
+    "id": 319,
+    "tempmax": {
+      "celsius": 24
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun (6-8 hours).",
+    "toleratedlight": "Bright direct light.",
+    "watering": "Let soil dry between waterings. Drought tolerant.",
+    "wateringperiod": "7",
+    "ai_label_en": "californian_poppy",
+    "ai_label_ko": "금영화",
+    "ideallight_ko": "하루에 6~8시간 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "물 주기 사이에 흙이 마르도록 하세요. 건조에 강해요"
+  },
+  {
+    "id": 320,
+    "tempmax": {
+      "celsius": 21
+    },
+    "tempmin": {
+      "celsius": -1
+    },
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Morning sun with afternoon shade.",
+    "watering": "Keep soil consistently moist but not soggy.",
+    "wateringperiod": "5",
+    "ai_label_en": "camellia",
+    "ai_label_ko": "동백",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "오전 햇빛과 오후 그늘이 좋아요",
+    "watering_ko": "흙을 계속 촉촉하게 유지하되 질척이지 않게 해주세요"
+  },
+  {
+    "id": 321,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": 4
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright direct light.",
+    "watering": "Water deeply 1-2 times per week. Keep moist.",
+    "wateringperiod": "4",
+    "ai_label_en": "canna_lily",
+    "ai_label_ko": "칸나",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "일주일에 1~2번 깊게 물을 주시고 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 322,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun (6 hours).",
+    "toleratedlight": "Afternoon shade in warm regions.",
+    "watering": "Water regularly. Keep soil consistently moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "canterbury_bells",
+    "ai_label_ko": "그레이스 캄파눌라",
+    "ideallight_ko": "하루에 6시간 정도 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "따뜻한 지역에서는 오후 그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 흙을 계속 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 323,
+    "tempmax": {
+      "celsius": 20
+    },
+    "tempmin": {
+      "celsius": 7
+    },
+    "ideallight": "Bright indirect to morning sun.",
+    "toleratedlight": "Full sun in temperate climates.",
+    "watering": "Water regularly during growth. Reduce when dormant.",
+    "wateringperiod": "7",
+    "ai_label_en": "cape_flower",
+    "ai_label_ko": "네리네",
+    "ideallight_ko": "밝은 간접광이나 오전 햇빛을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "온화한 기후에서는 햇빛이 잘 드는 곳이 좋아요",
+    "watering_ko": "생장기에는 정기적으로 물을 주시고, 휴면기에는 줄여주세요"
+  },
+  {
+    "id": 324,
+    "tempmax": {
+      "celsius": 21
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun (6-8 hours).",
+    "toleratedlight": "Morning sun preferred.",
+    "watering": "Water when soil surface is dry. Avoid overwatering.",
+    "wateringperiod": "7",
+    "ai_label_en": "carnation",
+    "ai_label_ko": "카네이션",
+    "ideallight_ko": "하루에 6~8시간 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "오전 햇빛이 좋아요",
+    "watering_ko": "흙 표면이 마르면 물을 주시고, 과습에 주의해주세요"
+  },
+  {
+    "id": 325,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Part sun to shade.",
+    "toleratedlight": "Shade during hot weather.",
+    "watering": "Regular water. Keep soil consistently moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "cautleya_spicata",
+    "ai_label_ko": "카틀레야 스피카타",
+    "ideallight_ko": "부분적인 햇빛이나 그늘에 두어주세요",
+    "toleratedlight_ko": "더운 날씨에는 그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 흙을 계속 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 326,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "4 to 6 hours of direct sunlight per day (prefers morning sun and afternoon shade).",
+    "toleratedlight": "Partial shade to full sun.",
+    "watering": "Keep soil consistently moist but well-drained. Do not let the soil completely dry out.",
+    "wateringperiod": "7",
+    "ai_label_en": "clematis",
+    "ai_label_ko": "클레마티스",
+    "ideallight_ko": "하루 4~6시간 직사광선을 받을 수 있는 곳에 두어주세요 (오전 햇빛과 오후 그늘이 좋습니다)",
+    "toleratedlight_ko": "반그늘부터 햇빛이 잘 드는 곳까지 견딜 수 있어요",
+    "watering_ko": "흙을 계속 촉촉하게 유지하되 배수가 잘 되게 하고, 완전히 마르지 않게 해주세요"
+  },
+  {
+    "id": 327,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -30
+    },
+    "ideallight": "Full sun or light shade.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Keep soil evenly moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "colt_s_foot",
+    "ai_label_ko": "관동화",
+    "ideallight_ko": "햇빛이 잘 드는 곳이나 밝은 그늘에 두어주세요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "흙을 고르게 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 328,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly, keep soil moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "columbine",
+    "ai_label_ko": "매발톱꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 흙을 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 329,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Water when soil surface is dry.",
+    "wateringperiod": "7",
+    "ai_label_en": "common_dandelion",
+    "ai_label_ko": "서양민들레",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "흙 표면이 마르면 물을 주세요"
+  },
+  {
+    "id": 330,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water moderately; avoid overwatering.",
+    "wateringperiod": "6",
+    "ai_label_en": "corn_poppy",
+    "ai_label_ko": "개양귀비",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "적당히 물을 주시고 과습에 주의해주세요"
+  },
+  {
+    "id": 331,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Light shade.",
+    "watering": "Keep soil slightly moist, do not overwater.",
+    "wateringperiod": "7",
+    "ai_label_en": "cyclamen",
+    "ai_label_ko": "시클라멘",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "밝은 그늘이 좋아요",
+    "watering_ko": "흙을 약간 촉촉하게 유지하시고 과습에 주의해주세요"
+  },
+  {
+    "id": 332,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Keep soil moderately moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "daffodil",
+    "ai_label_ko": "수선화",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "흙을 적당히 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 333,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright direct light.",
+    "watering": "Let soil dry completely between watering.",
+    "wateringperiod": "12",
+    "ai_label_en": "desert_rose",
+    "ai_label_ko": "사막장미",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "물 주기 사이에 흙이 완전히 마르도록 해주세요"
+  },
+  {
+    "id": 334,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 0
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun.",
+    "watering": "Water when soil is partially dry.",
+    "wateringperiod": "5",
+    "ai_label_en": "english_marigold",
+    "ai_label_ko": "금잔화",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "watering_ko": "흙이 부분적으로 마르면 물을 주세요"
+  },
+  {
+    "id": 335,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Bright light, some direct sunlight.",
+    "toleratedlight": "Bright indirect to direct sunlight.",
+    "watering": "Water regularly; allow slight drying between watering.",
+    "wateringperiod": "6",
+    "ai_label_en": "fire_lily",
+    "ai_label_ko": "글로리오사",
+    "ideallight_ko": "밝은 빛과 약간의 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 간접광부터 직사광선까지 견딜 수 있어요",
+    "watering_ko": "정기적으로 물을 주시고, 물 주기 사이에 약간 마르도록 해주세요"
+  },
+  {
+    "id": 336,
+    "tempmax": {
+      "celsius": 26
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Partial shade to full shade.",
+    "watering": "Keep soil moist but well-drained.",
+    "wateringperiod": "5",
+    "ai_label_en": "foxglove",
+    "ai_label_ko": "디기탈리스",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "반그늘이나 완전한 그늘까지 견딜 수 있어요",
+    "watering_ko": "흙을 촉촉하게 유지하되 배수가 잘 되게 해주세요"
+  },
+  {
+    "id": 337,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright sunlight.",
+    "watering": "Water moderately; drought-tolerant.",
+    "wateringperiod": "10",
+    "ai_label_en": "frangipani",
+    "ai_label_ko": "플루메리아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 햇빛이 좋아요",
+    "watering_ko": "적당히 물을 주세요. 건조에 강해요"
+  },
+  {
+    "id": 338,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil moderately moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "fritillary",
+    "ai_label_ko": "프리틸라리아",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 적당히 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 339,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water when soil dries slightly.",
+    "wateringperiod": "5",
+    "ai_label_en": "garden_phlox",
+    "ai_label_ko": "풀협죽도",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "흙이 약간 마르면 물을 주세요"
+  },
+  {
+    "id": 340,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Water regularly; drought tolerant once established.",
+    "wateringperiod": "6",
+    "ai_label_en": "gaura",
+    "ai_label_ko": "가우라",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "정기적으로 물을 주세요. 자리잡으면 건조에 강해요"
+  },
+  {
+    "id": 341,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright sunlight.",
+    "watering": "Allow soil to dry between watering.",
+    "wateringperiod": "8",
+    "ai_label_en": "gazania",
+    "ai_label_ko": "가자니아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 햇빛이 좋아요",
+    "watering_ko": "물 주기 사이에 흙이 마르도록 해주세요"
+  },
+  {
+    "id": 342,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water when topsoil is dry.",
+    "wateringperiod": "6",
+    "ai_label_en": "geranium",
+    "ai_label_ko": "제라늄",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "표토가 마르면 물을 주세요"
+  },
+  {
+    "id": 343,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Indirect to light shade.",
+    "watering": "Keep soil moist but not soggy.",
+    "wateringperiod": "7",
+    "ai_label_en": "giant_white_arum_lily",
+    "ai_label_ko": "카라꽃",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "간접광부터 밝은 그늘까지 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지하되 질척이지 않게 해주세요"
+  },
+  {
+    "id": 344,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "globe_flower",
+    "ai_label_ko": "금매화",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 345,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Drought tolerant; water occasionally.",
+    "wateringperiod": "10",
+    "ai_label_en": "globe_thistle",
+    "ai_label_ko": "절굿대",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "건조에 강해요. 가끔 물을 주세요"
+  },
+  {
+    "id": 346,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water when soil is slightly dry.",
+    "wateringperiod": "6",
+    "ai_label_en": "grape_hyacinth",
+    "ai_label_ko": "무스카리",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙이 약간 마르면 물을 주세요"
+  },
+  {
+    "id": 347,
+    "tempmax": {
+      "celsius": 26
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Shade to partial shade.",
+    "watering": "Keep soil consistently moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "great_masterwort",
+    "ai_label_ko": "아스트란티아",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "그늘이나 반그늘이 좋아요",
+    "watering_ko": "흙을 계속 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 348,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Indirect light.",
+    "watering": "Keep moist; avoid drying out completely.",
+    "wateringperiod": "6",
+    "ai_label_en": "hard_leaved_pocket_orchid",
+    "ai_label_ko": "복주머니란",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "간접광이 좋아요",
+    "watering_ko": "촉촉하게 유지하시고 완전히 마르지 않게 해주세요"
+  },
+  {
+    "id": 349,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water regularly; keep soil moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "hibiscus",
+    "ai_label_ko": "히비스커스",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "정기적으로 물을 주시고 흙을 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 350,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Bright light with some direct sun.",
+    "toleratedlight": "Bright indirect light.",
+    "watering": "Water evenly; do not let soil dry completely.",
+    "wateringperiod": "6",
+    "ai_label_en": "hippeastrum",
+    "ai_label_ko": "아마릴리스",
+    "ideallight_ko": "밝은 빛과 약간의 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 간접광이 좋아요",
+    "watering_ko": "고르게 물을 주시고 흙이 완전히 마르지 않게 해주세요"
+  },
+  {
+    "id": 351,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Bright, indirect sunlight.",
+    "toleratedlight": "Direct sunlight (avoid midday).",
+    "watering": "Water when topsoil is dry. Keep dry during dormancy.",
+    "wateringperiod": "7",
+    "ai_label_en": "hippeastrum",
+    "ai_label_ko": "아마릴리스",
+    "ideallight_ko": "밝은 간접광을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "직사광선이 좋아요 (한낮은 피해주세요)",
+    "watering_ko": "표토가 마르면 물을 주시고, 휴면기에는 건조하게 유지해주세요"
+  },
+  {
+    "id": 352,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Full sun (if moist).",
+    "watering": "Keep soil moist. Do not let it dry out completely.",
+    "wateringperiod": "4",
+    "ai_label_en": "japanese_anemone",
+    "ai_label_ko": "대상화",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "흙이 촉촉하면 햇빛이 잘 드는 곳도 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지하시고 완전히 마르지 않게 해주세요"
+  },
+  {
+    "id": 353,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -2
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Light shade.",
+    "watering": "Water deeply, allow to dry out. Good drainage is essential.",
+    "wateringperiod": "10",
+    "ai_label_en": "king_protea",
+    "ai_label_ko": "킹 프로테아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 그늘이 좋아요",
+    "watering_ko": "깊게 물을 주시고 마르도록 하세요. 배수가 중요해요"
+  },
+  {
+    "id": 354,
+    "tempmax": {
+      "celsius": 20
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Partial shade to shade.",
+    "toleratedlight": "Dappled sunlight.",
+    "watering": "Keep uniformly moist but not waterlogged.",
+    "wateringperiod": "5",
+    "ai_label_en": "lenten_rose",
+    "ai_label_ko": "헬레보루스",
+    "ideallight_ko": "반그늘이나 그늘에 두어주세요",
+    "toleratedlight_ko": "얼룩진 햇빛이 좋아요",
+    "watering_ko": "고르게 촉촉하게 유지하되 물이 고이지 않게 해주세요"
+  },
+  {
+    "id": 355,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
     "toleratedlight": "Direct sunlight.",
-    "watering": "Keep moist between watering. Water when soil is half dry.",
-    "insects": "N/A",
-    "diseases": "Downy mildiou",
-    "use": [
-      "Potted plant",
-      "Secondary"
-    ],
-    "ai_label_en": "",
-    "ai_label_ko": ""
+    "watering": "Aquatic plant. Keep water level maintained.",
+    "wateringperiod": "1",
+    "ai_label_en": "lotus",
+    "ai_label_ko": "연꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "직사광선이 좋아요",
+    "watering_ko": "수생 식물이에요. 수위를 유지해주세요"
+  },
+  {
+    "id": 356,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly. Allow soil to dry slightly.",
+    "wateringperiod": "5",
+    "ai_label_en": "love_in_the_mist",
+    "ai_label_ko": "니겔라",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고, 흙이 약간 마르도록 해주세요"
+  },
+  {
+    "id": 357,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep moist, especially young trees.",
+    "wateringperiod": "7",
+    "ai_label_en": "magnolia",
+    "ai_label_ko": "목련",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "촉촉하게 유지해주시고, 특히 어린 나무일 때 신경 써주세요"
+  },
+  {
+    "id": 358,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water when soil surface is dry. Very hardy.",
+    "wateringperiod": "5",
+    "ai_label_en": "mallow",
+    "ai_label_ko": "당아욱",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙 표면이 마르면 물을 주세요. 매우 강건해요"
+  },
+  {
+    "id": 359,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Direct sunlight.",
+    "watering": "Water when top soil is dry. Avoid overwatering.",
+    "wateringperiod": "4",
+    "ai_label_en": "marigold",
+    "ai_label_ko": "마리골드",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "직사광선이 좋아요",
+    "watering_ko": "표토가 마르면 물을 주시고 과습에 주의해주세요"
+  },
+  {
+    "id": 360,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Drought tolerant. Water when soil is dry.",
+    "wateringperiod": "7",
+    "ai_label_en": "mexican_aster",
+    "ai_label_ko": "코스모스",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "건조에 강해요. 흙이 마르면 물을 주세요"
+  },
+  {
+    "id": 361,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil moist. Very thirsty plant.",
+    "wateringperiod": "2",
+    "ai_label_en": "mexican_petunia",
+    "ai_label_ko": "루엘리아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지해주세요. 물을 많이 필요로 해요"
+  },
+  {
+    "id": 362,
+    "tempmax": {
+      "celsius": 20
+    },
+    "tempmin": {
+      "celsius": -25
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Shade.",
+    "watering": "Keep cool and moist. Do not let dry out.",
+    "wateringperiod": "4",
+    "ai_label_en": "monkshood",
+    "ai_label_ko": "투구꽃",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "그늘이 좋아요",
+    "watering_ko": "서늘하고 촉촉하게 유지하시고 마르지 않게 해주세요"
+  },
+  {
+    "id": 363,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 15
+    },
+    "ideallight": "Bright, indirect light.",
+    "toleratedlight": "Low light.",
+    "watering": "Soak roots when dry/silver. Drain well.",
+    "wateringperiod": "10",
+    "ai_label_en": "moon_orchid",
+    "ai_label_ko": "호접란",
+    "ideallight_ko": "밝은 간접광을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "약한 빛도 견딜 수 있어요",
+    "watering_ko": "뿌리가 마르거나 은색으로 변하면 담가주시고 배수를 잘 해주세요"
+  },
+  {
+    "id": 364,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Direct sunlight.",
+    "watering": "Keep moist. Water daily in summer.",
+    "wateringperiod": "2",
+    "ai_label_en": "morning_glory",
+    "ai_label_ko": "나팔꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "직사광선이 좋아요",
+    "watering_ko": "촉촉하게 유지하시고 여름에는 매일 물을 주세요"
+  },
+  {
+    "id": 365,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Direct sunlight.",
+    "watering": "Drought tolerant. Water when soil is dry.",
+    "wateringperiod": "7",
+    "ai_label_en": "orange_dahlia",
+    "ai_label_ko": "티쏘니아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "직사광선이 좋아요",
+    "watering_ko": "건조에 강해요. 흙이 마르면 물을 주세요"
+  },
+  {
+    "id": 366,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water when surface is dry. Needs good drainage.",
+    "wateringperiod": "5",
+    "ai_label_en": "osteospermum",
+    "ai_label_ko": "오스테오스퍼멈",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "표면이 마르면 물을 주시고 배수가 잘 되게 해주세요"
+  },
+  {
+    "id": 367,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly. Drought tolerant once established.",
+    "wateringperiod": "7",
+    "ai_label_en": "oxeye_daisy",
+    "ai_label_ko": "프랑스국화",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주세요. 자리잡으면 건조에 강해요"
+  },
+  {
+    "id": 368,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil moist during growth. Spray leaves.",
+    "wateringperiod": "4",
+    "ai_label_en": "passion_flower",
+    "ai_label_ko": "시계꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "생장기에는 흙을 촉촉하게 유지하시고 잎에 물을 분무해주세요"
+  },
+  {
+    "id": 369,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 0
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water when topsoil is dry. Do not overwater.",
+    "wateringperiod": "5",
+    "ai_label_en": "pelargonium",
+    "ai_label_ko": "라일락 히비스커스",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "표토가 마르면 물을 주시고 과습에 주의해주세요"
+  },
+  {
+    "id": 370,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Bright indirect.",
+    "watering": "Water regularly. Keep moist but drained.",
+    "wateringperiod": "4",
+    "ai_label_en": "peruvian_lily",
+    "ai_label_ko": "알스트로메리아",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "밝은 간접광이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 촉촉하되 배수가 잘 되게 해주세요"
+  },
+  {
+    "id": 371,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Direct sunlight.",
+    "watering": "Water when topsoil is dry. Avoid wetting leaves.",
+    "wateringperiod": "4",
+    "ai_label_en": "petunia",
+    "ai_label_ko": "페튜니아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "직사광선이 좋아요",
+    "watering_ko": "표토가 마르면 물을 주시고 잎이 젖지 않게 주의해주세요"
+  },
+  {
+    "id": 372,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Allow soil to dry slightly. Moderate water.",
+    "wateringperiod": "5",
+    "ai_label_en": "pincushion_flower",
+    "ai_label_ko": "스카비오사",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙이 약간 마르도록 하시고 적당히 물을 주세요"
+  },
+  {
+    "id": 373,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Drought tolerant. Water occasionally.",
+    "wateringperiod": "10",
+    "ai_label_en": "pink_primrose",
+    "ai_label_ko": "분홍낮달맞이꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "건조에 강해요. 가끔 물을 주세요"
+  },
+  {
+    "id": 374,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep moist. Tubers rot in wet cold soil.",
+    "wateringperiod": "4",
+    "ai_label_en": "pink_yellow_dahlia",
+    "ai_label_ko": "피치 다알리아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "촉촉하게 유지해주세요. 차갑고 젖은 흙에서 구근이 썩을 수 있어요"
+  },
+  {
+    "id": 375,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": 13
+    },
+    "ideallight": "Bright, indirect light.",
+    "toleratedlight": "Morning sun.",
+    "watering": "Water when soil surface feels dry.",
+    "wateringperiod": "7",
+    "ai_label_en": "poinsettia",
+    "ai_label_ko": "포인세티아",
+    "ideallight_ko": "밝은 간접광을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "오전 햇빛이 좋아요",
+    "watering_ko": "흙 표면이 마른 느낌이 들면 물을 주세요"
+  },
+  {
+    "id": 376,
+    "tempmax": {
+      "celsius": 20
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Shade.",
+    "watering": "Keep soil consistently moist. Cool environment.",
+    "wateringperiod": "3",
+    "ai_label_en": "primula",
+    "ai_label_ko": "프리뮬라",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "그늘이 좋아요",
+    "watering_ko": "흙을 계속 촉촉하게 유지하시고 서늘한 환경을 유지해주세요"
+  },
+  {
+    "id": 377,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water when soil surface dries.",
+    "wateringperiod": "6",
+    "ai_label_en": "purple_coneflower",
+    "ai_label_ko": "에키네시아",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "흙 표면이 마르면 물을 주세요"
+  },
+  {
+    "id": 378,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 12
+    },
+    "ideallight": "Bright indirect to direct sun.",
+    "toleratedlight": "Bright light.",
+    "watering": "Keep soil moist; avoid drying out.",
+    "wateringperiod": "5",
+    "ai_label_en": "red_ginger",
+    "ai_label_ko": "레드 진저",
+    "ideallight_ko": "밝은 간접광에서 직사광선까지 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 빛이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지하시고 마르지 않게 해주세요"
+  },
+  {
+    "id": 379,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water regularly; keep soil moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "rose",
+    "ai_label_ko": "장미",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "정기적으로 물을 주시고 흙을 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 380,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": 15
+    },
+    "ideallight": "Bright indirect light.",
+    "toleratedlight": "Bright filtered light.",
+    "watering": "Keep soil lightly moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "ruby_lipped_cattleya",
+    "ai_label_ko": "카틀레야",
+    "ideallight_ko": "밝은 간접광이 좋아요",
+    "toleratedlight_ko": "밝게 여과된 빛이 좋아요",
+    "watering_ko": "흙을 가볍게 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 381,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": 12
+    },
+    "ideallight": "Bright indirect to partial sun.",
+    "toleratedlight": "Indirect light.",
+    "watering": "Keep soil slightly moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "siam_tulip",
+    "ai_label_ko": "쿠르쿠마",
+    "ideallight_ko": "밝은 간접광이나 부분적인 햇빛을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "간접광이 좋아요",
+    "watering_ko": "흙을 약간 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 382,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Water deeply when soil dries.",
+    "wateringperiod": "7",
+    "ai_label_en": "silverbush",
+    "ai_label_ko": "비단목메꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "흙이 마르면 깊게 물을 주세요"
+  },
+  {
+    "id": 383,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Keep soil evenly moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "snapdragon",
+    "ai_label_ko": "금어초",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "흙을 고르게 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 384,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Moderate watering; allow soil to dry slightly.",
+    "wateringperiod": "6",
+    "ai_label_en": "spear_thistle",
+    "ai_label_ko": "서양가시엉겅퀴",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "적당히 물을 주시고 흙이 약간 마르도록 해주세요"
+  },
+  {
+    "id": 385,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil lightly moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "spring_crocus",
+    "ai_label_ko": "사프란",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 가볍게 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 386,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Even moisture; avoid drought.",
+    "wateringperiod": "5",
+    "ai_label_en": "stemless_gentian",
+    "ai_label_ko": "용담",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "고른 수분을 유지하시고 건조하지 않게 해주세요"
+  },
+  {
+    "id": 387,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright direct sun.",
+    "watering": "Water deeply; allow topsoil to dry.",
+    "wateringperiod": "6",
+    "ai_label_en": "sunflower",
+    "ai_label_ko": "해바라기",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "깊게 물을 주시고 표토가 마르도록 해주세요"
+  },
+  {
+    "id": 388,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil evenly moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "sweet_pea",
+    "ai_label_ko": "스위트피",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 고르게 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 389,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": -20
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly; keep moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "sweet_william",
+    "ai_label_ko": "수염패랭이꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 390,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": 5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Moderate moisture; avoid soggy soil.",
+    "wateringperiod": "6",
+    "ai_label_en": "sword_lily",
+    "ai_label_ko": "글라디올러스",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "적당한 수분을 유지하시고 질척한 흙은 피해주세요"
+  },
+  {
+    "id": 391,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright direct light.",
+    "watering": "Water when soil dries; drought tolerant.",
+    "wateringperiod": "8",
+    "ai_label_en": "thorn_apple",
+    "ai_label_ko": "독말풀",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 직사광선이 좋아요",
+    "watering_ko": "흙이 마르면 물을 주세요. 건조에 강해요"
+  },
+  {
+    "id": 392,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep moderately moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "tiger_lily",
+    "ai_label_ko": "참나리",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "적당히 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 393,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Partial shade.",
+    "toleratedlight": "Shade to partial shade.",
+    "watering": "Keep soil moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "toad_lily",
+    "ai_label_ko": "뻐꾹나리",
+    "ideallight_ko": "반그늘이 좋아요",
+    "toleratedlight_ko": "그늘이나 반그늘이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 394,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to partial shade.",
+    "watering": "Water regularly; allow slight drying.",
+    "wateringperiod": "6",
+    "ai_label_en": "tree_mallow",
+    "ai_label_ko": "라바테라",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "watering_ko": "정기적으로 물을 주시고 약간 마르도록 해주세요"
+  },
+  {
+    "id": 395,
+    "tempmax": {
+      "celsius": 32
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Bright sunlight.",
+    "watering": "Water deeply but infrequently.",
+    "wateringperiod": "7",
+    "ai_label_en": "tree_poppy",
+    "ai_label_ko": "롬네이아 코울테리",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "밝은 햇빛이 좋아요",
+    "watering_ko": "깊게 물을 주되 자주 주지 마세요"
+  },
+  {
+    "id": 396,
+    "tempmax": {
+      "celsius": 35
+    },
+    "tempmin": {
+      "celsius": -5
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to light shade.",
+    "watering": "Moderate watering; let soil dry slightly.",
+    "wateringperiod": "6",
+    "ai_label_en": "trumpet_creeper",
+    "ai_label_ko": "미국능소화",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 그늘까지 견딜 수 있어요",
+    "watering_ko": "적당히 물을 주시고 흙이 약간 마르도록 해주세요"
+  },
+  {
+    "id": 397,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Water regularly; keep moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "wallflower",
+    "ai_label_ko": "시베리아 꽃무",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "정기적으로 물을 주시고 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 398,
+    "tempmax": {
+      "celsius": 30
+    },
+    "tempmin": {
+      "celsius": 10
+    },
+    "ideallight": "Full sun.",
+    "toleratedlight": "Full sun to bright light.",
+    "watering": "Keep soil moist; avoid full drying.",
+    "wateringperiod": "5",
+    "ai_label_en": "water_lily",
+    "ai_label_ko": "수련",
+    "ideallight_ko": "햇빛이 잘 드는 곳이 좋아요",
+    "toleratedlight_ko": "햇빛이 잘 드는 곳부터 밝은 빛까지 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지하시고 완전히 마르지 않게 해주세요"
+  },
+  {
+    "id": 399,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": 0
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil consistently moist.",
+    "wateringperiod": "5",
+    "ai_label_en": "watercress",
+    "ai_label_ko": "한련화",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 계속 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 400,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Even moisture; do not allow drying.",
+    "wateringperiod": "5",
+    "ai_label_en": "wild_pansy",
+    "ai_label_ko": "삼색제비꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "고른 수분을 유지하시고 마르지 않게 해주세요"
+  },
+  {
+    "id": 401,
+    "tempmax": {
+      "celsius": 25
+    },
+    "tempmin": {
+      "celsius": -15
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil slightly moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "windflower",
+    "ai_label_ko": "바람꽃",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 약간 촉촉하게 유지해주세요"
+  },
+  {
+    "id": 402,
+    "tempmax": {
+      "celsius": 28
+    },
+    "tempmin": {
+      "celsius": -10
+    },
+    "ideallight": "Full sun to partial shade.",
+    "toleratedlight": "Partial shade.",
+    "watering": "Keep soil moist.",
+    "wateringperiod": "6",
+    "ai_label_en": "yellow_iris",
+    "ai_label_ko": "노랑꽃창포",
+    "ideallight_ko": "햇빛이 잘 드는 곳부터 반그늘까지 견딜 수 있어요",
+    "toleratedlight_ko": "반그늘이 좋아요",
+    "watering_ko": "흙을 촉촉하게 유지해주세요"
   }
 ]

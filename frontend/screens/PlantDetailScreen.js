@@ -46,6 +46,7 @@ export default function PlantDetailScreen({ navigation, route }) {
 
   /* 날짜 선택기 UI */
   const [showPicker, setShowPicker] = useState(false);
+  const [tempDate, setTempDate] = useState(""); // 웹용 임시 날짜 저장
 
   /* 사진 선택 모달 */
   const [imagePickerVisible, setImagePickerVisible] = useState(false);
@@ -66,7 +67,7 @@ export default function PlantDetailScreen({ navigation, route }) {
   if (!currentPlant) return null;
 
   /* ------------------------------------------------------------
-      [최근 물 준 날짜 수정]
+      [최근 물 준 날짜 수정 - 모바일]
       - DateTimePicker에서 날짜 선택
       - API updatePlant 호출
       - next_watering 자동 계산
@@ -88,7 +89,7 @@ export default function PlantDetailScreen({ navigation, route }) {
       });
 
       /* 다음 물 주는 날짜 계산 */
-      const period = currentPlant.WateringPeriod || 7; // 기본 7일
+      const period = currentPlant.WateringPeriod || currentPlant.wateringperiod || 7; // 기본 7일
       const next = new Date(selected);
       next.setDate(next.getDate() + period);
 
@@ -110,6 +111,46 @@ export default function PlantDetailScreen({ navigation, route }) {
     } catch (error) {
       console.error("물 준 날짜 수정 실패:", error);
       Alert.alert("오류", "물 준 날짜 수정에 실패했습니다.");
+    }
+  };
+
+  /* ------------------------------------------------------------
+      [최근 물 준 날짜 수정 - 웹]
+      - HTML input type="date" 사용
+      - 모바일과 동일한 로직
+  ------------------------------------------------------------ */
+  const handleWebDateChange = async (dateString) => {
+    if (!dateString) return;
+
+    try {
+      /* 백엔드에 최근 물준 날짜 기록 */
+      await userPlantService.updatePlant(currentPlant.id, {
+        last_watered: dateString
+      });
+
+      /* 다음 물 주는 날짜 계산 */
+      const period = currentPlant.WateringPeriod || currentPlant.wateringperiod || 7;
+      const selected = new Date(dateString);
+      const next = new Date(selected);
+      next.setDate(selected.getDate() + period);
+
+      const ny = next.getFullYear();
+      const nm = ("0" + (next.getMonth() + 1)).slice(-2);
+      const nd = ("0" + next.getDate()).slice(-2);
+      const nextWaterDate = `${ny}-${nm}-${nd}`;
+
+      /* 프론트 상태 갱신 */
+      setCurrentPlant({
+        ...currentPlant,
+        last_watered: dateString,
+        next_watering: nextWaterDate
+      });
+
+      setShowPicker(false);
+      window.alert("물 준 날짜가 수정되었습니다.");
+    } catch (error) {
+      console.error("물 준 날짜 수정 실패:", error);
+      window.alert("물 준 날짜 수정에 실패했습니다.");
     }
   };
 
@@ -300,32 +341,72 @@ export default function PlantDetailScreen({ navigation, route }) {
         {/* ---------------- 식물 이름 표시 ---------------- */}
         <Text style={styles.name}>
           {currentPlant.nickname ||
-            currentPlant.species_label_ko ||
+            currentPlant.ai_label_ko ||
             "이름 없음"}
         </Text>
 
         {/* ---------------- 최근 물 준 날짜 ---------------- */}
-        <TouchableOpacity
-          style={styles.infoBox}
-          onPress={() => setShowPicker(true)}
-        >
-          <Text style={styles.infoTitle}>최근 물 준 날짜</Text>
-          <Text style={[styles.infoValue, { color: "#3A7AFE" }]}>
-            {currentPlant.last_watered || "기록 없음"} (눌러서 수정)
-          </Text>
-        </TouchableOpacity>
+        {Platform.OS === "web" ? (
+          /* ---------------- WEB-ONLY BLOCK ---------------- */
+          <View style={styles.infoBox}>
+            <Text style={styles.infoTitle}>최근 물 준 날짜</Text>
+            <TouchableOpacity onPress={() => setShowPicker(!showPicker)}>
+              <Text style={[styles.infoValue, { color: "#3A7AFE" }]}>
+                {currentPlant.last_watered || "기록 없음"} (클릭하여 수정)
+              </Text>
+            </TouchableOpacity>
 
-        {showPicker && (
-          <DateTimePicker
-            value={
-              currentPlant.last_watered
-                ? new Date(currentPlant.last_watered)
-                : new Date()
-            }
-            mode="date"
-            display="default"
-            onChange={onChangeDate}
-          />
+            {showPicker && (
+              <View style={{ marginTop: 10 }}>
+                <input
+                  type="date"
+                  value={tempDate || currentPlant.last_watered || ""}
+                  max={new Date().toISOString().split('T')[0]}
+                  onChange={(e) => {
+                    setTempDate(e.target.value);
+                    handleWebDateChange(e.target.value);
+                  }}
+                  style={{
+                    padding: "10px",
+                    fontSize: "16px",
+                    borderRadius: "8px",
+                    border: "2px solid #3A7AFE",
+                    width: "100%"
+                  }}
+                />
+              </View>
+            )}
+          </View>
+        ) : (
+          /* ---------------- MOBILE BLOCK ---------------- */
+          <>
+            <TouchableOpacity
+              style={styles.infoBox}
+              onPress={() => {
+                console.log("날짜 클릭됨, showPicker 상태 변경");
+                setShowPicker(true);
+              }}
+            >
+              <Text style={styles.infoTitle}>최근 물 준 날짜</Text>
+              <Text style={[styles.infoValue, { color: "#3A7AFE" }]}>
+                {currentPlant.last_watered || "기록 없음"} (눌러서 수정)
+              </Text>
+            </TouchableOpacity>
+
+            {showPicker && (
+              <DateTimePicker
+                value={
+                  currentPlant.last_watered
+                    ? new Date(currentPlant.last_watered)
+                    : new Date()
+                }
+                mode="date"
+                display={Platform.OS === "ios" ? "spinner" : "calendar"}
+                onChange={onChangeDate}
+                maximumDate={new Date()}
+              />
+            )}
+          </>
         )}
 
         {/* ---------------- 다음 물 날짜 ---------------- */}
@@ -372,9 +453,10 @@ export default function PlantDetailScreen({ navigation, route }) {
         {/* ---------------- 식물 관리 정보 ---------------- */}
         {(currentPlant.tempmax_celsius ||
           currentPlant.tempmin_celsius ||
-          currentPlant.light_info ||
-          currentPlant.watering_info ||
-          currentPlant.WateringPeriod) && (
+          currentPlant.ideallight_ko ||
+          currentPlant.toleratedlight_ko ||
+          currentPlant.watering_ko ||
+          currentPlant.wateringperiod) && (
           <View style={styles.infoSection}>
             <Text style={styles.infoSectionTitle}>🌱 식물 관리 정보</Text>
 
@@ -390,22 +472,32 @@ export default function PlantDetailScreen({ navigation, route }) {
               </View>
             )}
 
-            {/* 빛 조건 */}
-            {currentPlant.light_info && (
+            {/* 이상적인 빛 조건 */}
+            {currentPlant.ideallight_ko && (
               <View style={styles.careInfoBox}>
-                <Text style={styles.careInfoLabel}>빛 조건</Text>
+                <Text style={styles.careInfoLabel}>이상적인 빛 조건</Text>
                 <Text style={styles.careInfoValue}>
-                  {currentPlant.light_info}
+                  {currentPlant.ideallight_ko}
+                </Text>
+              </View>
+            )}
+
+            {/* 견딜 수 있는 빛 조건 */}
+            {currentPlant.toleratedlight_ko && (
+              <View style={styles.careInfoBox}>
+                <Text style={styles.careInfoLabel}>견딜 수 있는 빛 조건</Text>
+                <Text style={styles.careInfoValue}>
+                  {currentPlant.toleratedlight_ko}
                 </Text>
               </View>
             )}
 
             {/* 물 주는 방법 */}
-            {currentPlant.watering_info && (
+            {currentPlant.watering_ko && (
               <View style={styles.careInfoBox}>
                 <Text style={styles.careInfoLabel}>물 주는 방법</Text>
                 <Text style={styles.careInfoValue}>
-                  {currentPlant.watering_info}
+                  {currentPlant.watering_ko}
                 </Text>
               </View>
             )}
@@ -414,7 +506,7 @@ export default function PlantDetailScreen({ navigation, route }) {
             <View style={styles.careInfoBox}>
               <Text style={styles.careInfoLabel}>물 주는 주기</Text>
               <Text style={styles.careInfoValue}>
-                {currentPlant.WateringPeriod || 7}일
+                {currentPlant.wateringperiod || 7}일
               </Text>
             </View>
           </View>
@@ -496,8 +588,8 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   imageBox: {
-    width: "60%",
-    aspectRatio: 1,
+    width: "70%",
+    aspectRatio: 1.2,
     alignSelf: "center",
     borderRadius: 15,
     overflow: "hidden",
@@ -505,7 +597,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    resizeMode: "cover"
   },
   name: {
     fontSize: 26,

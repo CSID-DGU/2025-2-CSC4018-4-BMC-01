@@ -158,11 +158,11 @@ export default function PlantEditorScreen({ navigation }) {
       const res = await analyzeSpecies(uri, fileName);
       setAiResult(res);
 
-      if (res?.speciesLabelKo) setNickname(res.speciesLabelKo);
+      if (res?.aiLabelKo) setNickname(res.aiLabelKo);
 
       Alert.alert(
         "분석 완료",
-        `식물: ${res.speciesLabelKo}\n신뢰도: ${(res.confidence * 100).toFixed(1)}%`
+        `식물: ${res.aiLabelKo}\n신뢰도: ${(res.confidence * 100).toFixed(1)}%`
       );
     } catch (error) {
       console.error("❌ AI 분석 오류:", error);
@@ -203,8 +203,8 @@ export default function PlantEditorScreen({ navigation }) {
 
     try {
       const WateringPeriod =
-        aiResult?.plantInfo?.watering_days != null
-          ? aiResult.plantInfo.watering_days
+        aiResult?.plantInfo?.wateringperiod != null
+          ? aiResult.plantInfo.wateringperiod
           : 7;
 
       const savedUri = await saveImagePermanently(imageUri);
@@ -213,8 +213,8 @@ export default function PlantEditorScreen({ navigation }) {
         aiResult.plantInfo?.plant_id || null,
         nickname,
         savedUri,
-        aiResult.speciesLabel,
-        aiResult.speciesLabelKo,
+        aiResult.aiLabelEn,
+        aiResult.aiLabelKo,
         WateringPeriod
       );
 
@@ -279,7 +279,7 @@ export default function PlantEditorScreen({ navigation }) {
 
             <View style={styles.row}>
               <Text style={styles.rowLabel}>식물명</Text>
-              <Text style={styles.rowValue}>{aiResult.speciesLabelKo}</Text>
+              <Text style={styles.rowValue}>{aiResult.aiLabelKo}</Text>
             </View>
 
             <View style={styles.row}>
@@ -289,11 +289,11 @@ export default function PlantEditorScreen({ navigation }) {
               </Text>
             </View>
 
-            {aiResult.plantInfo?.watering_days != null && (
+            {aiResult.plantInfo?.wateringperiod != null && (
               <View style={styles.row}>
-                <Text style={styles.rowLabel}>물주기</Text>
+                <Text style={styles.rowLabel}>물 주는 주기</Text>
                 <Text style={styles.rowValue}>
-                  {aiResult.plantInfo.watering_days}일
+                  {aiResult.plantInfo.wateringperiod}일
                 </Text>
               </View>
             )}
@@ -386,15 +386,17 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   imageBox: {
-    width: "100%",
-    height: 250,
+    width: "70%",
+    aspectRatio: 1.2,
+    alignSelf: "center",
     borderRadius: 14,
     overflow: "hidden",
     marginBottom: 20
   },
   previewImg: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    resizeMode: "cover"
   },
   loadingBox: {
     backgroundColor: "#FFF",
