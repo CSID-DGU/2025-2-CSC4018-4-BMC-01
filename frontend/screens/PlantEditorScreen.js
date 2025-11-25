@@ -165,9 +165,7 @@ export default function PlantEditorScreen({ navigation }) {
         `식물: ${res.aiLabelKo}\n신뢰도: ${(res.confidence * 100).toFixed(1)}%`
       );
     } catch (error) {
-      console.error("❌ AI 분석 오류:", error);
-      console.error("❌ message:", error.message);
-      console.error("❌ full:", JSON.stringify(error, null, 2));
+      console.error("AI 분석 오류:", error);
 
       Alert.alert(
         "분석 실패",

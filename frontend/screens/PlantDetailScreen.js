@@ -383,7 +383,6 @@ export default function PlantDetailScreen({ navigation, route }) {
             <TouchableOpacity
               style={styles.infoBox}
               onPress={() => {
-                console.log("날짜 클릭됨, showPicker 상태 변경");
                 setShowPicker(true);
               }}
             >

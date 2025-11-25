@@ -8,7 +8,6 @@ class Config:
     # DB 경로
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     DB_PATH = os.path.join(BASE_DIR, "database", "plants.db")
-    DATA_PATH = os.path.join(BASE_DIR, "data", "house_plants.json")
     UPDATED_DATA_PATH = os.path.join(BASE_DIR, "data", "house_plants_updated.json")
 
     # Flask 설정

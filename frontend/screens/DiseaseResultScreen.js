@@ -43,7 +43,7 @@ const updateLeafPhotoMeta = async (plantId, fileName, savedUri) => {
 
     await AsyncStorage.setItem(META_KEY, JSON.stringify(meta));
   } catch (error) {
-    console.log("leafPhoto meta 저장 오류:", error);
+    console.error("leafPhoto meta 저장 오류:", error);
   }
 };
 
@@ -149,9 +149,7 @@ export default function DiseaseResultScreen({ navigation, route }) {
         );
       }
     } catch (error) {
-      console.error("❌ AI 분석 오류:", error);
-      console.error("❌ message:", error.message);
-      console.error("❌ full:", JSON.stringify(error, null, 2));
+      console.error("AI 분석 오류:", error);
 
       if (Platform.OS === "web") {
         window.alert(error.message || "분석 실패");

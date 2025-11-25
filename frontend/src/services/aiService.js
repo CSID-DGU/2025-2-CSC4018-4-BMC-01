@@ -73,9 +73,7 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
       throw new Error(data.error || '식물 분석에 실패했습니다.');
     }
   } catch (error) {
-    console.error('❌ [analyzeSpecies] 에러:', error);
-    console.error('❌ 에러 메시지:', error.message);
-    console.error('❌ 에러 스택:', error.stack);
+    console.error('[analyzeSpecies] 에러:', error);
     throw error;
   }
 };

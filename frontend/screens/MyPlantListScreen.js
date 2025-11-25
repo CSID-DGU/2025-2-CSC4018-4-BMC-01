@@ -60,7 +60,7 @@ export default function MyPlantListScreen({ navigation }) {
       setPlants(list);
       setLoadError(false);
     } catch (e) {
-      console.log("식물 목록 로드 실패:", e);
+      console.error("식물 목록 로드 실패:", e);
       setLoadError(true);
       setPlants([]); // 오류 시 빈 리스트라도 렌더링되도록 처리
     }
