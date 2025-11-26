@@ -1,25 +1,35 @@
 # 🌱 BMC Plant Frontend
 
-React Native + Expo 기반 스마트 화분 관리 모바일 앱
+React Native + expo-sqlite 기반의 독립형 식물 관리 애플리케이션
 
-## 개요
+[![React Native](https://img.shields.io/badge/React%20Native-0.81-blue)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-54-black)](https://expo.dev/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-green)](https://www.sqlite.org/)
 
-102종의 식물 데이터베이스를 활용하여 물주기 알림, 날씨 정보, AI 기반 병충해 진단을 제공하는 모바일 애플리케이션입니다.
+## 앱 개요
+
+BMC Plant는 식물 관리를 돕는 스마트 모바일 애플리케이션입니다. 102종의 식물 데이터베이스를 기반으로 물주기 알림, 날씨 정보, AI 기반 병충해 진단 기능을 제공합니다.
+
+**⚠️ 2025.11 업데이트:** 백엔드 Flask 서버 없이 완전히 독립적으로 작동합니다!
 
 ## 아키텍처
 
-### Screen-Service Pattern
+### 독립형 구조 (Backend-Free)
 
 ```
-App.js (진입점)
+App.js (진입점 + DB 초기화)
    ↓
-AppNavigator (Bottom Tabs + Stack)
+expo-sqlite (로컬 SQLite DB)
+   ├── plants (102종 식물 정보)
+   ├── users (사용자 정보)
+   └── user_plants (내 화분 관리)
    ↓
-Screens (7개 화면)
+Screens (8개 화면)
    ↓
-Services (API 클라이언트)
-   ↓
-Backend REST API (Flask)
+Services
+   ├── localDbService.js (로컬 DB 작업)
+   ├── aiService.js (Google Cloud AI 직접 호출)
+   └── weatherService.js (기상청 API 직접 호출)
 ```
 
 ### 네비게이션 구조
@@ -27,16 +37,18 @@ Backend REST API (Flask)
 ```
 Bottom Tab Navigator
 ├── Home Tab (Stack)
-│   └── HomeScreen
+│   └── HomeScreen (날씨 + 슬라이드)
 ├── My Plants Tab (Stack)
-│   ├── MyPlantListScreen
-│   ├── PlantDetailScreen
-│   ├── PlantEditorScreen
-│   └── DiseaseResultScreen
+│   ├── MyPlantListScreen (목록)
+│   ├── PlantDetailScreen (상세)
+│   ├── PlantEditorScreen (추가/수정)
+│   └── DiseaseResultScreen (병충해)
 ├── Calendar Tab
-│   └── CalendarScreen
+│   └── CalendarScreen (물주기 캘린더)
+├── Report Tab
+│   └── ReportScreen (성실도 통계)
 └── Settings Tab
-    └── SettingsScreen (NotificationSettingScreen)
+    └── SettingsScreen (알림 설정)
 ```
 
 ## 실행 방법
@@ -48,86 +60,76 @@ cd frontend
 npm install
 ```
 
-### 2. 백엔드 서버 실행 (필수)
-
-별도 터미널에서 백엔드 서버를 실행해야 합니다:
-
-```bash
-cd backend/src
-python app.py
-
-# 서버: http://localhost:5000
+**주요 의존성:**
+```json
+{
+  "expo-sqlite": "~15.0.0",        // 로컬 SQLite DB
+  "expo-asset": "~11.0.0",         // 에셋 관리
+  "expo-file-system": "~19.0.0",   // 파일 시스템
+  "expo-image-picker": "~17.0.0",  // 이미지 선택
+  "expo-location": "~19.0.0",      // GPS 위치
+  "expo-notifications": "~0.32.0"  // 푸시 알림
+}
 ```
 
-### 3. API URL 설정
-
-`src/config/index.js`에서 환경에 맞게 API URL 설정:
-
-```javascript
-const getApiUrl = () => {
-  if (__DEV__) {
-    if (Platform.OS === 'android') {
-      return 'http://10.0.2.2:5000/api';  // Android 에뮬레이터
-    }
-    return 'http://localhost:5000/api';    // iOS 시뮬레이터
-    // 실제 기기: return 'http://[PC_IP]:5000/api';
-  }
-  return 'http://YOUR_PRODUCTION_SERVER/api';
-};
-```
-
-**중요:**
-- Android 에뮬레이터: `10.0.2.2`는 호스트 머신의 localhost
-- iOS 시뮬레이터: `localhost` 직접 사용 가능
-- 실제 기기: PC와 같은 WiFi 네트워크 필요, PC의 IP 주소 사용
-
-### 4. Expo 개발 서버 실행
+### 2. Expo 개발 서버 실행
 
 ```bash
-npx expo start
+npx expo start --tunnel
 ```
 
 **실행 옵션:**
-- `a` 키: Android 에뮬레이터에서 실행
-- `i` 키: iOS 시뮬레이터에서 실행 (macOS만)
-- QR 코드 스캔: Expo Go 앱으로 실제 기기에서 실행
+- **Expo Go (권장)**: 실제 Android/iOS 기기에서 QR 코드 스캔
+- **Android 에뮬레이터**: 'a' 키 입력
+- **iOS 시뮬레이터**: 'i' 키 입력 (Mac 전용)
+
+### 3. 첫 실행 시
+
+앱 시작 시 자동으로:
+1. ✅ `assets/database/plants.db` → 앱 내부 디렉토리로 복사
+2. ✅ expo-sqlite로 데이터베이스 열기
+3. ✅ 102종 식물 정보 로드
+4. ✅ 사용자 생성 (AsyncStorage에 ID 저장)
 
 ## 프로젝트 구조
 
 ```
 frontend/
+├── assets/
+│   └── database/
+│       └── plants.db              # 앱 내장 DB (102종)
+│
 ├── src/
 │   ├── config/
-│   │   └── index.js             # API URL, 앱 설정
-│   └── services/                # API 클라이언트 모듈
-│       ├── api.js               # HTTP 요청 wrapper
-│       ├── plantService.js      # 식물 API
-│       ├── userService.js       # 사용자 API
-│       ├── userPlantService.js  # 사용자 식물 API
-│       ├── weatherService.js    # 날씨 API
-│       └── aiService.js         # AI 분석 API
+│   │   └── index.js               # 앱 설정
+│   └── services/
+│       ├── localDbService.js      # expo-sqlite 로컬 DB
+│       ├── aiService.js           # Google Cloud AI 직접 호출
+│       ├── weatherService.js      # 기상청 API 직접 호출
+│       ├── plantService.js        # 식물 CRUD (로컬 DB)
+│       ├── userService.js         # 사용자 관리 (로컬 DB)
+│       └── userPlantService.js    # 화분 관리 (로컬 DB)
 │
-├── screens/                     # 화면 컴포넌트
-│   ├── HomeScreen.js            # 홈 (날씨, 슬라이드, 알림)
-│   ├── MyPlantListScreen.js     # 내 화분 목록 그리드
-│   ├── PlantDetailScreen.js     # 화분 상세 정보
-│   ├── PlantEditorScreen.js     # 화분 추가/수정
-│   ├── CalendarScreen.js        # 물주기 캘린더
-│   ├── DiseaseResultScreen.js   # 병충해 진단 결과
-│   ├── NotificationSettingScreen.js  # 알림 설정
-│   └── SettingsScreen.js        # 설정 (NotificationSettingScreen 래퍼)
+├── screens/                       # 화면 컴포넌트 (8개)
+│   ├── HomeScreen.js              # 홈 (날씨, 슬라이드, 알림)
+│   ├── MyPlantListScreen.js       # 내 화분 목록 그리드
+│   ├── PlantDetailScreen.js       # 화분 상세 정보
+│   ├── PlantEditorScreen.js       # 화분 추가/수정
+│   ├── CalendarScreen.js          # 물주기 캘린더
+│   ├── ReportScreen.js            # 성실도 통계 레포트
+│   ├── DiseaseResultScreen.js     # 병충해 진단 결과
+│   └── SettingsScreen.js          # 설정 (알림)
 │
 ├── navigation/
-│   └── AppNavigator.js          # React Navigation 설정
+│   └── AppNavigator.js            # React Navigation 설정
 │
 ├── utils/
-│   ├── Storage.js               # AsyncStorage 유틸리티
-│   └── notificationService.js   # 푸시 알림 서비스
+│   ├── Storage.js                 # fetchPlants + 메타데이터 관리
+│   └── notificationService.js     # 푸시 알림 서비스
 │
-├── assets/                      # 이미지, 아이콘, 폰트
-├── App.js                       # 앱 진입점
-├── app.json                     # Expo 설정
-└── package.json                 # 의존성
+├── App.js                         # 앱 진입점 (DB 초기화)
+├── app.json                       # Expo 설정
+└── package.json                   # 의존성
 ```
 
 ## 화면 상세
@@ -135,10 +137,10 @@ frontend/
 ### 1. HomeScreen (홈)
 - **위치**: `screens/HomeScreen.js`
 - **기능**:
-  - GPS 기반 실시간 날씨 정보 (기상청 API)
-  - 내 화분 가로 슬라이드 (최대 5개 표시)
+  - GPS 기반 실시간 날씨 정보 (기상청 API 직접 호출)
+  - 내 화분 가로 슬라이드
   - 오늘/내일 물주기 알림 리스트
-  - Nominatim API로 주소 변환
+- **데이터 갱신**: focus 시 자동 갱신
 
 ### 2. MyPlantListScreen (내 화분)
 - **위치**: `screens/MyPlantListScreen.js`
@@ -146,7 +148,7 @@ frontend/
   - 2열 그리드 레이아웃
   - 즐겨찾기 표시 (별 아이콘)
   - 물주기 일정 표시 (D-day)
-  - 화분 탭으로 상세 화면 이동
+- **데이터 갱신**: focus 시 자동 갱신
 
 ### 3. PlantDetailScreen (화분 상세)
 - **위치**: `screens/PlantDetailScreen.js`
@@ -154,8 +156,9 @@ frontend/
   - 화분 상세 정보 (닉네임, 사진, 물주기 주기)
   - 최근 물 준 날짜 수정 (DateTimePicker)
   - 사진 변경 (갤러리/카메라)
-  - 병충해 분석 버튼 (→ DiseaseResultScreen)
+  - 병충해 분석 버튼
   - 화분 삭제
+- **데이터 갱신**: 진입 시 최신 데이터 로드
 
 ### 4. PlantEditorScreen (화분 추가/수정)
 - **위치**: `screens/PlantEditorScreen.js`
@@ -169,80 +172,192 @@ frontend/
 - **위치**: `screens/CalendarScreen.js`
 - **기능**:
   - react-native-calendars 사용
-  - 물주기 일정 표시 (마커)
+  - 물주기 일정 표시 (O: 예정, ●: 완료)
   - 날짜별 화분 목록 표시
+- **데이터 갱신**: focus 시 자동 갱신
 
-### 6. DiseaseResultScreen (병충해 진단)
+### 6. ReportScreen (레포트)
+- **위치**: `screens/ReportScreen.js`
+- **기능**:
+  - 최근 30일 물주기 성실도 통계
+  - 평균 성실도, 식물 수, 물 준 횟수
+  - 식물별 성실도 바 그래프
+  - 식물별 관리 지표 카드
+- **데이터 갱신**: focus 시 자동 갱신
+
+### 7. DiseaseResultScreen (병충해 진단)
 - **위치**: `screens/DiseaseResultScreen.js`
 - **기능**:
   - 잎사귀 사진 촬영/선택
   - AI 병충해 진단 (Google Cloud AI)
   - 진단 결과 표시 (병명, 신뢰도)
-  - 진단 이력 저장
 
-### 7. NotificationSettingScreen (알림 설정)
-- **위치**: `screens/NotificationSettingScreen.js`
+### 8. SettingsScreen (설정)
+- **위치**: `screens/SettingsScreen.js`
 - **기능**:
   - 알림 on/off 토글
-  - 알림 시간 설정 (TimePicker)
-  - 권한 요청 및 관리
+  - 알림 시간 설정
+  - 앱 정보
 
-## API 서비스 모듈
+## 데이터베이스 (expo-sqlite)
 
-### plantService
-```javascript
-getAllPlants()           // 전체 식물 목록 (102종)
-getPlantById(id)         // 특정 식물 조회
-searchPlants(keyword)    // 식물 검색
+### plants 테이블 (102종)
+```sql
+CREATE TABLE plants (
+    id INTEGER PRIMARY KEY,
+    tempmax_celsius REAL,
+    tempmin_celsius REAL,
+    ideallight TEXT,
+    toleratedlight TEXT,
+    watering TEXT,
+    wateringperiod INTEGER,
+    ai_label_en TEXT,
+    ai_label_ko TEXT,
+    ideallight_ko TEXT,
+    toleratedlight_ko TEXT,
+    watering_ko TEXT
+);
 ```
 
-### userService
-```javascript
-getCurrentUserId()       // 현재 사용자 ID (없으면 생성)
-createUser(name)         // 사용자 생성
-getUserById(userId)      // 사용자 조회
+### users 테이블
+```sql
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
-### userPlantService
-```javascript
-addUserPlant(userId, plantData)     // 식물 추가
-getUserPlants(userId)               // 내 식물 목록
-recordWatering(userPlantId)         // 물주기 기록
-updateUserPlant(userPlantId, data)  // 식물 정보 수정
-deleteUserPlant(userPlantId)        // 식물 삭제
+### user_plants 테이블
+```sql
+CREATE TABLE user_plants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    plant_id INTEGER,
+    nickname TEXT,
+    image TEXT,
+    ai_label_en TEXT,
+    ai_label_ko TEXT,
+    wateringperiod INTEGER,
+    last_watered TEXT,
+    next_watering TEXT,
+    disease TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (plant_id) REFERENCES plants(id)
+);
 ```
 
-### weatherService
+## 서비스 모듈
+
+### localDbService (로컬 DB)
 ```javascript
-getWeather(lat, lon)     // 날씨 정보
+// 식물 관련
+getAllPlants()                    // 전체 식물 목록 (102종)
+getPlantById(plantId)             // 특정 식물 조회
+searchPlants(keyword)             // 식물 검색
+
+// 사용자 관련
+createUser(name)                  // 사용자 생성
+getUserById(userId)               // 사용자 조회
+
+// 화분 관련
+addUserPlant(userId, plantId, nickname, image, ...)  // 화분 추가
+getUserPlants(userId)             // 내 화분 목록
+updateUserPlant(userPlantId, nickname, ...)          // 화분 수정
+recordWatering(userPlantId)       // 물주기 기록
+deleteUserPlant(userPlantId)      // 화분 삭제
+updateDisease(userPlantId, disease)  // 병충해 정보 업데이트
 ```
 
-### aiService
+### aiService (Google Cloud AI)
 ```javascript
-analyzeSpecies(imageUri, filename)               // 식물 종 분석만
 identifySpecies(userId, imageUri, nickname)      // 식물 종 판별 + 저장
 diagnoseDisease(userPlantId, imageUri, filename) // 병충해 진단
 ```
 
-**중요:** AI 서비스는 multipart/form-data로 이미지 업로드
+### weatherService (기상청 API)
+```javascript
+getWeather(latitude, longitude)   // 날씨 정보
+// - 좌표 변환: Lambert Conformal Conic 투영
+// - 응답: 온도, 습도, 하늘 상태, 강수 형태
+```
+
+## 주요 기능 구현
+
+### 1. 물주기 일정 계산 (프론트엔드)
+
+```javascript
+// Storage.js의 fetchPlants()에서 자동 계산
+const WateringPeriod = m.WateringPeriod ?? p.wateringperiod ?? 7;
+// 우선순위:
+//   1. AsyncStorage의 WateringPeriod (사용자 커스텀)
+//   2. user_plants.wateringperiod (식물별 설정)
+//   3. plants.wateringperiod (기본 DB 값)
+//   4. 7일 (하드코딩 기본값)
+
+const nextWater = new Date(waterDate);
+nextWater.setDate(nextWater.getDate() + WateringPeriod);
+
+// UI 표시 우선순위: nextWater > next_watering
+```
+
+### 2. 화면 전환 시 데이터 갱신
+
+```javascript
+// Home, MyPlantList, Calendar, Report 화면
+useEffect(() => {
+  const unsub = navigation.addListener("focus", loadPlantData);
+  return unsub;
+}, [navigation]);
+
+// PlantDetailScreen
+useEffect(() => {
+  loadPlantData(); // 진입 시 최신 데이터 로드
+}, []);
+```
+
+### 3. GPS 기반 날씨
+- expo-location으로 GPS 좌표 획득
+- weatherService.getWeather()로 기상청 API 직접 호출
+- convertToGrid()로 좌표 변환 (Lambert Conformal Conic)
+
+### 4. AI 식물 종 판별
+- expo-image-picker로 이미지 선택
+- aiService.identifySpecies()로 multipart/form-data 업로드
+- Google Cloud AI API 직접 호출 (백엔드 불필요)
+- 결과를 바탕으로 localDbService.addUserPlant() 호출
+
+### 5. 병충해 진단
+- 잎사귀 사진 촬영
+- aiService.diagnoseDisease()로 업로드
+- Google Cloud AI API 직접 호출
+- localDbService.updateDisease()로 저장
 
 ## 저장소
 
 ### AsyncStorage
-- **용도**: 사용자 ID 저장 (영구 저장)
-- **키**: `@user_id`
-- **로직**: 앱 실행 시 userService가 확인 후 없으면 자동 생성
+- **용도**: 사용자 ID, 즐겨찾기, 물주기 주기 커스텀 값
+- **키**:
+  - `@user_id`: 현재 사용자 ID
+  - `PLANT_META_DATA`: 식물별 메타데이터 (favorite, WateringPeriod)
 
-### Backend API
-- 모든 식물 데이터는 백엔드 API에 저장
-- 실시간 동기화 (로컬 캐싱 없음)
+### expo-sqlite
+- **DB 파일**: `assets/database/plants.db` → 앱 내부 SQLite 디렉토리
+- **위치**: `${FileSystem.documentDirectory}SQLite/plants.db`
+- **데이터**: 102종 식물 정보, 사용자 정보, 화분 관리 데이터
 
 ## 기술 스택
 
 ### Core
-- **React Native**: 0.81.5
+- **React Native**: 0.81
 - **Expo**: ~54.0
 - **React**: 19.1.0
+
+### Database
+- **expo-sqlite**: ~15.0 (로컬 SQLite)
+- **expo-asset**: ~11.0 (DB 파일 임베딩)
+- **expo-file-system**: ~19.0 (파일 관리, `/legacy` 사용)
 
 ### Navigation
 - **@react-navigation/native**: ^7.1
@@ -250,110 +365,64 @@ diagnoseDisease(userPlantId, imageUri, filename) // 병충해 진단
 - **@react-navigation/native-stack**: ^7.6
 
 ### UI Components
-- **expo-image**: ~3.0 (이미지 표시)
-- **expo-image-picker**: ~17.0 (갤러리/카메라)
-- **expo-camera**: ~17.0 (카메라 접근)
-- **@react-native-community/datetimepicker**: 8.4 (날짜/시간 선택)
-- **react-native-calendars**: ^1.1313 (캘린더)
+- **expo-image**: ~3.0
+- **expo-image-picker**: ~17.0
+- **expo-camera**: ~17.0
+- **@react-native-community/datetimepicker**: 8.4
+- **react-native-calendars**: ^1.1313
 
-### Data & Storage
-- **@react-native-async-storage/async-storage**: ^2.2 (로컬 저장소)
-
-### Location & Notifications
-- **expo-location**: ~19.0 (GPS 위치)
+### Services
+- **expo-location**: ~19.0 (GPS)
 - **expo-notifications**: ^0.32 (푸시 알림)
-
-### File System
-- **expo-file-system**: ~19.0 (파일 저장/읽기)
-
-## 주요 기능 구현
-
-### 1. 물주기 알림
-- `utils/notificationService.js`에서 관리
-- expo-notifications 사용
-- 매일 지정된 시간에 알림 발송
-- 권한 요청 및 토큰 관리
-
-### 2. GPS 기반 날씨
-- expo-location으로 GPS 좌표 획득
-- weatherService로 백엔드 API 호출
-- 백엔드에서 기상청 API 호출 및 격자 변환 처리
-
-### 3. AI 식물 종 판별
-- expo-image-picker로 이미지 선택
-- aiService.identifySpecies()로 multipart/form-data 업로드
-- 백엔드에서 Google Cloud AI API 호출
-- 결과를 바탕으로 user_plant 자동 생성
-
-### 4. 병충해 진단
-- 잎사귀 사진 촬영
-- aiService.diagnoseDisease()로 업로드
-- AI 진단 결과 표시
-- user_plant.disease 필드에 저장
-
-## 개발 상태
-
-### 완료된 기능
-- ✅ 7개 화면 구현
-- ✅ React Navigation 설정 (Bottom Tabs + Stack)
-- ✅ 백엔드 API 연동 (5개 서비스 모듈)
-- ✅ 사용자 ID 자동 생성 및 저장
-- ✅ GPS 기반 날씨 정보
-- ✅ AI 식물 종 판별
-- ✅ AI 병충해 진단
-- ✅ 물주기 알림 시스템
-- ✅ 캘린더 뷰
-- ✅ 이미지 업로드 (갤러리/카메라)
-
-### 개발 예정
-- 🔲 백엔드 JavaScript 마이그레이션 (앱 내장)
-- 🔲 오프라인 지원
+- **@react-native-async-storage/async-storage**: ^2.2
 
 ## 빌드 및 배포
 
-### Expo EAS Build (권장)
+### Development Build (권장)
+
+```bash
+# Android APK
+npx expo run:android
+
+# iOS IPA (Mac 전용)
+npx expo run:ios
+```
+
+### Production Build (EAS Build)
 
 ```bash
 # EAS CLI 설치
 npm install -g eas-cli
 
-# Expo 계정 로그인
-eas login
+# 프로젝트 설정
+eas build:configure
 
-# Android APK 빌드
-eas build --platform android --profile preview
+# Android 빌드
+eas build --platform android
 
-# Android AAB 빌드 (Google Play)
-eas build --platform android --profile production
-```
-
-### 로컬 빌드
-
-```bash
-# Android
-npx expo run:android
-
-# iOS (macOS만)
-npx expo run:ios
+# iOS 빌드 (Mac 전용)
+eas build --platform ios
 ```
 
 ## 주의사항
 
-### 개발 환경
-1. **백엔드 서버 필수**: 백엔드 Flask 서버가 실행 중이어야 API 호출 가능
-2. **WiFi 네트워크**: 실제 기기 테스트 시 PC와 같은 WiFi 필요
-3. **API URL 설정**: 각 환경(에뮬레이터/시뮬레이터/실제 기기)에 맞게 설정
+### 네트워크 조건
+- ⚠️ **온라인 필요**: AI 분석, 날씨 정보 조회에 네트워크 필요
+
+### 데이터 관리
+- 로컬 DB는 앱 삭제 시 함께 삭제됨
+- AsyncStorage의 사용자 ID도 앱 삭제 시 초기화
+
+### API 키
+- 기상청 API 키: `src/services/weatherService.js`에 하드코딩
+- Google Cloud AI URL: `src/services/aiService.js`에 하드코딩
+- 프로덕션 배포 시 환경변수로 관리 권장
 
 ### 권한
 - **위치**: 날씨 정보를 위한 GPS 접근
 - **카메라**: 식물/병충해 사진 촬영
 - **갤러리**: 기존 사진 선택
 - **알림**: 물주기 알림 발송
-
-### 플랫폼 차이
-- **Android**: `10.0.2.2`로 localhost 접근
-- **iOS**: `localhost` 직접 사용
-- **Web**: 일부 기능 제한 (카메라, 알림 등)
 
 ## 디버깅
 
@@ -367,38 +436,39 @@ npx expo start
 # - R: 앱 새로고침
 ```
 
-### Console Logging
-- `console.log()`: 일반 로그
-- `console.error()`: 에러 로그 (빨간색 표시)
-- React Native Debugger 사용 권장
+### 주요 로그 포인트
+- `[localDbService]`: DB 초기화 및 쿼리
+- `[aiService]`: AI API 호출 및 응답
+- `[weatherService]`: 날씨 API 호출 및 좌표 변환
+- `[App]`: 앱 초기화
+
+## 트러블슈팅
+
+### 문제: AI 분석 타임아웃
+**해결:**
+- 네트워크 연결 확인
+- 30초 타임아웃 설정됨
+- Google Cloud AI 서버 상태 확인
+
+### 문제: 날씨 정보 오류
+**해결:**
+- GPS 권한 확인
+- 위치 서비스 활성화 확인
+- 기상청 API 키 유효성 확인
+
+### 문제: 알림이 발송되지 않음
+**해결:**
+- Expo Go는 원격 푸시 알림 미지원 (SDK 53+)
+- Development Build 또는 Production Build 필요
+- 로컬 알림만 Expo Go에서 작동
 
 ## 성능 최적화
 
 - **이미지**: expo-image 사용 (자동 캐싱)
 - **리스트**: FlatList 사용 (가상화)
 - **네비게이션**: React Navigation의 lazy loading
-
-## 트러블슈팅
-
-### 문제: Android 에뮬레이터에서 API 연결 안됨
-**해결:** API URL을 `http://10.0.2.2:5000/api`로 설정
-
-### 문제: 실제 기기에서 API 연결 안됨
-**해결:**
-1. PC와 기기가 같은 WiFi에 연결되어 있는지 확인
-2. PC의 방화벽 설정 확인
-3. API URL을 PC의 IP 주소로 변경
-
-### 문제: 알림이 발송되지 않음
-**해결:**
-1. 알림 권한 확인
-2. 물리적 기기에서 테스트 (시뮬레이터는 제한적)
-3. NotificationSettingScreen에서 알림 활성화 확인
+- **DB 쿼리**: 인덱싱 및 COALESCE 활용
 
 ## 라이선스
 
 교육 목적 프로젝트
-
-## 기여
-
-2025-2 CSC4018-4-BMC-01 팀 프로젝트

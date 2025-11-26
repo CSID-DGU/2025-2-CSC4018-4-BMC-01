@@ -155,14 +155,14 @@ npx expo start --tunnel
 
 | 화면 | 파일 | 기능 | 데이터 갱신 |
 |------|------|------|------------|
-| 🏠 홈 | `HomeScreen.js` | 날씨, 내 화분 슬라이드, 물주기 알림 | focus 시 자동 갱신 |
-| 🪴 내 화분 | `MyPlantListScreen.js` | 화분 목록 그리드, 즐겨찾기 | focus 시 자동 갱신 |
-| 📝 화분 상세 | `PlantDetailScreen.js` | 상세 정보, 수정, 삭제, 병충해 분석 | 진입 시 최신 데이터 로드 |
-| ➕ 화분 추가/수정 | `PlantEditorScreen.js` | 이름, 사진, AI 분석 등록 | - |
-| 📅 캘린더 | `CalendarScreen.js` | 물주기 일정 캘린더 | focus 시 자동 갱신 |
-| 📊 레포트 | `ReportScreen.js` | 30일 물주기 성실도 통계 | focus 시 자동 갱신 |
-| 🔬 병충해 결과 | `DiseaseResultScreen.js` | AI 분석 결과 표시 | - |
-| ⚙️ 설정 | `SettingsScreen.js` | 알림 설정, 앱 정보 | - |
+| 🏠 홈 | `HomeScreen.js` | 날씨, 내 화분 슬라이드, 물주기 알림 |
+| 🪴 내 화분 | `MyPlantListScreen.js` | 화분 목록 그리드, 즐겨찾기 |
+| 📝 화분 상세 | `PlantDetailScreen.js` | 상세 정보, 수정, 삭제, 병충해 분석 |
+| ➕ 화분 추가/수정 | `PlantEditorScreen.js` | 이름, 사진, AI 분석 등록 |
+| 📅 캘린더 | `CalendarScreen.js` | 물주기 일정 캘린더 |
+| 📊 레포트 | `ReportScreen.js` | 30일 물주기 성실도 통계 |
+| 🔬 병충해 결과 | `DiseaseResultScreen.js` | AI 분석 결과 표시 |
+| ⚙️ 설정 | `SettingsScreen.js` | 알림 설정, 앱 정보 |
 
 ## 기술 스택
 
@@ -321,7 +321,7 @@ eas build --platform ios
 ## 주의사항
 
 ### 네트워크 조건
-- ⚠️ AI 분석, 날씨 정보 요청에 네트워크 필요
+- ⚠️ **온라인 필요**: AI 분석, 날씨 정보 조회에 네트워크 필요
 
 ### 데이터 관리
 - 로컬 DB는 앱 삭제 시 함께 삭제됨
