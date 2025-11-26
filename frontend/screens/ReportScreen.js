@@ -29,7 +29,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPlants } from "../utils/Storage";
 
-export default function ReportScreen() {
+export default function ReportScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
   const [report, setReport] = useState([]);
 
@@ -40,9 +40,16 @@ export default function ReportScreen() {
     setReport(generateReport(list));
   };
 
+  /* 초기 로드 */
   useEffect(() => {
     loadData();
   }, []);
+
+  /* 화면 focus 시 자동 새로고침 */
+  useEffect(() => {
+    const unsub = navigation.addListener("focus", loadData);
+    return unsub;
+  }, [navigation]);
 
   /* ------------------ 성실도 계산 ------------------ */
   const generateReport = (list) => {

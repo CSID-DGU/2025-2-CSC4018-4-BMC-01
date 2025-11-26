@@ -55,6 +55,32 @@ export default function PlantDetailScreen({ navigation, route }) {
   const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
   /* ------------------------------------------------------------
+      화면 진입 시 최신 데이터 불러오기
+  ------------------------------------------------------------ */
+  const loadPlantData = async () => {
+    if (!plant?.id) return;
+
+    try {
+      const { fetchPlants } = require("../utils/Storage");
+      const plants = await fetchPlants();
+      const updated = plants.find(p => p.id === plant.id);
+
+      if (updated) {
+        setCurrentPlant(updated);
+      }
+    } catch (error) {
+      console.error('[PlantDetailScreen] 데이터 로드 실패:', error);
+    }
+  };
+
+  /* ------------------------------------------------------------
+      초기 로드 - 화면 진입 시 최신 데이터 가져오기
+  ------------------------------------------------------------ */
+  useEffect(() => {
+    loadPlantData();
+  }, []);
+
+  /* ------------------------------------------------------------
       route.params가 변경되면 화면에 반영
       - 예: 상세 화면에서 사진/정보 수정 후 돌아올 경우
   ------------------------------------------------------------ */
@@ -412,7 +438,7 @@ export default function PlantDetailScreen({ navigation, route }) {
         <View style={styles.infoBox}>
           <Text style={styles.infoTitle}>다음 물 주는 날</Text>
           <Text style={styles.infoValue}>
-            {currentPlant.next_watering || "미정"}
+            {currentPlant.nextWater || currentPlant.next_watering || "미정"}
           </Text>
         </View>
 

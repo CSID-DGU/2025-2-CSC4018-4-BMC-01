@@ -1,9 +1,9 @@
 /*
   파일명: services/userService.js
-  기능: 사용자 관련 API 서비스
+  기능: 사용자 관련 서비스 (로컬 DB 사용)
 */
 
-import api from './api';
+import * as localDb from './localDbService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USER_ID_KEY = 'USER_ID';
@@ -11,14 +11,15 @@ const USER_ID_KEY = 'USER_ID';
 export const userService = {
   // 사용자 생성
   create: async (name = 'User') => {
-    const response = await api.post('/users', { name });
-    return response.data;
+    const userId = await localDb.createUser(name);
+    const user = await localDb.getUserById(userId);
+    return user;
   },
 
   // 사용자 조회
   getById: async (userId) => {
-    const response = await api.get(`/users/${userId}`);
-    return response.data;
+    const user = await localDb.getUserById(userId);
+    return user;
   },
 
   // 현재 사용자 ID 가져오기 (없으면 생성)

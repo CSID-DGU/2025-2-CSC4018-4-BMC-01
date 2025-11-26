@@ -70,7 +70,8 @@ python app.py
 
 ```bash
 cd backend/database
-python init_db.py  # plants.db 재생성 및 102종 데이터 삽입
+python init_db.py           # plants.db 재생성
+python load_plants_data.py  # 102종 데이터 삽입
 ```
 
 ## 프로젝트 구조
@@ -276,14 +277,15 @@ CREATE TABLE users (
 ### user_plants 테이블
 ```sql
 CREATE TABLE user_plants (
+    -- 기본 정보
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    plant_id INTEGER,                  -- NULL 가능 (AI 식별 식물)
+    plant_id INTEGER,
     nickname TEXT,
-    image TEXT,                        -- Base64 또는 파일 경로
+    image TEXT,
     ai_label_en TEXT,
     ai_label_ko TEXT,
-    disease TEXT,                      -- 병충해 진단 결과
+    disease TEXT,
 
     -- 관리 정보 (plants 테이블에서 복사)
     tempmax_celsius REAL,
@@ -313,15 +315,13 @@ CREATE TABLE user_plants (
 - Base Time 계산 (API 업데이트 시간: 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300)
 - 다음 시간대 예보 데이터 추출
 
-**중요:** `weather_service.py`의 `_convert_to_grid()` 메서드는 복잡한 수학 계산을 포함하므로 수정 시 주의 필요
-
 ### 2. Google Cloud AI API
 
 **API URL:** `https://smartpot-api-551846265142.asia-northeast3.run.app/infer`
 
 **주요 기능:**
-- 식물 종 판별 (plant_ 접두사 이미지)
-- 병충해 진단 (leaf_ 접두사 이미지)
+- 식물 종 판별 (_plant_ 포함 이미지)
+- 병충해 진단 (_leaf_ 포함 이미지)
 
 **응답 형식:**
 ```json
@@ -347,11 +347,9 @@ class Config:
     FLASK_DEBUG = True
 
     # 기상청 API
-    WEATHER_API_KEY = "5621048a47e5a1f37bdb05a7dd8c567dca6034fbde9af3a9cd320293cfff84dc"
-    WEATHER_API_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+    WEATHER_API_KEY = "-"
+    WEATHER_API_URL = "-"
 ```
-
-**주의:** 프로덕션 배포 시 API 키를 환경 변수로 관리하는 것을 권장합니다.
 
 ## 개발자 도구
 
@@ -399,22 +397,6 @@ python check_db_status.py
 ## 로깅
 
 Flask 기본 로거를 사용하며, 로그 레벨은 `config.py`의 `FLASK_DEBUG` 설정에 따라 결정됩니다.
-
-## 개발 상태
-
-- ✅ Layered Architecture 구현
-- ✅ 102종 식물 데이터베이스
-- ✅ REST API (15개 엔드포인트)
-- ✅ 기상청 API 연동
-- ✅ Google Cloud AI 연동
-- ✅ CORS 설정 (개발용)
-- ✅ 날짜 자동 계산 (물주기 일정)
-
-## 향후 계획
-
-- 🔲 JavaScript/Node.js로 마이그레이션 (React Native 앱 내장)
-- 🔲 API 인증/인가 추가
-- 🔲 환경 변수 기반 설정 관리
 
 ## 라이선스
 

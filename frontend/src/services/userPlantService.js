@@ -1,17 +1,17 @@
 /*
   파일명: services/userPlantService.js
-  기능: 사용자-식물 관련 API 서비스
+  기능: 사용자-식물 관련 서비스 (로컬 DB 사용)
 */
 
-import api from './api';
+import * as localDb from './localDbService';
 import userService from './userService';
 
 export const userPlantService = {
   // 내 식물 목록 조회
   getMyPlants: async () => {
     const userId = await userService.getCurrentUserId();
-    const response = await api.get(`/users/${userId}/plants`);
-    return response.data;
+    const plants = await localDb.getUserPlants(userId);
+    return plants;
   },
 
   // 식물 추가
@@ -24,33 +24,44 @@ export const userPlantService = {
     wateringPeriod = null
   ) => {
     const userId = await userService.getCurrentUserId();
-    const response = await api.post(`/users/${userId}/plants`, {
-      plant_id: plantId,
+    const userPlantId = await localDb.addUserPlant(
+      userId,
+      plantId,
       nickname,
       image,
-      ai_label_en: aiLabelEn,
-      ai_label_ko: aiLabelKo,
-      wateringperiod: wateringPeriod,
-    });
-    return response.data;
+      aiLabelEn,
+      aiLabelKo,
+      wateringPeriod
+    );
+
+    // 생성된 식물 정보 반환
+    const plants = await localDb.getUserPlants(userId);
+    const newPlant = plants.find(p => p.id === userPlantId);
+    return newPlant;
   },
 
   // 물주기 기록
   recordWatering: async (userPlantId) => {
-    const response = await api.put(`/user-plants/${userPlantId}/water`);
-    return response;
+    await localDb.recordWatering(userPlantId);
+    return { success: true };
   },
 
   // 식물 정보 수정
   updatePlant: async (userPlantId, data) => {
-    const response = await api.put(`/user-plants/${userPlantId}`, data);
-    return response;
+    await localDb.updateUserPlant(
+      userPlantId,
+      data.nickname,
+      data.wateringperiod,
+      data.last_watered,
+      data.image
+    );
+    return { success: true };
   },
 
   // 식물 삭제
   deletePlant: async (userPlantId) => {
-    const response = await api.delete(`/user-plants/${userPlantId}`);
-    return response;
+    await localDb.deleteUserPlant(userPlantId);
+    return { success: true };
   },
 };
 

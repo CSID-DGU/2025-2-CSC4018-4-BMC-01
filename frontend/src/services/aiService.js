@@ -1,4 +1,9 @@
-import { API_URL } from '../config';
+import { Platform } from 'react-native';
+import * as localDb from './localDbService';
+import userService from './userService';
+
+// Google Cloud AI API URL (백엔드와 동일)
+const AI_API_URL = 'https://smartpot-api-551846265142.asia-northeast3.run.app/infer';
 
 /**
  * AI 이미지 분석 서비스
@@ -14,35 +19,36 @@ import { API_URL } from '../config';
  */
 export const analyzeSpecies = async (imageUri, originalFileName = null) => {
   try {
-    // FormData 생성
-    const formData = new FormData();
+    console.log('[analyzeSpecies] 시작:', { imageUri, originalFileName, platform: Platform.OS });
 
-    // 파일명 결정: 원본 파일명 우선, 없으면 URI에서 추출
+    // 파일명 결정
     let filename = originalFileName || imageUri.split('/').pop();
-
-    // 확장자 확인
     const match = /\.(\w+)$/.exec(filename);
     const type = match ? `image/${match[1]}` : 'image/jpeg';
 
-    // 확장자가 없으면 추가
     if (!match) {
       const ext = type === 'image/png' ? 'png' : 'jpg';
       filename = `${filename}.${ext}`;
     }
 
-    // 라우팅을 위해 plant_ 프리픽스 추가 (이미 있으면 추가 안함)
     if (!filename.startsWith('plant_') && !filename.startsWith('leaf_')) {
       filename = `plant_${filename}`;
     }
 
-    // React Native Web의 경우 blob URL을 File 객체로 변환
-    if (imageUri.startsWith('blob:')) {
-      const blobResponse = await fetch(imageUri);
-      const blob = await blobResponse.blob();
-      const file = new File([blob], filename, { type: type });
-      formData.append('file', file);
+    // FormData 생성
+    const formData = new FormData();
+
+    // 플랫폼별 처리
+    if (Platform.OS === 'web') {
+      if (imageUri.startsWith('blob:') || imageUri.startsWith('http')) {
+        const blobResponse = await fetch(imageUri);
+        const blob = await blobResponse.blob();
+        const file = new File([blob], filename, { type: type });
+        formData.append('file', file);
+      } else {
+        throw new Error('Web에서는 blob URL이 필요합니다');
+      }
     } else {
-      // React Native (모바일)의 경우
       formData.append('file', {
         uri: imageUri,
         name: filename,
@@ -50,27 +56,66 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
       });
     }
 
-    const fullUrl = `${API_URL}/ai/analyze`;
+    console.log('[analyzeSpecies] Google Cloud AI API 호출 시작');
 
-    // API 요청
-    // 주의: FormData 사용 시 Content-Type을 명시하면 안 됨 (브라우저가 자동으로 boundary 설정)
-    const response = await fetch(fullUrl, {
-      method: 'POST',
-      body: formData,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-    const data = await response.json();
+    try {
+      // Google Cloud AI API 직접 호출
+      const response = await fetch(AI_API_URL, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
 
-    if (data.success) {
+      clearTimeout(timeoutId);
+      console.log('[analyzeSpecies] AI API 응답 상태:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[analyzeSpecies] AI API 오류:', errorText);
+        throw new Error(`AI API 오류 (${response.status})`);
+      }
+
+      const aiData = await response.json();
+      console.log('[analyzeSpecies] AI 분석 결과:', aiData);
+
+      const predLabelEn = aiData.pred_label;
+      const predLabelKo = aiData.pred_label_ko;
+
+      // 로컬 DB에서 식물 정보 검색
+      const plants = await localDb.searchPlants(predLabelKo);
+      let plantInfo = null;
+
+      if (plants && plants.length > 0) {
+        const plant = plants[0];
+        plantInfo = {
+          plant_id: plant.id,
+          ai_label_en: plant.ai_label_en,
+          ai_label_ko: plant.ai_label_ko,
+          wateringperiod: plant.wateringperiod || 7,
+          ideallight: plant.ideallight,
+          toleratedlight: plant.toleratedlight,
+          watering: plant.watering,
+          tempmin_celsius: plant.tempmin_celsius,
+          tempmax_celsius: plant.tempmax_celsius,
+        };
+      }
+
       return {
         success: true,
-        aiLabelEn: data.ai_label_en,
-        aiLabelKo: data.ai_label_ko,
-        confidence: data.confidence,
-        plantInfo: data.plant_info, // DB에서 찾은 식물 정보 (plant_id, wateringperiod 등)
+        aiLabelEn: predLabelEn,
+        aiLabelKo: predLabelKo,
+        confidence: aiData.confidence,
+        plantInfo: plantInfo,
       };
-    } else {
-      throw new Error(data.error || '식물 분석에 실패했습니다.');
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        throw new Error('요청 시간 초과 (30초)');
+      }
+      throw fetchError;
     }
   } catch (error) {
     console.error('[analyzeSpecies] 에러:', error);
@@ -88,31 +133,35 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
  */
 export const identifySpecies = async (userId, imageUri, nickname = null, originalFileName = null) => {
   try {
-    // FormData 생성
-    const formData = new FormData();
+    console.log('[identifySpecies] 시작:', { userId, imageUri, nickname, platform: Platform.OS });
 
-    // 이미지 파일 추가
+    // 파일명 결정
     let filename = originalFileName || imageUri.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
     const type = match ? `image/${match[1]}` : 'image/jpeg';
 
-    // 확장자가 없으면 추가 (blob URL의 경우)
     if (!match) {
       const ext = type === 'image/png' ? 'png' : 'jpg';
       filename = `${filename}.${ext}`;
     }
 
-    // 라우팅을 위해 plant_ 프리픽스 추가
     if (!filename.startsWith('plant_') && !filename.startsWith('leaf_')) {
       filename = `plant_${filename}`;
     }
 
-    // React Native Web의 경우 blob URL을 File 객체로 변환
-    if (imageUri.startsWith('blob:')) {
-      const blobResponse = await fetch(imageUri);
-      const blob = await blobResponse.blob();
-      const file = new File([blob], filename, { type: type });
-      formData.append('file', file);
+    // FormData 생성
+    const formData = new FormData();
+
+    // 플랫폼별 처리
+    if (Platform.OS === 'web') {
+      if (imageUri.startsWith('blob:') || imageUri.startsWith('http')) {
+        const blobResponse = await fetch(imageUri);
+        const blob = await blobResponse.blob();
+        const file = new File([blob], filename, { type: type });
+        formData.append('file', file);
+      } else {
+        throw new Error('Web에서는 blob URL이 필요합니다');
+      }
     } else {
       formData.append('file', {
         uri: imageUri,
@@ -121,36 +170,77 @@ export const identifySpecies = async (userId, imageUri, nickname = null, origina
       });
     }
 
-    // 파라미터 추가
-    formData.append('user_id', userId.toString());
-    if (nickname) {
-      formData.append('nickname', nickname);
-    }
-    formData.append('image_path', imageUri);
+    console.log('[identifySpecies] Google Cloud AI API 호출 시작');
 
-    // API 요청
-    const response = await fetch(`${API_URL}/ai/identify-species`, {
-      method: 'POST',
-      body: formData,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-    const data = await response.json();
+    try {
+      // Google Cloud AI API 직접 호출
+      const response = await fetch(AI_API_URL, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
 
-    if (data.success) {
+      clearTimeout(timeoutId);
+      console.log('[identifySpecies] AI API 응답 상태:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[identifySpecies] AI API 오류:', errorText);
+        throw new Error(`AI API 오류 (${response.status})`);
+      }
+
+      const aiData = await response.json();
+      console.log('[identifySpecies] AI 분석 결과:', aiData);
+
+      const predLabelEn = aiData.pred_label;
+      const predLabelKo = aiData.pred_label_ko;
+
+      // 로컬 DB에서 식물 검색
+      const plants = await localDb.searchPlants(predLabelKo);
+      let plantId = null;
+      let wateringPeriod = 7;
+
+      if (plants && plants.length > 0) {
+        plantId = plants[0].id;
+        wateringPeriod = plants[0].wateringperiod || 7;
+      }
+
+      // 사용자 식물 추가
+      const userPlantId = await localDb.addUserPlant(
+        userId,
+        plantId,
+        nickname || predLabelKo,
+        imageUri,
+        predLabelEn,
+        predLabelKo,
+        wateringPeriod
+      );
+
+      // 생성된 식물 조회
+      const userPlants = await localDb.getUserPlants(userId);
+      const createdPlant = userPlants.find(p => p.id === userPlantId);
+
       return {
         success: true,
-        userPlant: data.user_plant,
+        userPlant: createdPlant,
         aiResult: {
-          species: data.ai_result.pred_label,
-          speciesKo: data.ai_result.pred_label_ko,
-          confidence: data.ai_result.confidence,
+          species: predLabelEn,
+          speciesKo: predLabelKo,
+          confidence: aiData.confidence,
         },
       };
-    } else {
-      throw new Error(data.error || '식물 종류 판별에 실패했습니다.');
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        throw new Error('요청 시간 초과 (30초)');
+      }
+      throw fetchError;
     }
   } catch (error) {
-    console.error('identifySpecies error:', error);
+    console.error('[identifySpecies] 에러:', error);
     throw error;
   }
 };
@@ -164,8 +254,7 @@ export const identifySpecies = async (userId, imageUri, nickname = null, origina
  */
 export const diagnoseDisease = async (userPlantId, imageUri, filename) => {
   try {
-    // FormData 생성
-    const formData = new FormData();
+    console.log('[diagnoseDisease] 시작:', { userPlantId, imageUri, filename, platform: Platform.OS });
 
     // 파일명이 제공되지 않은 경우 기본값 사용
     if (!filename) {
@@ -175,13 +264,22 @@ export const diagnoseDisease = async (userPlantId, imageUri, filename) => {
     const match = /\.(\w+)$/.exec(filename);
     const type = match ? `image/${match[1]}` : 'image/jpeg';
 
-    // React Native Web의 경우 blob URL을 File 객체로 변환
-    if (imageUri.startsWith('blob:')) {
-      const blobResponse = await fetch(imageUri);
-      const blob = await blobResponse.blob();
-      const file = new File([blob], filename, { type: type });
-      formData.append('file', file);
+    // FormData 생성
+    const formData = new FormData();
+
+    // 플랫폼별로 다르게 처리
+    if (Platform.OS === 'web') {
+      console.log('[diagnoseDisease] Web 플랫폼 처리');
+      if (imageUri.startsWith('blob:') || imageUri.startsWith('http')) {
+        const blobResponse = await fetch(imageUri);
+        const blob = await blobResponse.blob();
+        const file = new File([blob], filename, { type: type });
+        formData.append('file', file);
+      } else {
+        throw new Error('Web에서는 blob URL이 필요합니다');
+      }
     } else {
+      console.log('[diagnoseDisease] React Native 플랫폼 처리');
       formData.append('file', {
         uri: imageUri,
         name: filename,
@@ -189,32 +287,59 @@ export const diagnoseDisease = async (userPlantId, imageUri, filename) => {
       });
     }
 
-    // 파라미터 추가
-    formData.append('user_plant_id', userPlantId.toString());
+    console.log('[diagnoseDisease] Google Cloud AI API 호출 시작');
 
-    // API 요청
-    const response = await fetch(`${API_URL}/ai/diagnose-disease`, {
-      method: 'POST',
-      body: formData,
-    });
+    // Google Cloud AI API 직접 호출 with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.log('[diagnoseDisease] 30초 타임아웃');
+      controller.abort();
+    }, 30000);
 
-    const data = await response.json();
+    try {
+      const response = await fetch(AI_API_URL, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
 
-    if (data.success) {
+      clearTimeout(timeoutId);
+
+      console.log('[diagnoseDisease] AI API 응답 상태:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[diagnoseDisease] AI API 오류:', errorText);
+        throw new Error(`AI API 오류 (${response.status})`);
+      }
+
+      const aiData = await response.json();
+      console.log('[diagnoseDisease] AI 분석 결과:', aiData);
+
+      const disease = aiData.pred_label_ko || aiData.pred_label;
+
+      // 로컬 DB에 병충해 정보 저장
+      await localDb.updateDisease(userPlantId, disease);
+
       return {
         success: true,
-        userPlantId: data.user_plant_id,
-        disease: data.disease,
+        userPlantId: userPlantId,
+        disease: disease,
         aiResult: {
-          disease: data.ai_result.pred_label_ko,
-          confidence: data.ai_result.confidence,
+          disease: disease,
+          confidence: aiData.confidence,
         },
       };
-    } else {
-      throw new Error(data.error || '병충해 판별에 실패했습니다.');
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      if (fetchError.name === 'AbortError') {
+        console.error('[diagnoseDisease] 타임아웃 발생');
+        throw new Error('요청 시간 초과 (30초). 네트워크 연결을 확인해주세요.');
+      }
+      throw fetchError;
     }
   } catch (error) {
-    console.error('diagnoseDisease error:', error);
+    console.error('[diagnoseDisease] 최종 에러:', error);
     throw error;
   }
 };

@@ -53,6 +53,12 @@ export default function CalendarScreen({ navigation }) {
     setPlants(list);
   };
 
+  /* 초기 로드 */
+  useEffect(() => {
+    loadPlantData();
+  }, []);
+
+  /* 화면 focus 시 자동 새로고침 */
   useEffect(() => {
     const unsub = navigation.addListener("focus", loadPlantData);
     return unsub;
