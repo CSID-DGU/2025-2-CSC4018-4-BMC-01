@@ -4,7 +4,7 @@
     "slug": "BMC",
     "version": "1.0.0",
     "orientation": "portrait",
-     "entryPoint": "./index.js",
+    "entryPoint": "./index.js",
     "icon": "./assets/images/icon.png",
     "scheme": "bmc20251110",
     "userInterfaceStyle": "automatic",
@@ -20,7 +20,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.BMC"
     },
     "web": {
       "output": "static",
