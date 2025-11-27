@@ -20,11 +20,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchPlants } from "../utils/Storage";
+import { usePlants } from "../context/PlantContext";
 import * as localDb from "../src/services/localDbService";
 
 export default function ReportScreen({ navigation }) {
-  const [plants, setPlants] = useState([]);
+  // Context에서 식물 데이터 가져오기
+  const { plants, loadPlants } = usePlants();
   const [report, setReport] = useState([]);
   const [mode, setMode] = useState("recent30");
 
@@ -32,9 +33,7 @@ export default function ReportScreen({ navigation }) {
      데이터 로드
   ------------------------------------------------- */
   const loadData = async () => {
-    const list = await fetchPlants();
-    setPlants(list);
-
+    const list = await loadPlants();
     const rep = await generateReport(list);
     setReport(rep);
   };
@@ -44,7 +43,7 @@ export default function ReportScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    const unsub = navigation.addListener("focus", loadData);
+    const unsub = navigation.addListener("focus", () => loadData());
     return unsub;
   }, [navigation]);
 

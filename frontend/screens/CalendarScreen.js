@@ -40,30 +40,25 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar } from "react-native-calendars";
 
 /* Storage.js 연동 */
-import { fetchPlants } from "../utils/Storage";
+import { usePlants } from "../context/PlantContext";
 
 export default function CalendarScreen({ navigation }) {
-  const [plants, setPlants] = useState([]);
+  // Context에서 식물 데이터 가져오기
+  const { plants, loadPlants } = usePlants();
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPlants, setSelectedPlants] = useState([]);
 
-  /* ------------------ 식물 로드 ------------------ */
-  const loadPlantData = async () => {
-    const list = await fetchPlants();
-    setPlants(list);
-  };
-
   /* 초기 로드 */
   useEffect(() => {
-    loadPlantData();
+    loadPlants();
   }, []);
 
   /* 화면 focus 시 자동 갱신 */
   useEffect(() => {
-    const unsub = navigation.addListener("focus", loadPlantData);
+    const unsub = navigation.addListener("focus", () => loadPlants());
     return unsub;
-  }, [navigation]);
+  }, [navigation, loadPlants]);
 
   /* ------------------ custom marker 생성 ------------------ */
   const generateMarks = (list) => {

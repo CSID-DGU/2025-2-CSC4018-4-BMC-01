@@ -31,7 +31,8 @@ import {
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchPlants, toggleFavorite } from "../utils/Storage";
+import { toggleFavorite } from "../utils/Storage";
+import { usePlants } from "../context/PlantContext";
 
 /* ----------------------------------------------------------
     화면 너비 기반 Layout 계산
@@ -46,38 +47,22 @@ const SPACING = 12;   // 카드 간 간격
 const CARD_WIDTH = (SCREEN_WIDTH - H_PADDING * 2 - SPACING) / 2;
 
 export default function MyPlantListScreen({ navigation }) {
-  const [plants, setPlants] = useState([]);
+  // Context에서 식물 데이터 가져오기
+  const { plants, loadPlants } = usePlants();
   const [loadError, setLoadError] = useState(false);
-
-  /* ----------------------------------------------------------
-      식물 목록 로드 (Storage.js 모델 기반)
-      - fetchPlants(): API 데이터 + 로컬 메타데이터 통합
-      - 오류 발생 시 앱 크래시 방지 및 메시지 출력
-  ----------------------------------------------------------- */
-  const loadPlantData = async () => {
-    try {
-      const list = await fetchPlants();
-      setPlants(list);
-      setLoadError(false);
-    } catch (e) {
-      console.error("[MyPlantListScreen] 식물 목록 로드 실패:", e);
-      setLoadError(true);
-      setPlants([]); // 오류 시 빈 리스트라도 렌더링되도록 처리
-    }
-  };
 
   /* ----------------------------------------------------------
       화면 focus 시 자동 갱신
       - 상세 화면에서 돌아왔을 때 최신 정보 반영
   ----------------------------------------------------------- */
   useEffect(() => {
-    const unsub = navigation.addListener("focus", loadPlantData);
+    const unsub = navigation.addListener("focus", () => loadPlants());
     return unsub;
-  }, [navigation]);
+  }, [navigation, loadPlants]);
 
   /* 초기 로드 */
   useEffect(() => {
-    loadPlantData();
+    loadPlants();
   }, []);
 
   /* ----------------------------------------------------------

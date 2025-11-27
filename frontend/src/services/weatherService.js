@@ -4,7 +4,7 @@
 */
 
 // 기상청 단기예보 API
-const WEATHER_API_URL = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
+const WEATHER_API_URL = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
 const WEATHER_API_KEY = '5621048a47e5a1f37bdb05a7dd8c567dca6034fbde9af3a9cd320293cfff84dc';
 
 /**

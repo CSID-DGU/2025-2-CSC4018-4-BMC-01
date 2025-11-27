@@ -4,13 +4,19 @@
     "slug": "BMC",
     "version": "1.0.0",
     "orientation": "portrait",
-    "entryPoint": "./index.js",
     "icon": "./assets/images/icon.png",
     "scheme": "bmc20251110",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.BMC",
+      "infoPlist": {
+        "NSCameraUsageDescription": "식물 사진을 촬영하여 AI로 식물을 식별하고 병충해를 진단합니다.",
+        "NSPhotoLibraryUsageDescription": "갤러리에서 식물 사진을 선택하여 AI로 식물을 식별하고 병충해를 진단합니다.",
+        "NSLocationWhenInUseUsageDescription": "현재 위치를 기반으로 날씨 정보를 제공합니다.",
+        "NSMicrophoneUsageDescription": "카메라 사용 시 필요합니다."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +27,16 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.BMC"
+      "package": "com.anonymous.BMC",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "NOTIFICATIONS",
+        "POST_NOTIFICATIONS"
+      ]
     },
     "web": {
       "output": "static",
@@ -41,11 +56,18 @@
         }
       ],
       "expo-sqlite",
-      "expo-asset"
+      "expo-asset",
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "21330787-860e-45bf-8c97-46daa0df7cd3"
+      }
+    },
+    "owner": "la2y"
   }
 }

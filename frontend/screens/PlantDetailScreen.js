@@ -38,8 +38,12 @@ import ImagePickerModal from "../components/ImagePickerModal";
   - userPlantService.deletePlant(id)
 */
 import userPlantService from "../src/services/userPlantService";
+import { usePlants } from "../context/PlantContext";
 
 export default function PlantDetailScreen({ navigation, route }) {
+  /* Context에서 식물 데이터 관리 */
+  const { plants, loadPlants } = usePlants();
+
   /* ------------------------------------------------------------
       초기값: route.params로 전달된 plant 객체
       currentPlant는 화면에서 실시간으로 갱신되는 상태
@@ -58,14 +62,13 @@ export default function PlantDetailScreen({ navigation, route }) {
   const [isUpdatingImage, setIsUpdatingImage] = useState(false);
 
   /* ------------------------------------------------------------
-      화면 진입 시 최신 데이터 불러오기
+      화면 진입 시 최신 데이터 불러오기 (Context 활용)
   ------------------------------------------------------------ */
   const loadPlantData = async () => {
     if (!plant?.id) return;
 
     try {
-      const { fetchPlants } = require("../utils/Storage");
-      const plants = await fetchPlants();
+      await loadPlants(); // Context 캐싱 활용
       const updated = plants.find(p => p.id === plant.id);
 
       if (updated) {

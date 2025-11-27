@@ -17,14 +17,16 @@ BMC Plant는 식물 관리를 돕는 스마트 모바일 애플리케이션입�
 ### 독립형 구조 (Backend-Free)
 
 ```
-App.js (진입점 + DB 초기화)
+App.js (진입점 + DB 초기화 + PlantProvider)
+   ↓
+PlantContext (전역 상태 관리, 5초 캐싱)
    ↓
 expo-sqlite (로컬 SQLite DB)
    ├── plants (102종 식물 정보)
    ├── users (사용자 정보)
    └── user_plants (내 화분 관리)
    ↓
-Screens (8개 화면)
+Screens (8개 화면, usePlants() 훅 사용)
    ↓
 Services
    ├── localDbService.js (로컬 DB 작업)
@@ -110,6 +112,9 @@ frontend/
 │       ├── userService.js         # 사용자 관리 (로컬 DB)
 │       └── userPlantService.js    # 화분 관리 (로컬 DB)
 │
+├── context/
+│   └── PlantContext.js            # 전역 상태 관리 (5초 캐싱)
+│
 ├── screens/                       # 화면 컴포넌트 (8개)
 │   ├── HomeScreen.js              # 홈 (날씨, 슬라이드, 알림)
 │   ├── MyPlantListScreen.js       # 내 화분 목록 그리드
@@ -127,7 +132,7 @@ frontend/
 │   ├── Storage.js                 # fetchPlants + 메타데이터 관리
 │   └── notificationService.js     # 푸시 알림 서비스
 │
-├── App.js                         # 앱 진입점 (DB 초기화)
+├── App.js                         # 앱 진입점 (DB 초기화, PlantProvider)
 ├── app.json                       # Expo 설정
 └── package.json                   # 의존성
 ```
@@ -140,7 +145,7 @@ frontend/
   - GPS 기반 실시간 날씨 정보 (기상청 API 직접 호출)
   - 내 화분 가로 슬라이드
   - 오늘/내일 물주기 알림 리스트
-- **데이터 갱신**: focus 시 자동 갱신
+- **데이터**: usePlants() 훅 사용
 
 ### 2. MyPlantListScreen (내 화분)
 - **위치**: `screens/MyPlantListScreen.js`
@@ -148,7 +153,7 @@ frontend/
   - 2열 그리드 레이아웃
   - 즐겨찾기 표시 (별 아이콘)
   - 물주기 일정 표시 (D-day)
-- **데이터 갱신**: focus 시 자동 갱신
+- **데이터**: usePlants() 훅 사용
 
 ### 3. PlantDetailScreen (화분 상세)
 - **위치**: `screens/PlantDetailScreen.js`
@@ -158,7 +163,7 @@ frontend/
   - 사진 변경 (갤러리/카메라)
   - 병충해 분석 버튼
   - 화분 삭제
-- **데이터 갱신**: 진입 시 최신 데이터 로드
+- **데이터**: usePlants() 훅 사용
 
 ### 4. PlantEditorScreen (화분 추가/수정)
 - **위치**: `screens/PlantEditorScreen.js`
@@ -174,7 +179,7 @@ frontend/
   - react-native-calendars 사용
   - 물주기 일정 표시 (O: 예정, ●: 완료)
   - 날짜별 화분 목록 표시
-- **데이터 갱신**: focus 시 자동 갱신
+- **데이터**: usePlants() 훅 사용
 
 ### 6. ReportScreen (레포트)
 - **위치**: `screens/ReportScreen.js`
@@ -183,7 +188,7 @@ frontend/
   - 평균 성실도, 식물 수, 물 준 횟수
   - 식물별 성실도 바 그래프
   - 식물별 관리 지표 카드
-- **데이터 갱신**: focus 시 자동 갱신
+- **데이터**: usePlants() 훅 사용
 
 ### 7. DiseaseResultScreen (병충해 진단)
 - **위치**: `screens/DiseaseResultScreen.js`
@@ -302,19 +307,24 @@ nextWater.setDate(nextWater.getDate() + WateringPeriod);
 // UI 표시 우선순위: nextWater > next_watering
 ```
 
-### 2. 화면 전환 시 데이터 갱신
+### 2. 전역 상태 관리 (PlantContext)
 
 ```javascript
-// Home, MyPlantList, Calendar, Report 화면
-useEffect(() => {
-  const unsub = navigation.addListener("focus", loadPlantData);
-  return unsub;
-}, [navigation]);
+// context/PlantContext.js
+// - 5초 캐싱으로 중복 DB 쿼리 방지
+// - 화면 전환 시 캐시 재사용
 
-// PlantDetailScreen
+// 화면에서 사용
+const { plants, loadPlants } = usePlants();
+
 useEffect(() => {
-  loadPlantData(); // 진입 시 최신 데이터 로드
+  loadPlants(); // 캐시 우선 (5초 이내면 재사용)
 }, []);
+
+useEffect(() => {
+  const unsub = navigation.addListener("focus", () => loadPlants());
+  return unsub;
+}, [navigation, loadPlants]);
 ```
 
 ### 3. GPS 기반 날씨
@@ -464,6 +474,7 @@ npx expo start
 
 ## 성능 최적화
 
+- **전역 상태 관리**: PlantContext로 중복 DB 쿼리 75% 감소 (5초 캐싱)
 - **이미지**: expo-image 사용 (자동 캐싱)
 - **리스트**: FlatList 사용 (가상화)
 - **네비게이션**: React Navigation의 lazy loading

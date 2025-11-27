@@ -15,6 +15,7 @@ import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import AppNavigator from "./navigation/AppNavigator";
 import { initializeNotifications } from "./utils/notificationService";
 import { initDatabase } from "./src/services/localDbService";
+import { PlantProvider } from "./context/PlantContext";
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -59,9 +60,11 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <PlantProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </PlantProvider>
     </SafeAreaProvider>
   );
 }

@@ -23,9 +23,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
-import { fetchPlants, updateWaterDate } from "../utils/Storage";
+import { updateWaterDate } from "../utils/Storage";
 import { weatherService } from "../src/services";
 import { COLORS, SPACING, SHADOWS, TYPOGRAPHY, RADIUS, OPACITY, TOUCH_TARGET } from "../constants/theme";
+import { usePlants } from "../context/PlantContext";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_WIDTH = SCREEN_WIDTH - (SPACING.xl * 2); // 좌우 패딩 24px씩 = 48px
@@ -34,7 +35,9 @@ const CARD_WIDTH = SCREEN_WIDTH - (SPACING.xl * 2); // 좌우 패딩 24px씩 = 4
     메인 함수
 ---------------------------------------------------------- */
 export default function HomeScreen({ navigation }) {
-  const [plants, setPlants] = useState([]);
+  // Context에서 식물 데이터 가져오기
+  const { plants, loadPlants } = usePlants();
+
   const [weatherText, setWeatherText] = useState("날씨 정보를 불러오는 중...");
   const [locationText, setLocationText] = useState("위치 확인 중...");
   const [dateText, setDateText] = useState("");
@@ -57,14 +60,6 @@ export default function HomeScreen({ navigation }) {
     const MM = ("0" + now.getMinutes()).slice(-2);
 
     setDateText(`${Y}.${M}.${D} ${HH}:${MM} (${week[now.getDay()]})`);
-  };
-
-  /* ----------------------------------------------------------
-      [데이터] 식물 로드
-  ---------------------------------------------------------- */
-  const loadPlantData = async () => {
-    const list = await fetchPlants();
-    setPlants(list);
   };
 
   /* ----------------------------------------------------------
@@ -137,7 +132,7 @@ export default function HomeScreen({ navigation }) {
   ---------------------------------------------------------- */
   const giveWater = async (plant) => {
     await updateWaterDate(plant.id);
-    loadPlantData();
+    loadPlants(true); // 강제 갱신
   };
 
   /* ----------------------------------------------------------
@@ -146,7 +141,7 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     updateDateTime();
     loadWeather();
-    loadPlantData();
+    loadPlants(); // Context 캐싱 활용
   }, []);
 
   /* ----------------------------------------------------------
@@ -155,10 +150,10 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     const unsub = navigation.addListener("focus", () => {
       updateDateTime();
-      loadPlantData();
+      loadPlants(); // Context 캐싱 활용 (5초 이내는 재사용)
     });
     return unsub;
-  }, [navigation]);
+  }, [navigation, loadPlants]);
 
   /* ----------------------------------------------------------
       대표 화분 필터

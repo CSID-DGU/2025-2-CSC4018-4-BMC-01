@@ -75,12 +75,14 @@ React Native → expo-sqlite (오프라인 DB)
     │       ├── plantService.js      # 식물 CRUD (로컬 DB)
     │       ├── userService.js       # 사용자 관리 (로컬 DB)
     │       └── userPlantService.js  # 화분 관리 (로컬 DB)
+    ├── context/          # 전역 상태 관리
+    │   └── PlantContext.js          # 식물 데이터 캐싱 (5초)
     ├── screens/          # 화면 컴포넌트 (8개)
     ├── components/       # 재사용 컴포넌트
     ├── constants/        # 디자인 시스템 상수
     ├── navigation/       # React Navigation 설정
     ├── utils/            # 유틸리티
-    └── App.js            # 앱 진입점 (DB 초기화)
+    └── App.js            # 앱 진입점 (DB 초기화, PlantProvider)
 ```
 
 ## 시작하기
@@ -149,8 +151,8 @@ npx expo start --tunnel
 
 **2. 날씨 정보**
 - **API**: 기상청 단기예보 API
-- **URL**: `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst`
-- **기능**: GPS 위치 기반 실시간 날씨 (온도, 습도, 강수량, 풍속)
+- **URL**: `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst`
+- **기능**: GPS 위치 기반 실시간 날씨 (온도, 습도, 강수량, 하늘 상태)
 - **좌표 변환**: Lambert Conformal Conic 투영 (JavaScript 구현)
 
 ## 화면 구성
@@ -290,9 +292,9 @@ CREATE TABLE user_plants (
 - ✅ 물주기 알림 시스템
 - ✅ 사진 기반 식물 등록
 - ✅ 병충해 진단 기능
-- ✅ 화면 전환 시 자동 데이터 갱신 (focus 기반)
 - ✅ 물주기 주기 자동 계산 (DB 우선순위: 커스텀 > 식물별 > 기본값)
 - ✅ 레포트 화면 (30일 물주기 성실도 통계)
+- ✅ 전역 상태 관리 (PlantContext, 5초 캐싱)
 
 ## 빌드 및 배포
 

@@ -33,6 +33,8 @@ web-build/
 *.apk
 *.aab
 *.ipa
+android/
+ios/
 
 # ===== Database =====
 *.sqlite
@@ -64,3 +66,4 @@ coverage/
 
 CLAUDE.md
 .claude/
+nul
