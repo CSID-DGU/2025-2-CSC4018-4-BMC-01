@@ -32,7 +32,8 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground // ★ 추가: 캘린더 화면 배경 이미지
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -147,58 +148,64 @@ export default function CalendarScreen({ navigation }) {
 
   /* ------------------ 화면 구성 ------------------ */
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "#FAFAFA" }}
-      edges={["top", "bottom", "left", "right"]}
+    <ImageBackground
+      source={require("../assets/bg_full_calendar.png")} // ★ 캘린더 전용 배경
+      style={{ flex: 1 }}
+      resizeMode="cover"
     >
-      {/* ------------------ 헤더 (톱니 추가) ------------------ */}
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>물주기 캘린더</Text>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("NotificationSetting")}
-        >
-          <Text style={{ fontSize: 22 }}>⚙️</Text>
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 40 }}
-        showsVerticalScrollIndicator={false}
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: "transparent" }} // ★ 배경 이미지를 보이도록 투명 처리
+        edges={["top", "bottom", "left", "right"]}
       >
-        {/* 캘린더 */}
-        <Calendar
-          markedDates={markedDates}
-          markingType="custom"
-          onDayPress={handleDayPress}
-          theme={{
-            textDayFontSize: 16,
-            textMonthFontSize: 18,
-            textDayHeaderFontSize: 14
-          }}
-          style={styles.calendar}
-        />
+        {/* ------------------ 헤더 (톱니 추가) ------------------ */}
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>물주기 캘린더</Text>
 
-        {/* 선택 날짜 정보 */}
-        {selectedDate && (
-          <View style={styles.infoBox}>
-            <Text style={styles.infoTitle}>{selectedDate} 물 줄 화분</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("NotificationSetting")}
+          >
+            <Text style={{ fontSize: 22 }}>⚙️</Text>
+          </TouchableOpacity>
+        </View>
 
-            {selectedPlants.length === 0 ? (
-              <Text style={styles.noneText}>물 줄 화분 없음</Text>
-            ) : (
-              <FlatList
-                data={selectedPlants}
-                keyExtractor={(i) => i.id.toString()}
-                renderItem={renderItem}
-                scrollEnabled={false}
-              />
-            )}
-          </View>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={{ paddingBottom: 40 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* 캘린더 */}
+          <Calendar
+            markedDates={markedDates}
+            markingType="custom"
+            onDayPress={handleDayPress}
+            theme={{
+              textDayFontSize: 16,
+              textMonthFontSize: 18,
+              textDayHeaderFontSize: 14
+            }}
+            style={styles.calendar}
+          />
+
+          {/* 선택 날짜 정보 */}
+          {selectedDate && (
+            <View style={styles.infoBox}>
+              <Text style={styles.infoTitle}>{selectedDate} 물 줄 화분</Text>
+
+              {selectedPlants.length === 0 ? (
+                <Text style={styles.noneText}>물 줄 화분 없음</Text>
+              ) : (
+                <FlatList
+                  data={selectedPlants}
+                  keyExtractor={(i) => i.id.toString()}
+                  renderItem={renderItem}
+                  scrollEnabled={false}
+                />
+              )}
+            </View>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
