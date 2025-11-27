@@ -122,11 +122,7 @@ export default function CalendarScreen({ navigation }) {
     setSelectedPlants(plants.filter((p) => p.nextWater === date));
   };
 
-  /* ------------------ 초기 로드 ------------------ */
-  useEffect(() => {
-    loadPlantData();
-  }, []);
-
+  /* ------------------ 마크된 날짜 업데이트 ------------------ */
   useEffect(() => {
     setMarkedDates(generateMarks(plants));
   }, [plants]);
