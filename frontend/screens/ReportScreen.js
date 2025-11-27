@@ -1,22 +1,21 @@
 /*
   파일명: ReportScreen.js
   목적:
-    - 최근 30일 기준 식물 관리 지표 요약 화면
-    - 물주기 성실도(%) 계산 및 시각화
-    - 대시보드 + 바그래프 + 식물별 상세 카드
+    - 최근 30일 기준 식물 관리 성실도 리포트 화면
+    - watering_logs 기반 “실제 물준 횟수”를 기준으로 정확한 성실도 계산
+    - 기존 UI/구조/스타일은 그대로 유지
 
   데이터 소스:
     - fetchPlants(): Storage.js에서 API + 로컬메타 결합한 결과 사용
-      · waterDate       : 최근 물 준 날짜
-      · nextWater       : 다음 물 줄 날짜
-      · WateringPeriod  : 물주는 주기(일)
-      · favorite        : 대표식물 여부
+    - localDbService.getWateringHistory():
+        · 최근 N일간 물준 날짜 기록 조회
+        · ReportScreen 계산용
 
-  성실도 계산 기준:
+  성실도 계산 기준(개선된 버전):
     - 기간: 최근 30일
     - 예정된 물주기 횟수 = floor(30 / WateringPeriod)
-    - 최근 물 준 날짜가 30일 이내면 준수 1회로 판단(단일 기록 기반)
-    - 성실도(%) = (준수 / 예정) * 100
+    - 실제 물준 횟수 = watering_logs 테이블에서 recent N일간 기록 count
+    - 성실도(%) = (실제 / 예정) * 100
 */
 
 import React, { useEffect, useState } from "react";
@@ -28,6 +27,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPlants } from "../utils/Storage";
+import * as localDb from "../src/services/localDbService";
 
 export default function ReportScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
@@ -37,7 +37,9 @@ export default function ReportScreen({ navigation }) {
   const loadData = async () => {
     const list = await fetchPlants();
     setPlants(list);
-    setReport(generateReport(list));
+
+    const rep = await generateReport(list);
+    setReport(rep);
   };
 
   /* 초기 로드 */
@@ -51,37 +53,37 @@ export default function ReportScreen({ navigation }) {
     return unsub;
   }, [navigation]);
 
-  /* ------------------ 성실도 계산 ------------------ */
-  const generateReport = (list) => {
-    const today = new Date();
-    const THIRTY = 30;
+  /* ------------------ 성실도 계산(개선) ------------------ */
+  const generateReport = async (list) => {
+    const DAYS = 30;
+    const results = [];
 
-    return list.map((p) => {
-      const lastWater = p.waterDate ? new Date(p.waterDate) : null;
+    for (const p of list) {
       const period = p.WateringPeriod ?? 7;
 
-      const expected = Math.floor(THIRTY / period);
+      // 예정 물주기 횟수
+      const expected = Math.floor(DAYS / period) || 1;
 
-      let success = 0;
-      if (lastWater) {
-        const diff = (today - lastWater) / (1000 * 60 * 60 * 24);
-        if (diff <= THIRTY) success = 1;
-      }
+      // 실제 물준 기록 (watering_logs 테이블)
+      const logs = await localDb.getWateringHistory(p.id, DAYS);
+      const actual = logs.length;
 
-      const rate =
-        expected === 0 ? 0 : Math.round((success / expected) * 100);
+      // 성실도 계산
+      const rate = Math.min(100, Math.round((actual / expected) * 100));
 
-      return {
+      results.push({
         id: p.id,
         name: p.name,
         waterDate: p.waterDate,
         nextWater: p.nextWater,
         period,
         expected,
-        success,
+        actual,
         rate,
-      };
-    });
+      });
+    }
+
+    return results;
   };
 
   /* ------------------ 전체 요약 ------------------ */
@@ -93,7 +95,8 @@ export default function ReportScreen({ navigation }) {
         );
 
   /* ------------------ 전체 물준 횟수 ------------------ */
-  const successCount = report.filter((r) => r.success > 0).length;
+  const successCount =
+    report.reduce((acc, r) => acc + r.actual, 0);
 
   /* ------------------ 그래프 최대치 설정 ------------------ */
   const maxRate =
@@ -122,7 +125,7 @@ export default function ReportScreen({ navigation }) {
           </View>
 
           <View style={styles.dashboardBox}>
-            <Text style={styles.dashboardTitle}>이번달 물 준 횟수</Text>
+            <Text style={styles.dashboardTitle}>최근 30일 물준 횟수</Text>
             <Text style={styles.dashboardValue}>{successCount}회</Text>
           </View>
         </View>
@@ -164,6 +167,13 @@ export default function ReportScreen({ navigation }) {
               물주는 주기: {r.period}일
             </Text>
 
+            <Text style={styles.cardText}>
+              최근 30일 실제 물준 횟수: {r.actual}회
+            </Text>
+            <Text style={styles.cardText}>
+              예정된 물주기 횟수: {r.expected}회
+            </Text>
+
             <View style={styles.rateBox}>
               <Text style={styles.rateText}>{r.rate}%</Text>
             </View>
@@ -178,7 +188,6 @@ export default function ReportScreen({ navigation }) {
    스타일
 -------------------------------------------------- */
 const styles = StyleSheet.create({
-  /* --- 대시보드 --- */
   dashboardRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -206,7 +215,6 @@ const styles = StyleSheet.create({
     color: "#333",
   },
 
-  /* --- 섹션 제목 --- */
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -214,7 +222,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  /* --- 그래프 --- */
   graphRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -247,7 +254,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  /* --- 카드 --- */
   card: {
     backgroundColor: "#FFFFFF",
     padding: 20,
