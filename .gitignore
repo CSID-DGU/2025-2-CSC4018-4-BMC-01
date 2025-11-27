@@ -35,7 +35,6 @@ web-build/
 *.ipa
 
 # ===== Database =====
-*.db
 *.sqlite
 *.sqlite3
 
