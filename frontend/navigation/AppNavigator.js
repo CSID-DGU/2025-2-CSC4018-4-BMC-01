@@ -17,7 +17,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 
 /* Screens */
 import HomeScreen from "../screens/HomeScreen";
@@ -43,7 +43,12 @@ const Stack = createStackNavigator();
 -------------------------------------------------- */
 function PlantStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
       <Stack.Screen name="MyPlantList" component={MyPlantListScreen} />
       <Stack.Screen name="PlantDetail" component={PlantDetailScreen} />
       <Stack.Screen name="PlantEditor" component={PlantEditorScreen} />
@@ -60,7 +65,12 @@ function PlantStack() {
 -------------------------------------------------- */
 function CalendarStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}
+    >
       <Stack.Screen name="CalendarMain" component={CalendarScreen} />
       <Stack.Screen
         name="NotificationSetting"
@@ -80,12 +90,13 @@ export default function AppNavigator() {
         headerShown: false,
         tabBarStyle: {
           height: 70,
-          paddingBottom: 10,
-          paddingTop: 10
+          paddingBottom: 12,
+          paddingTop: 8
         },
         tabBarLabelStyle: {
-          fontSize: 12
-        }
+          fontSize: 12,
+          marginTop: 4
+        },
       }}
     >
       {/* ------------------ 홈 ------------------ */}
@@ -94,7 +105,7 @@ export default function AppNavigator() {
         component={HomeScreen}
         options={{
           title: "홈",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>🏠</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>🌿</Text>
         }}
       />
 
@@ -104,7 +115,7 @@ export default function AppNavigator() {
         component={PlantStack}
         options={{
           title: "내 화분",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>🪴</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>🌱</Text>
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
@@ -121,7 +132,7 @@ export default function AppNavigator() {
         component={ReportScreen}
         options={{
           title: "레포트",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📊</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📈</Text>
         }}
       />
 
@@ -131,7 +142,7 @@ export default function AppNavigator() {
         component={CalendarStack}
         options={{
           title: "캘린더",
-          tabBarIcon: () => <Text style={{ fontSize: 22 }}>📅</Text>
+          tabBarIcon: () => <Text style={{ fontSize: 22 }}>💧</Text>
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {

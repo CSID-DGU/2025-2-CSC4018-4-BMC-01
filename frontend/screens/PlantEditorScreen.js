@@ -28,8 +28,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
 
+/* 공통 컴포넌트 */
+import ImagePickerModal from "../components/ImagePickerModal";
+
 /* AI 분석 서비스 */
 import { analyzeSpecies } from "../src/services/aiService";
+
+/* 디자인 시스템 */
+import { COLORS, SPACING, SHADOWS, TYPOGRAPHY, RADIUS, OPACITY, TOUCH_TARGET } from "../constants/theme";
 /* API */
 import userPlantService from "../src/services/userPlantService";
 
@@ -51,12 +57,6 @@ export default function PlantEditorScreen({ navigation }) {
 
   const [nickname, setNickname] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
-  /* 화면 진입 시 자동 사진 선택 모달 */
-  useEffect(() => {
-    const t = setTimeout(() => setPickerVisible(true), 250);
-    return () => clearTimeout(t);
-  }, []);
 
   /* -------------------------------------------------------------
       이미지 영구 저장 처리
@@ -102,7 +102,6 @@ export default function PlantEditorScreen({ navigation }) {
 
     if (r.canceled) {
       setPickerVisible(false);
-      navigation.goBack();
       return;
     }
 
@@ -133,7 +132,6 @@ export default function PlantEditorScreen({ navigation }) {
 
     if (r.canceled) {
       setPickerVisible(false);
-      navigation.goBack();
       return;
     }
 
@@ -252,14 +250,27 @@ export default function PlantEditorScreen({ navigation }) {
       </View>
 
       <ScrollView
-        style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}
-        contentContainerStyle={{ paddingBottom: 40 }}
+        style={{ flex: 1, paddingHorizontal: SPACING.xl, paddingTop: SPACING.lg }}
+        contentContainerStyle={{ paddingBottom: SPACING.xxxl }}
       >
         {/* 이미지 미리보기 */}
-        {imageUri && (
-          <View style={styles.imageBox}>
+        <View style={styles.imageBox}>
+          {imageUri ? (
             <Image source={{ uri: imageUri }} style={styles.previewImg} />
-          </View>
+          ) : (
+            <Text style={styles.previewPlaceholder}>꽃 사진을 선택해주세요.</Text>
+          )}
+        </View>
+
+        {/* 사진 촬영/선택 버튼 */}
+        {!imageUri && !isAnalyzing && (
+          <TouchableOpacity
+            style={styles.cameraBtn}
+            onPress={() => setPickerVisible(true)}
+            activeOpacity={OPACITY.active}
+          >
+            <Text style={styles.cameraBtnText}>꽃 사진 촬영 / 선택</Text>
+          </TouchableOpacity>
         )}
 
         {/* 분석 로딩 */}
@@ -314,6 +325,7 @@ export default function PlantEditorScreen({ navigation }) {
               style={[styles.saveBtn, isSaving && styles.saveBtnDisabled]}
               onPress={handleSave}
               disabled={isSaving}
+              activeOpacity={OPACITY.active}
             >
               {isSaving ? (
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -329,33 +341,12 @@ export default function PlantEditorScreen({ navigation }) {
       </ScrollView>
 
       {/* 사진 선택 모달 */}
-      <Modal
+      <ImagePickerModal
         visible={pickerVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => navigation.goBack()}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>사진 선택</Text>
-
-            <TouchableOpacity style={styles.modalBtn} onPress={pickFromGallery}>
-              <Text style={styles.modalBtnText}>갤러리 선택</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.modalBtn} onPress={pickFromCamera}>
-              <Text style={styles.modalBtnText}>카메라 촬영</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalBtn, styles.modalCancel]}
-              onPress={() => navigation.goBack()}
-            >
-              <Text style={styles.modalCancelText}>닫기</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        onClose={() => setPickerVisible(false)}
+        onCamera={pickFromCamera}
+        onGallery={pickFromGallery}
+      />
     </SafeAreaView>
   );
 }
@@ -367,19 +358,17 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0"
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.base
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold"
+    ...TYPOGRAPHY.h1,
+    color: COLORS.text.primary
   },
   headerClose: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: TOUCH_TARGET.min,
+    height: TOUCH_TARGET.min,
+    borderRadius: RADIUS.round,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -387,118 +376,109 @@ const styles = StyleSheet.create({
     width: "70%",
     aspectRatio: 1.2,
     alignSelf: "center",
-    borderRadius: 14,
+    borderRadius: RADIUS.lg,
     overflow: "hidden",
-    marginBottom: 20
+    marginBottom: SPACING.lg,
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center"
   },
   previewImg: {
     width: "100%",
     height: "100%",
     resizeMode: "cover"
   },
-  loadingBox: {
-    backgroundColor: "#FFF",
-    padding: 25,
-    borderRadius: 12,
+  previewPlaceholder: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.text.secondary,
+    textAlign: "center"
+  },
+  cameraBtn: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.md,
+    borderRadius: RADIUS.md,
     alignItems: "center",
-    marginBottom: 20
+    marginBottom: SPACING.lg,
+    minHeight: TOUCH_TARGET.comfortable,
+    justifyContent: "center"
+  },
+  cameraBtnText: {
+    ...TYPOGRAPHY.body,
+    color: "#FFF",
+    fontWeight: "600"
+  },
+  loadingBox: {
+    backgroundColor: COLORS.surface,
+    padding: SPACING.xl,
+    borderRadius: RADIUS.lg,
+    alignItems: "center",
+    marginBottom: SPACING.lg,
+    ...SHADOWS.sm
   },
   loadingText: {
-    marginTop: 12,
-    fontSize: 15,
-    color: "#555"
+    ...TYPOGRAPHY.small,
+    marginTop: SPACING.md,
+    color: COLORS.text.secondary
   },
   resultBox: {
     backgroundColor: "#E3F2FD",
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.base,
     borderWidth: 2,
-    borderColor: "#4A90E2",
-    marginBottom: 20
+    borderColor: COLORS.info,
+    marginBottom: SPACING.lg
   },
   resultTitle: {
-    fontSize: 17,
-    fontWeight: "bold",
-    marginBottom: 12
+    ...TYPOGRAPHY.h3,
+    color: COLORS.text.primary,
+    marginBottom: SPACING.md
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 6
+    marginBottom: SPACING.sm
   },
   rowLabel: {
-    color: "#555",
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.secondary,
     fontWeight: "600"
   },
   rowValue: {
-    color: "#1976D2",
+    ...TYPOGRAPHY.small,
+    color: COLORS.info,
     fontWeight: "bold"
   },
   label: {
-    fontSize: 16,
+    ...TYPOGRAPHY.body,
     fontWeight: "600",
-    marginBottom: 8
+    color: COLORS.text.primary,
+    marginBottom: SPACING.sm
   },
   input: {
     width: "100%",
-    padding: 14,
+    ...TYPOGRAPHY.body,
+    padding: SPACING.md,
     borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#CCC",
-    backgroundColor: "#FFF",
-    marginBottom: 20,
-    fontSize: 16
+    borderRadius: RADIUS.md,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.surface,
+    marginBottom: SPACING.lg,
+    minHeight: TOUCH_TARGET.comfortable
   },
   saveBtn: {
-    backgroundColor: "#8CCB7F",
-    paddingVertical: 14,
-    borderRadius: 10
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.md,
+    borderRadius: RADIUS.md,
+    minHeight: TOUCH_TARGET.comfortable,
+    ...SHADOWS.sm
   },
   saveBtnDisabled: {
-    backgroundColor: "#AAA"
+    backgroundColor: COLORS.text.disabled,
+    opacity: OPACITY.disabled
   },
   saveBtnText: {
+    ...TYPOGRAPHY.button,
     textAlign: "center",
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#FFF"
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.45)",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalBox: {
-    width: "80%",
-    backgroundColor: "#FFF",
-    padding: 25,
-    borderRadius: 15
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 18,
-    textAlign: "center"
-  },
-  modalBtn: {
-    backgroundColor: "#8CCB7F",
-    paddingVertical: 14,
-    borderRadius: 10,
-    marginBottom: 12
-  },
-  modalBtnText: {
-    color: "#FFF",
-    fontSize: 16,
-    fontWeight: "600",
-    textAlign: "center"
-  },
-  modalCancel: {
-    backgroundColor: "#DDD"
-  },
-  modalCancelText: {
-    textAlign: "center",
-    color: "#333",
-    fontWeight: "600"
+    color: COLORS.text.inverse
   }
 });

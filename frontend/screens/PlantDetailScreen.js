@@ -29,7 +29,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
 
-/* 
+/* 공통 컴포넌트 */
+import ImagePickerModal from "../components/ImagePickerModal";
+
+/*
   API 서비스
   - userPlantService.updatePlant(id, data)
   - userPlantService.deletePlant(id)
@@ -109,13 +112,14 @@ export default function PlantDetailScreen({ navigation, route }) {
     const newWater = `${y}-${m}-${d}`;
 
     try {
-      /* 백엔드에 최근 물준 날짜 기록 */
-      await userPlantService.updatePlant(currentPlant.id, {
-        last_watered: newWater
-      });
-
       /* 다음 물 주는 날짜 계산 */
       const period = currentPlant.WateringPeriod || currentPlant.wateringperiod || 7; // 기본 7일
+
+      /* 백엔드에 최근 물준 날짜 기록 */
+      await userPlantService.updatePlant(currentPlant.id, {
+        last_watered: newWater,
+        wateringperiod: period
+      });
       const next = new Date(selected);
       next.setDate(next.getDate() + period);
 
@@ -132,7 +136,9 @@ export default function PlantDetailScreen({ navigation, route }) {
       setCurrentPlant({
         ...currentPlant,
         last_watered: newWater,
-        next_watering: nextWaterDate
+        waterDate: newWater,
+        next_watering: nextWaterDate,
+        nextWater: nextWaterDate
       });
     } catch (error) {
       console.error("물 준 날짜 수정 실패:", error);
@@ -149,13 +155,14 @@ export default function PlantDetailScreen({ navigation, route }) {
     if (!dateString) return;
 
     try {
-      /* 백엔드에 최근 물준 날짜 기록 */
-      await userPlantService.updatePlant(currentPlant.id, {
-        last_watered: dateString
-      });
-
       /* 다음 물 주는 날짜 계산 */
       const period = currentPlant.WateringPeriod || currentPlant.wateringperiod || 7;
+
+      /* 백엔드에 최근 물준 날짜 기록 */
+      await userPlantService.updatePlant(currentPlant.id, {
+        last_watered: dateString,
+        wateringperiod: period
+      });
       const selected = new Date(dateString);
       const next = new Date(selected);
       next.setDate(selected.getDate() + period);
@@ -169,7 +176,9 @@ export default function PlantDetailScreen({ navigation, route }) {
       setCurrentPlant({
         ...currentPlant,
         last_watered: dateString,
-        next_watering: nextWaterDate
+        waterDate: dateString,
+        next_watering: nextWaterDate,
+        nextWater: nextWaterDate
       });
 
       setShowPicker(false);
@@ -387,7 +396,10 @@ export default function PlantDetailScreen({ navigation, route }) {
                 <input
                   type="date"
                   value={tempDate || currentPlant.last_watered || ""}
-                  max={new Date().toISOString().split('T')[0]}
+                  max={(() => {
+                    const kst = new Date(new Date().getTime() + (9 * 60 * 60 * 1000));
+                    return kst.toISOString().split('T')[0];
+                  })()}
                   onChange={(e) => {
                     setTempDate(e.target.value);
                     handleWebDateChange(e.target.value);
@@ -423,12 +435,12 @@ export default function PlantDetailScreen({ navigation, route }) {
                 value={
                   currentPlant.last_watered
                     ? new Date(currentPlant.last_watered)
-                    : new Date()
+                    : new Date(new Date().getTime() + (9 * 60 * 60 * 1000))
                 }
                 mode="date"
                 display={Platform.OS === "ios" ? "spinner" : "calendar"}
                 onChange={onChangeDate}
-                maximumDate={new Date()}
+                maximumDate={new Date(new Date().getTime() + (9 * 60 * 60 * 1000))}
               />
             )}
           </>
@@ -445,14 +457,14 @@ export default function PlantDetailScreen({ navigation, route }) {
         {/* ---------------- 주요 버튼 영역 ---------------- */}
         <View style={styles.btnArea}>
 
-          {/* 사진 수정 버튼 */}
+          {/* 사진 변경 버튼 */}
           <TouchableOpacity
             style={[styles.btn, { backgroundColor: "#7BA4F4" }]}
             onPress={() => setImagePickerVisible(true)}
             disabled={isUpdatingImage}
           >
             <Text style={styles.btnText}>
-              {isUpdatingImage ? "업데이트 중..." : "사진 수정"}
+              {isUpdatingImage ? "업데이트 중..." : "사진 변경"}
             </Text>
           </TouchableOpacity>
 
@@ -539,40 +551,12 @@ export default function PlantDetailScreen({ navigation, route }) {
       </ScrollView>
 
       {/* ---------------- 사진 선택 모달 ---------------- */}
-      <Modal
+      <ImagePickerModal
         visible={imagePickerVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setImagePickerVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>사진 변경</Text>
-
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={takePhoto}
-            >
-              <Text style={styles.modalButtonText}>📷 사진 촬영</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={pickFromGallery}
-            >
-              <Text style={styles.modalButtonText}>🖼 갤러리 선택</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, styles.modalCancelButton]}
-              onPress={() => setImagePickerVisible(false)}
-            >
-              <Text style={styles.modalCancelText}>취소</Text>
-            </TouchableOpacity>
-
-          </View>
-        </View>
-      </Modal>
+        onClose={() => setImagePickerVisible(false)}
+        onCamera={takePhoto}
+        onGallery={pickFromGallery}
+      />
     </SafeAreaView>
   );
 }
@@ -585,31 +569,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 15,
     backgroundColor: "#FAFAFA",
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0"
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold"
   },
   closeButton: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "#EFEFEF",
     justifyContent: "center",
     alignItems: "center"
   },
   closeButtonText: {
-    fontSize: 22,
-    color: "#444"
+    fontSize: 26,
+    color: "#666"
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingTop: 20
   },
   imageBox: {
@@ -683,44 +666,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#333"
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalContent: {
-    backgroundColor: "#FFF",
-    width: "80%",
-    maxWidth: 350,
-    borderRadius: 15,
-    padding: 20
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center"
-  },
-  modalButton: {
-    backgroundColor: "#8CCB7F",
-    padding: 13,
-    borderRadius: 10,
-    marginBottom: 12
-  },
-  modalButtonText: {
-    color: "#FFF",
-    textAlign: "center",
-    fontWeight: "600",
-    fontSize: 16
-  },
-  modalCancelButton: {
-    backgroundColor: "#E0E0E0"
-  },
-  modalCancelText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#444"
   }
 });

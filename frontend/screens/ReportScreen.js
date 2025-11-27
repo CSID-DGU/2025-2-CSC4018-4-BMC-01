@@ -1,15 +1,15 @@
 /*
   파일명: ReportScreen.js
   목적:
-    - 최근 30일 기준 리포트 + 누적 성실도(score) 리포트를 모두 지원
+    - 최근 30일 기준 리포트 + 누적 성실도 리포트를 모두 지원
     - 사용자 토글로 모드 선택 가능 (recent30 | score)
     - 기존 recent30 구조/레이아웃/스타일은 그대로 유지
-    - 신규 기능: score 안내 박스 + score 기반 그래프/카드 출력
+    - 신규 기능: 모드별 안내 박스 + score 기반 그래프/카드 출력
 
   데이터 소스:
     - fetchPlants(): Storage.js (API + 로컬메타)
     - localDbService.getWateringHistory(): 최근 N일간 물준 기록
-    - localDbService.recordWatering(): 누적 성실도(score) 갱신
+    - localDbService.recordWatering(): 누적 성실도 갱신
 */
 
 import React, { useEffect, useState } from "react";
@@ -128,7 +128,7 @@ export default function ReportScreen({ navigation }) {
       edges={["top", "bottom", "left", "right"]}
     >
       <ScrollView
-        contentContainerStyle={{ padding: 20, paddingBottom: 80 }}
+        contentContainerStyle={{ padding: 24, paddingBottom: 80 }}
         showsVerticalScrollIndicator={false}
       >
         {/* -------------------------------------------------
@@ -171,16 +171,25 @@ export default function ReportScreen({ navigation }) {
         </View>
 
         {/* -------------------------------------------------
-           안내 박스: score 모드에서만 표시
+           안내 박스: 모드별로 다른 안내 표시
         ------------------------------------------------- */}
-        {mode === "score" && (
+        {mode === "recent30" ? (
           <View style={styles.infoBox}>
             <Text style={styles.infoText}>
-              ● 누적 성실도(score) 안내{"\n"}
-              - 식물 등록 시 100점에서 시작{"\n"}
-              - 제때 물주기: +2점{"\n"}
-              - 지연: 1일당 -5점{"\n"}
-              - 너무 일찍 준 경우: 1일당 -3점{"\n"}
+              ● 최근 30일 성실도 안내{"\n"}
+              - 물주는 주기 대비 실제 물준 횟수로 계산{"\n"}
+              - 예상 물주기 횟수 = 30일 ÷ 물주는 주기{"\n"}
+              - 성실도 = (실제 횟수 ÷ 예상 횟수) × 100%{"\n"}
+              - 최대 100%까지 표시됩니다.
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.infoBox}>
+            <Text style={styles.infoText}>
+              ● 누적 성실도 안내{"\n"}
+              - 식물 등록 시 100점에서 시작합니다{"\n"}
+              - 제때 물주기: +2점 추가{"\n"}
+              - 물주기 지연: 1일당 -5점 감점{"\n"}
               - 점수는 0~100 사이에서 유지됩니다.
             </Text>
           </View>
@@ -201,7 +210,7 @@ export default function ReportScreen({ navigation }) {
           </View>
 
           <View style={styles.dashboardBox}>
-            <Text style={styles.dashboardTitle}>최근 30일 물준 횟수</Text>
+            <Text style={styles.dashboardTitle}>최근 30일{"\n"}물 준 횟수</Text>
             <Text style={styles.dashboardValue}>{successCount}회</Text>
           </View>
         </View>
@@ -211,7 +220,7 @@ export default function ReportScreen({ navigation }) {
            (모드에 따라 기준 rate 변경)
         ------------------------------------------------- */}
         <Text style={styles.sectionTitle}>
-          {mode === "recent30" ? "최근 30일 성실도" : "누적 성실도(score)"}
+          {mode === "recent30" ? "최근 30일 성실도" : "누적 성실도"}
         </Text>
 
         {report.map((r) => {
@@ -241,7 +250,7 @@ export default function ReportScreen({ navigation }) {
         {/* -------------------------------------------------
            식물별 상세 카드
         ------------------------------------------------- */}
-        <Text style={styles.sectionTitle}>식물별 관리 지표</Text>
+        <Text style={styles.sectionTitle}>화분별 관리 지표</Text>
 
         {report.map((r) => {
           const rate =
@@ -342,13 +351,17 @@ const styles = StyleSheet.create({
   dashboardTitle: {
     fontSize: 14,
     color: "#555",
-    marginBottom: 6,
+    marginBottom: 8,
+    textAlign: "center",
+    height: 40,
+    textAlignVertical: "center",
   },
 
   dashboardValue: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#333",
+    textAlign: "center",
   },
 
   sectionTitle: {
@@ -395,6 +408,12 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 15,
     marginBottom: 15,
+    // iOS 스타일 그림자 (opacity 애니메이션과 함께 작동)
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    // Android 호환
     elevation: 1,
   },
 

@@ -152,7 +152,11 @@ export default function CalendarScreen({ navigation }) {
       source={require("../assets/bg_full_calendar.png")} // ★ 캘린더 전용 배경
       style={{ flex: 1 }}
       resizeMode="cover"
+      blurRadius={2}
     >
+      {/* 흰색 오버레이 */}
+      <View style={styles.overlay} />
+
       <SafeAreaView
         style={{ flex: 1, backgroundColor: "transparent" }} // ★ 배경 이미지를 보이도록 투명 처리
         edges={["top", "bottom", "left", "right"]}
@@ -163,8 +167,9 @@ export default function CalendarScreen({ navigation }) {
 
           <TouchableOpacity
             onPress={() => navigation.navigate("NotificationSetting")}
+            style={styles.settingBtn}
           >
-            <Text style={{ fontSize: 22 }}>⚙️</Text>
+            <Text style={{ fontSize: 26 }}>⚙️</Text>
           </TouchableOpacity>
         </View>
 
@@ -192,7 +197,9 @@ export default function CalendarScreen({ navigation }) {
               <Text style={styles.infoTitle}>{selectedDate} 물 줄 화분</Text>
 
               {selectedPlants.length === 0 ? (
-                <Text style={styles.noneText}>물 줄 화분 없음</Text>
+                <View style={styles.emptyPlantBox}>
+                  <Text style={styles.noneText}>물 줄 화분 없음</Text>
+                </View>
               ) : (
                 <FlatList
                   data={selectedPlants}
@@ -211,9 +218,18 @@ export default function CalendarScreen({ navigation }) {
 
 /* ---------------------- 스타일 ---------------------- */
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(255, 255, 255, 0.25)"
+  },
+
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingTop: 10
   },
 
@@ -221,13 +237,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 20
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    marginBottom: 20
   },
 
   title: {
-    fontSize: 22,
-    fontWeight: "bold"
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333"
+  },
+
+  settingBtn: {
+    padding: 4
   },
 
   calendar: {
@@ -250,11 +272,21 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
 
+  emptyPlantBox: {
+    backgroundColor: "#FFF",
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    marginBottom: 12,
+    minHeight: 60,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
   noneText: {
     fontSize: 15,
-    color: "#777",
-    textAlign: "center",
-    marginTop: 5
+    color: "#999",
+    textAlign: "center"
   },
 
   plantBox: {

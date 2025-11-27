@@ -157,8 +157,9 @@ export const fetchPlants = async () => {
       const waterDate = p.last_watered || null;
       const WateringPeriod = m.WateringPeriod ?? p.wateringperiod ?? 7;
 
-      let nextWater = null;
-      if (waterDate) {
+      // DB의 next_watering 값이 있으면 우선 사용, 없으면 계산
+      let nextWater = p.next_watering || null;
+      if (!nextWater && waterDate) {
         const dt = new Date(waterDate);
         dt.setDate(dt.getDate() + WateringPeriod);
         nextWater = formatDate(dt);

@@ -39,7 +39,7 @@ import { fetchPlants, toggleFavorite } from "../utils/Storage";
     - 화면 회전 대비 안정적인 카드 너비 계산
 ----------------------------------------------------------- */
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const H_PADDING = 20; // 좌우 여백
+const H_PADDING = 24; // 좌우 여백
 const SPACING = 12;   // 카드 간 간격
 
 // 카드 2열 고정 width
@@ -100,11 +100,18 @@ export default function MyPlantListScreen({ navigation }) {
     <View style={styles.cardContainer}>
       {/* ⭐ 즐겨찾기 토글 버튼 */}
       <TouchableOpacity
-        style={styles.favoriteBtn}
+        style={[
+          styles.favoriteBtn,
+          item.favorite && styles.favoriteBtnActive
+        ]}
         onPress={() => handleToggleFavorite(item.id)}
+        activeOpacity={0.7}
       >
-        <Text style={styles.favoriteBtnText}>
-          {item.favorite ? "⭐" : "☆"}
+        <Text style={[
+          styles.favoriteBtnText,
+          item.favorite && styles.favoriteBtnTextActive
+        ]}>
+          {item.favorite ? "★" : "☆"}
         </Text>
       </TouchableOpacity>
 
@@ -202,7 +209,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
   },
 
@@ -226,14 +233,25 @@ const styles = StyleSheet.create({
   favoriteBtn: {
     position: "absolute",
     zIndex: 10,
-    right: 6,
-    top: 6,
+    right: 16,
+    top: 8,
     padding: 4,
   },
 
+  favoriteBtnActive: {
+    // 활성화 시 추가 스타일 (필요시)
+  },
+
   favoriteBtnText: {
-    fontSize: 22,
-    color: "#F5D742",
+    fontSize: 24,
+    color: "#DDD",
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+
+  favoriteBtnTextActive: {
+    color: "#FFD700",
   },
 
   /* 2열 정렬 */
@@ -252,6 +270,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 12,
+    // iOS 스타일 그림자 (opacity 애니메이션과 함께 작동)
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    // Android 호환
     elevation: 2,
   },
 

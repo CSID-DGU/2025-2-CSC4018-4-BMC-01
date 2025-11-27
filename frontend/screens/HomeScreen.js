@@ -3,8 +3,8 @@
   목적:
     - 홈 화면 UI 및 기능 관리
       · 현재 시간/날씨 표시
-      · 대표 식물 슬라이드
-      · 오늘 물 줄 식물 리스트
+      · 대표 화분 슬라이드
+      · 오늘 물 줄 화분 리스트
     - (신규) 고정 배경 이미지 적용
       → ImageBackground로 전체 화면만 감싸고
         ScrollView는 투명 처리하여 배경이 스크롤되지 않도록 유지
@@ -28,9 +28,10 @@ import * as Location from "expo-location";
 
 import { fetchPlants, updateWaterDate } from "../utils/Storage";
 import { weatherService } from "../src/services";
+import { COLORS, SPACING, SHADOWS, TYPOGRAPHY, RADIUS, OPACITY, TOUCH_TARGET } from "../constants/theme";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const CARD_WIDTH = SCREEN_WIDTH - 40;
+const CARD_WIDTH = SCREEN_WIDTH - (SPACING.xl * 2); // 좌우 패딩 24px씩 = 48px
 
 /* ----------------------------------------------------------
     메인 함수
@@ -163,14 +164,19 @@ export default function HomeScreen({ navigation }) {
   }, [navigation]);
 
   /* ----------------------------------------------------------
-      대표 식물 필터
+      대표 화분 필터
   ---------------------------------------------------------- */
   const favoritePlants = plants.filter((p) => p.favorite === true);
 
   /* ----------------------------------------------------------
-      오늘 물 줄 식물 필터
+      오늘 물 줄 화분 필터 (한국 시간 기준)
   ---------------------------------------------------------- */
-  const today = new Date().toISOString().split("T")[0];
+  const getTodayKST = () => {
+    const now = new Date();
+    const kst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    return kst.toISOString().split("T")[0];
+  };
+  const today = getTodayKST();
   const mustWaterPlants = plants.filter((p) => !p.nextWater || p.nextWater <= today);
 
   /* ----------------------------------------------------------
@@ -241,7 +247,11 @@ export default function HomeScreen({ navigation }) {
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.waterBtn} onPress={() => giveWater(item)}>
+      <TouchableOpacity
+        style={styles.waterBtn}
+        onPress={() => giveWater(item)}
+        activeOpacity={OPACITY.active}
+      >
         <Text style={styles.waterBtnText}>물 줬어요</Text>
       </TouchableOpacity>
     </View>
@@ -257,7 +267,11 @@ export default function HomeScreen({ navigation }) {
       source={require("../assets/bg_full_home.png")} // ★ 홈 배경 이미지
       style={{ flex: 1 }}
       resizeMode="cover"
+      blurRadius={2}
     >
+      {/* 흰색 오버레이 */}
+      <View style={styles.overlay} />
+
       <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
         <ScrollView
           style={[styles.container, { backgroundColor: "transparent" }]} // ★ 배경 투명화
@@ -267,13 +281,13 @@ export default function HomeScreen({ navigation }) {
           {/* ------------------ 날씨 ------------------ */}
           <View style={styles.weatherBox}>
             <Text style={styles.dateText}>{dateText}</Text>
-            <Text style={styles.locText}>{locationText}</Text>
-            <Text style={styles.tempText}>{weatherText}</Text>
-            <Text style={styles.msgText}>{generateWeatherMessage(tempValue)}</Text>
+            <Text style={styles.locText}>📍 {locationText}</Text>
+            <Text style={styles.tempText}>🌡️ {weatherText}</Text>
+            <Text style={styles.msgText}>💡 {generateWeatherMessage(tempValue)}</Text>
           </View>
 
-          {/* ------------------ 대표 식물 ------------------ */}
-          <Text style={styles.sectionTitle}>대표 식물</Text>
+          {/* ------------------ 대표 화분 ------------------ */}
+          <Text style={styles.sectionTitle}>대표 화분</Text>
 
           {favoritePlants.length > 0 ? (
             <View style={styles.carouselContainer}>
@@ -289,29 +303,22 @@ export default function HomeScreen({ navigation }) {
                 decelerationRate="fast"
                 onScroll={onScroll}
                 scrollEventThrottle={16}
-                contentContainerStyle={{ paddingRight: 20 }}
+                snapToAlignment="start"
+                disableIntervalMomentum={true}
               />
 
-              {/* 오른쪽 화살표 */}
+              {/* 오른쪽 화살표 (터치 비활성화 - 표시만) */}
               {currentSlideIndex < favoritePlants.length - 1 && (
-                <TouchableOpacity
-                  style={styles.rightArrow}
-                  onPress={goToNextSlide}
-                  activeOpacity={0.7}
-                >
+                <View style={styles.rightArrow}>
                   <Text style={styles.arrowText}>▶</Text>
-                </TouchableOpacity>
+                </View>
               )}
 
-              {/* 왼쪽 화살표 */}
+              {/* 왼쪽 화살표 (터치 비활성화 - 표시만) */}
               {currentSlideIndex > 0 && (
-                <TouchableOpacity
-                  style={styles.leftArrow}
-                  onPress={goToPrevSlide}
-                  activeOpacity={0.7}
-                >
+                <View style={styles.leftArrow}>
                   <Text style={styles.arrowText}>◀</Text>
-                </TouchableOpacity>
+                </View>
               )}
 
               {/* 페이지 인디케이터 */}
@@ -334,16 +341,16 @@ export default function HomeScreen({ navigation }) {
               style={styles.emptyFavoriteBox}
               onPress={() => navigation.navigate("Plants")}
             >
-              <Text style={styles.emptyFavoriteText}>대표식물을 선택해주세요</Text>
+              <Text style={styles.emptyFavoriteText}>대표화분을 선택해주세요</Text>
               <Text style={styles.emptyFavoriteSub}>내 화분 목록으로 이동하기</Text>
             </TouchableOpacity>
           )}
 
           {/* ------------------ 물주기 ------------------ */}
-          <Text style={styles.sectionTitle}>오늘 물 줄 식물</Text>
+          <Text style={styles.sectionTitle}>오늘 물 줄 화분</Text>
 
           {mustWaterPlants.length === 0 ? (
-            <Text style={styles.doneText}>오늘 물 줄 식물이 없어요!</Text>
+            <Text style={styles.doneText}>오늘 물 줄 화분이 없어요!</Text>
           ) : (
             <FlatList
               data={mustWaterPlants}
@@ -362,73 +369,97 @@ export default function HomeScreen({ navigation }) {
     스타일
 ---------------------------------------------------------- */
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(200, 200, 200, 0.2)"
+  },
+
   container: {
     flex: 1,
-    paddingHorizontal: 20
-    // backgroundColor 제거됨 → ScrollView 투명 처리
+    paddingHorizontal: SPACING.xl
   },
 
   /* ------------------ 날씨 박스 ------------------ */
   weatherBox: {
-    backgroundColor: "#FFF",
-    padding: 18,
-    borderRadius: 15,
-    marginBottom: 25
+    backgroundColor: COLORS.surface,
+    padding: SPACING.lg,
+    borderRadius: RADIUS.xl,
+    marginTop: SPACING.md,
+    marginBottom: SPACING.xl,
+    ...SHADOWS.sm
   },
-  dateText: { fontSize: 16, fontWeight: "600" },
-  locText: { fontSize: 15, marginTop: 2 },
-  tempText: { fontSize: 16, fontWeight: "600", marginTop: 5 },
-  msgText: { marginTop: 5, color: "#444" },
+  dateText: {
+    ...TYPOGRAPHY.body,
+    fontWeight: "600",
+    color: COLORS.text.primary
+  },
+  locText: {
+    ...TYPOGRAPHY.small,
+    marginTop: SPACING.xs,
+    color: COLORS.text.secondary
+  },
+  tempText: {
+    ...TYPOGRAPHY.body,
+    fontWeight: "600",
+    marginTop: SPACING.sm,
+    color: COLORS.text.primary
+  },
+  msgText: {
+    ...TYPOGRAPHY.small,
+    marginTop: SPACING.sm,
+    color: COLORS.text.secondary
+  },
 
-  /* ------------------ 대표 식물 ------------------ */
+  /* ------------------ 대표 화분 ------------------ */
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 12
+    ...TYPOGRAPHY.h2,
+    color: COLORS.text.primary,
+    marginBottom: SPACING.md
   },
 
   emptyFavoriteBox: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    paddingVertical: 40,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    paddingVertical: SPACING.xxxl,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: SPACING.lg,
     borderWidth: 1,
-    borderColor: "#E0E0E0"
+    borderColor: COLORS.border,
+    ...SHADOWS.sm
   },
   emptyFavoriteText: {
-    fontSize: 16,
+    ...TYPOGRAPHY.body,
     fontWeight: "600",
-    color: "#444"
+    color: COLORS.text.secondary
   },
   emptyFavoriteSub: {
-    fontSize: 13,
-    marginTop: 6,
-    color: "#777"
+    ...TYPOGRAPHY.small,
+    marginTop: SPACING.sm,
+    color: COLORS.text.tertiary
   },
 
   carouselContainer: {
     position: "relative",
-    marginBottom: 30
+    marginBottom: SPACING.xxl
   },
 
   slideBox: {
     width: CARD_WIDTH,
-    backgroundColor: "#FFF",
-    borderRadius: 20,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.xxl,
     overflow: "hidden",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8
+    ...SHADOWS.md
   },
 
   slideImg: {
     width: "100%",
     aspectRatio: 1,
-    backgroundColor: "#E8E8E8",
+    backgroundColor: COLORS.border,
     resizeMode: "cover"
   },
   noImage: {
@@ -436,81 +467,73 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   noImageText: {
-    color: "#999",
-    fontSize: 14
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.disabled
   },
 
   slideInfo: {
-    padding: 20
+    padding: SPACING.lg
   },
   slideName: {
+    ...TYPOGRAPHY.h2,
     fontWeight: "700",
-    fontSize: 22,
-    marginBottom: 8
+    color: COLORS.text.primary,
+    marginBottom: SPACING.sm
   },
   slideDetail: {
-    fontSize: 14,
-    color: "#777",
-    marginTop: 4
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.tertiary,
+    marginTop: SPACING.xs
   },
 
   /* 화살표 */
   rightArrow: {
     position: "absolute",
-    right: 20,
-    top: "35%",
+    right: SPACING.md,
+    top: "30%",
     backgroundColor: "rgba(255,255,255,0.5)",
-    borderRadius: 25,
-    width: 50,
-    height: 50,
+    borderRadius: RADIUS.round,
+    width: TOUCH_TARGET.min,
+    height: TOUCH_TARGET.min,
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform.OS === "web"
-      ? { cursor: "pointer", backdropFilter: "blur(4px)" }
-      : { elevation: 3 }),
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4
+    ...(Platform.OS === "web" ? { cursor: "pointer" } : {}),
+    ...SHADOWS.sm
   },
   leftArrow: {
     position: "absolute",
-    left: 0,
-    top: "35%",
+    left: SPACING.md,
+    top: "30%",
     backgroundColor: "rgba(255,255,255,0.5)",
-    borderRadius: 25,
-    width: 50,
-    height: 50,
+    borderRadius: RADIUS.round,
+    width: TOUCH_TARGET.min,
+    height: TOUCH_TARGET.min,
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform.OS === "web"
-      ? { cursor: "pointer", backdropFilter: "blur(4px)" }
-      : { elevation: 3 }),
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4
+    ...(Platform.OS === "web" ? { cursor: "pointer" } : {}),
+    ...SHADOWS.sm
   },
   arrowText: {
-    fontSize: 20,
-    color: "#555"
+    fontSize: 18,
+    color: COLORS.text.secondary,
+    fontWeight: "700"
   },
 
   pagination: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 15
+    marginTop: SPACING.base
   },
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#CCC",
-    marginHorizontal: 4
+    width: SPACING.sm,
+    height: SPACING.sm,
+    borderRadius: SPACING.xs,
+    backgroundColor: COLORS.border,
+    marginHorizontal: SPACING.xs
   },
   activeDot: {
-    backgroundColor: "#8CCB7F",
+    backgroundColor: COLORS.primary,
     width: 10,
     height: 10,
     borderRadius: 5
@@ -521,36 +544,40 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#FFF",
-    borderRadius: 12,
-    padding: 15,
-    marginBottom: 12
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.base,
+    marginBottom: SPACING.md,
+    ...SHADOWS.sm
   },
   waterName: {
-    fontSize: 16,
-    fontWeight: "600"
+    ...TYPOGRAPHY.body,
+    fontWeight: "600",
+    color: COLORS.text.primary
   },
   waterSub: {
-    fontSize: 13,
-    color: "#777",
-    marginTop: 4
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.tertiary,
+    marginTop: SPACING.xs
   },
 
   waterBtn: {
-    backgroundColor: "#8CCB7F",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 8
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.base,
+    borderRadius: RADIUS.sm,
+    minHeight: TOUCH_TARGET.min
   },
   waterBtnText: {
-    color: "#FFF",
-    fontWeight: "600"
+    ...TYPOGRAPHY.button,
+    color: COLORS.text.inverse
   },
 
   doneText: {
-    marginTop: 10,
+    ...TYPOGRAPHY.body,
+    marginTop: SPACING.md,
     textAlign: "center",
-    color: "#777",
+    color: COLORS.text.tertiary,
     fontWeight: "600"
   }
 });

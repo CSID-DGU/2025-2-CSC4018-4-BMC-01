@@ -22,6 +22,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 
+/* 공통 컴포넌트 */
+import ImagePickerModal from "../components/ImagePickerModal";
+
+/* 디자인 시스템 */
+import { COLORS, SPACING, SHADOWS, TYPOGRAPHY, RADIUS, OPACITY, TOUCH_TARGET } from "../constants/theme";
+
 import {
   saveLeafImageToStorage
 } from "../utils/Storage";
@@ -165,8 +171,11 @@ export default function DiseaseResultScreen({ navigation, route }) {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FAFAFA" }}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>병충해 분석</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.closeButton}>✕</Text>
+        <TouchableOpacity
+          style={styles.closeBtn}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.closeText}>✕</Text>
         </TouchableOpacity>
       </View>
 
@@ -186,7 +195,11 @@ export default function DiseaseResultScreen({ navigation, route }) {
         </View>
 
         {/* 촬영 버튼 */}
-        <TouchableOpacity style={styles.cameraBtn} onPress={openPicker}>
+        <TouchableOpacity
+          style={styles.cameraBtn}
+          onPress={openPicker}
+          activeOpacity={OPACITY.active}
+        >
           <Text style={styles.cameraBtnText}>잎 사진 촬영 / 선택</Text>
         </TouchableOpacity>
 
@@ -219,28 +232,12 @@ export default function DiseaseResultScreen({ navigation, route }) {
       </ScrollView>
 
       {/* 사진 선택 모달 */}
-      <Modal visible={pickerVisible} transparent animationType="fade">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>사진 선택</Text>
-
-            <TouchableOpacity style={styles.modalBtn} onPress={pickFromGallery}>
-              <Text style={styles.modalText}>갤러리</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.modalBtn} onPress={pickFromCamera}>
-              <Text style={styles.modalText}>카메라</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalBtn, styles.cancelBtn]}
-              onPress={closePicker}
-            >
-              <Text style={[styles.modalText, styles.cancelText]}>닫기</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <ImagePickerModal
+        visible={pickerVisible}
+        onClose={closePicker}
+        onCamera={pickFromCamera}
+        onGallery={pickFromGallery}
+      />
     </SafeAreaView>
   );
 }
@@ -251,129 +248,105 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderColor: "#E0E0E0"
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.base
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold"
+    ...TYPOGRAPHY.h1,
+    color: COLORS.text.primary
   },
-  closeButton: {
+  closeBtn: {
+    width: TOUCH_TARGET.min,
+    height: TOUCH_TARGET.min,
+    borderRadius: RADIUS.round,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  closeText: {
     fontSize: 26,
-    color: "#666"
+    color: COLORS.text.tertiary
   },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20
+    paddingHorizontal: SPACING.xl,
+    paddingTop: SPACING.lg
   },
   sub: {
-    fontSize: 15,
-    color: "#777",
-    marginBottom: 20
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.tertiary,
+    marginBottom: SPACING.lg
   },
   previewBox: {
     width: "70%",
     aspectRatio: 1.2,
     alignSelf: "center",
-    backgroundColor: "#EEE",
-    borderRadius: 15,
+    backgroundColor: COLORS.border,
+    borderRadius: RADIUS.xl,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20
+    marginBottom: SPACING.lg
   },
   previewImg: {
     width: "100%",
     height: "100%",
-    borderRadius: 15,
+    borderRadius: RADIUS.xl,
     resizeMode: "cover"
   },
   previewText: {
-    color: "#666"
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.tertiary
   },
   cameraBtn: {
-    backgroundColor: "#8CCB7F",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 25
+    backgroundColor: COLORS.primary,
+    paddingVertical: SPACING.base,
+    borderRadius: RADIUS.md,
+    marginBottom: SPACING.xl,
+    minHeight: TOUCH_TARGET.comfortable,
+    ...SHADOWS.sm
   },
   cameraBtnText: {
+    ...TYPOGRAPHY.button,
     textAlign: "center",
-    color: "#FFF",
-    fontWeight: "bold",
-    fontSize: 16
+    color: COLORS.text.inverse
   },
   loadingBox: {
-    backgroundColor: "#FFF",
-    padding: 30,
-    borderRadius: 12,
+    backgroundColor: COLORS.surface,
+    padding: SPACING.xxl,
+    borderRadius: RADIUS.lg,
     alignItems: "center",
-    marginBottom: 25
+    marginBottom: SPACING.xl,
+    ...SHADOWS.sm
   },
   loadingText: {
-    marginTop: 15,
-    color: "#555"
+    ...TYPOGRAPHY.small,
+    marginTop: SPACING.base,
+    color: COLORS.text.secondary
   },
   resultBox: {
     backgroundColor: "#E8F5E9",
-    padding: 20,
-    borderRadius: 12,
+    padding: SPACING.lg,
+    borderRadius: RADIUS.lg,
     borderWidth: 1.5,
-    borderColor: "#8CCB7F"
+    borderColor: COLORS.primary
   },
   resultTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15
+    ...TYPOGRAPHY.h3,
+    color: COLORS.text.primary,
+    marginBottom: SPACING.base
   },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10
+    marginBottom: SPACING.md
   },
   resultLabel: {
-    color: "#555",
+    ...TYPOGRAPHY.small,
+    color: COLORS.text.secondary,
     fontWeight: "600"
   },
   resultValue: {
+    ...TYPOGRAPHY.small,
     color: "#2E7D32",
     fontWeight: "bold"
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalBox: {
-    width: "75%",
-    backgroundColor: "#FFF",
-    padding: 25,
-    borderRadius: 15
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 15,
-    textAlign: "center"
-  },
-  modalBtn: {
-    backgroundColor: "#8CCB7F",
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 12
-  },
-  modalText: {
-    color: "#FFF",
-    textAlign: "center",
-    fontWeight: "bold"
-  },
-  cancelBtn: {
-    backgroundColor: "#DDD"
-  },
-  cancelText: {
-    color: "#333"
   }
 });
