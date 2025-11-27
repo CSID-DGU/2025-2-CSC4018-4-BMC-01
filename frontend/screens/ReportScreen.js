@@ -1,21 +1,15 @@
 /*
   파일명: ReportScreen.js
   목적:
-    - 최근 30일 기준 식물 관리 성실도 리포트 화면
-    - watering_logs 기반 “실제 물준 횟수”를 기준으로 정확한 성실도 계산
-    - 기존 UI/구조/스타일은 그대로 유지
+    - 최근 30일 기준 리포트 + 누적 성실도(score) 리포트를 모두 지원
+    - 사용자 토글로 모드 선택 가능 (recent30 | score)
+    - 기존 recent30 구조/레이아웃/스타일은 그대로 유지
+    - 신규 기능: score 안내 박스 + score 기반 그래프/카드 출력
 
   데이터 소스:
-    - fetchPlants(): Storage.js에서 API + 로컬메타 결합한 결과 사용
-    - localDbService.getWateringHistory():
-        · 최근 N일간 물준 날짜 기록 조회
-        · ReportScreen 계산용
-
-  성실도 계산 기준(개선된 버전):
-    - 기간: 최근 30일
-    - 예정된 물주기 횟수 = floor(30 / WateringPeriod)
-    - 실제 물준 횟수 = watering_logs 테이블에서 recent N일간 기록 count
-    - 성실도(%) = (실제 / 예정) * 100
+    - fetchPlants(): Storage.js (API + 로컬메타)
+    - localDbService.getWateringHistory(): 최근 N일간 물준 기록
+    - localDbService.recordWatering(): 누적 성실도(score) 갱신
 */
 
 import React, { useEffect, useState } from "react";
@@ -24,6 +18,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchPlants } from "../utils/Storage";
@@ -32,8 +27,11 @@ import * as localDb from "../src/services/localDbService";
 export default function ReportScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
   const [report, setReport] = useState([]);
+  const [mode, setMode] = useState("recent30"); // ★ 신규: 성실도 리포트 모드
 
-  /* ------------------ 데이터 로드 ------------------ */
+  /* -------------------------------------------------
+     데이터 로드
+  ------------------------------------------------- */
   const loadData = async () => {
     const list = await fetchPlants();
     setPlants(list);
@@ -42,18 +40,20 @@ export default function ReportScreen({ navigation }) {
     setReport(rep);
   };
 
-  /* 초기 로드 */
   useEffect(() => {
     loadData();
   }, []);
 
-  /* 화면 focus 시 자동 새로고침 */
   useEffect(() => {
     const unsub = navigation.addListener("focus", loadData);
     return unsub;
   }, [navigation]);
 
-  /* ------------------ 성실도 계산(개선) ------------------ */
+  /* -------------------------------------------------
+     리포트 생성
+     - 기존 recent30 방식 유지
+     - 신규: p.score (localDb 저장) 함께 포함
+  ------------------------------------------------- */
   const generateReport = async (list) => {
     const DAYS = 30;
     const results = [];
@@ -61,15 +61,18 @@ export default function ReportScreen({ navigation }) {
     for (const p of list) {
       const period = p.WateringPeriod ?? 7;
 
-      // 예정 물주기 횟수
       const expected = Math.floor(DAYS / period) || 1;
 
-      // 실제 물준 기록 (watering_logs 테이블)
       const logs = await localDb.getWateringHistory(p.id, DAYS);
       const actual = logs.length;
 
-      // 성실도 계산
-      const rate = Math.min(100, Math.round((actual / expected) * 100));
+      const recentRate = Math.min(
+        100,
+        Math.round((actual / expected) * 100)
+      );
+
+      // ★ 신규: score 기반 리포트 — 데이터만 병합, 계산은 DB recordWatering에서 수행
+      const scoreRate = p.score ?? 100;
 
       results.push({
         id: p.id,
@@ -79,30 +82,46 @@ export default function ReportScreen({ navigation }) {
         period,
         expected,
         actual,
-        rate,
+        recentRate,
+        scoreRate,
       });
     }
 
     return results;
   };
 
-  /* ------------------ 전체 요약 ------------------ */
-  const avgRate =
+  /* -------------------------------------------------
+     요약값 계산
+     - 모드별로 서로 다른 rate 사용
+  ------------------------------------------------- */
+  const avg =
     report.length === 0
       ? 0
       : Math.round(
-          report.reduce((acc, r) => acc + r.rate, 0) / report.length
+          report.reduce(
+            (acc, r) =>
+              acc +
+              (mode === "recent30" ? r.recentRate : r.scoreRate),
+            0
+          ) / report.length
         );
 
-  /* ------------------ 전체 물준 횟수 ------------------ */
   const successCount =
     report.reduce((acc, r) => acc + r.actual, 0);
 
-  /* ------------------ 그래프 최대치 설정 ------------------ */
   const maxRate =
-    report.length === 0 ? 100 : Math.max(...report.map((r) => r.rate), 100);
+    report.length === 0
+      ? 100
+      : Math.max(
+          ...(mode === "recent30"
+            ? report.map((r) => r.recentRate)
+            : report.map((r) => r.scoreRate)),
+          100
+        );
 
-  /* ------------------ 화면 구성 ------------------ */
+  /* -------------------------------------------------
+     화면 구성
+  ------------------------------------------------- */
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "#FAFAFA" }}
@@ -112,11 +131,68 @@ export default function ReportScreen({ navigation }) {
         contentContainerStyle={{ padding: 20, paddingBottom: 80 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* ------------------ 대시보드 3칸 ------------------ */}
+        {/* -------------------------------------------------
+           모드 토글 (recent30 | score)
+        ------------------------------------------------- */}
+        <View style={styles.toggleRow}>
+          <TouchableOpacity
+            style={[
+              styles.toggleBtn,
+              mode === "recent30" && styles.toggleActive,
+            ]}
+            onPress={() => setMode("recent30")}
+          >
+            <Text
+              style={[
+                styles.toggleText,
+                mode === "recent30" && styles.toggleTextActive,
+              ]}
+            >
+              최근 30일
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.toggleBtn,
+              mode === "score" && styles.toggleActive,
+            ]}
+            onPress={() => setMode("score")}
+          >
+            <Text
+              style={[
+                styles.toggleText,
+                mode === "score" && styles.toggleTextActive,
+              ]}
+            >
+              누적 성실도
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* -------------------------------------------------
+           안내 박스: score 모드에서만 표시
+        ------------------------------------------------- */}
+        {mode === "score" && (
+          <View style={styles.infoBox}>
+            <Text style={styles.infoText}>
+              ● 누적 성실도(score) 안내{"\n"}
+              - 식물 등록 시 100점에서 시작{"\n"}
+              - 제때 물주기: +2점{"\n"}
+              - 지연: 1일당 -5점{"\n"}
+              - 너무 일찍 준 경우: 1일당 -3점{"\n"}
+              - 점수는 0~100 사이에서 유지됩니다.
+            </Text>
+          </View>
+        )}
+
+        {/* -------------------------------------------------
+           대시보드 3칸 (원본 유지)
+        ------------------------------------------------- */}
         <View style={styles.dashboardRow}>
           <View style={styles.dashboardBox}>
             <Text style={styles.dashboardTitle}>평균 성실도</Text>
-            <Text style={styles.dashboardValue}>{avgRate}%</Text>
+            <Text style={styles.dashboardValue}>{avg}%</Text>
           </View>
 
           <View style={styles.dashboardBox}>
@@ -130,55 +206,79 @@ export default function ReportScreen({ navigation }) {
           </View>
         </View>
 
-        {/* ------------------ 성실도 바 그래프 ------------------ */}
-        <Text style={styles.sectionTitle}>성실도 그래프</Text>
+        {/* -------------------------------------------------
+           성실도 바 그래프
+           (모드에 따라 기준 rate 변경)
+        ------------------------------------------------- */}
+        <Text style={styles.sectionTitle}>
+          {mode === "recent30" ? "최근 30일 성실도" : "누적 성실도(score)"}
+        </Text>
 
-        {report.map((r) => (
-          <View key={r.id} style={styles.graphRow}>
-            <Text style={styles.graphLabel}>{r.name}</Text>
+        {report.map((r) => {
+          const rate =
+            mode === "recent30" ? r.recentRate : r.scoreRate;
 
-            <View style={styles.graphBarBackground}>
-              <View
-                style={[
-                  styles.graphBarFill,
-                  { width: `${(r.rate / maxRate) * 100}%` },
-                ]}
-              />
+          return (
+            <View key={r.id} style={styles.graphRow}>
+              <Text style={styles.graphLabel}>{r.name}</Text>
+
+              <View style={styles.graphBarBackground}>
+                <View
+                  style={[
+                    styles.graphBarFill,
+                    {
+                      width: `${(rate / maxRate) * 100}%`,
+                    },
+                  ]}
+                />
+              </View>
+
+              <Text style={styles.graphRate}>{rate}%</Text>
             </View>
+          );
+        })}
 
-            <Text style={styles.graphRate}>{r.rate}%</Text>
-          </View>
-        ))}
-
-        {/* ------------------ 식물별 상세 카드 ------------------ */}
+        {/* -------------------------------------------------
+           식물별 상세 카드
+        ------------------------------------------------- */}
         <Text style={styles.sectionTitle}>식물별 관리 지표</Text>
 
-        {report.map((r) => (
-          <View key={r.id} style={styles.card}>
-            <Text style={styles.cardName}>{r.name}</Text>
+        {report.map((r) => {
+          const rate =
+            mode === "recent30" ? r.recentRate : r.scoreRate;
 
-            <Text style={styles.cardText}>
-              마지막 물 준 날짜: {r.waterDate || "기록 없음"}
-            </Text>
-            <Text style={styles.cardText}>
-              다음 물 줄 날짜: {r.nextWater || "예정 없음"}
-            </Text>
-            <Text style={styles.cardText}>
-              물주는 주기: {r.period}일
-            </Text>
+          return (
+            <View key={r.id} style={styles.card}>
+              <Text style={styles.cardName}>{r.name}</Text>
 
-            <Text style={styles.cardText}>
-              최근 30일 실제 물준 횟수: {r.actual}회
-            </Text>
-            <Text style={styles.cardText}>
-              예정된 물주기 횟수: {r.expected}회
-            </Text>
+              <Text style={styles.cardText}>
+                마지막 물 준 날짜: {r.waterDate || "기록 없음"}
+              </Text>
+              <Text style={styles.cardText}>
+                다음 물 줄 날짜: {r.nextWater || "예정 없음"}
+              </Text>
+              <Text style={styles.cardText}>
+                물주는 주기: {r.period}일
+              </Text>
 
-            <View style={styles.rateBox}>
-              <Text style={styles.rateText}>{r.rate}%</Text>
+              {/* recent30 모드에서만 표시 */}
+              {mode === "recent30" && (
+                <>
+                  <Text style={styles.cardText}>
+                    최근 30일 실제 물준 횟수: {r.actual}회
+                  </Text>
+                  <Text style={styles.cardText}>
+                    예정된 물주기 횟수: {r.expected}회
+                  </Text>
+                </>
+              )}
+
+              <View style={styles.rateBox}>
+                <Text style={styles.rateText}>{rate}%</Text>
+              </View>
             </View>
-          </View>
-        ))}
+          );
+        })}
       </ScrollView>
     </SafeAreaView>
   );
@@ -188,6 +288,42 @@ export default function ReportScreen({ navigation }) {
    스타일
 -------------------------------------------------- */
 const styles = StyleSheet.create({
+  toggleRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 15,
+  },
+  toggleBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginHorizontal: 10,
+    backgroundColor: "#EEE",
+  },
+  toggleActive: {
+    backgroundColor: "#8CCB7F",
+  },
+  toggleText: {
+    fontSize: 14,
+    color: "#555",
+  },
+  toggleTextActive: {
+    color: "#FFF",
+    fontWeight: "bold",
+  },
+
+  infoBox: {
+    backgroundColor: "#F5FDEB",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  infoText: {
+    color: "#4A6F3D",
+    fontSize: 13,
+    lineHeight: 20,
+  },
+
   dashboardRow: {
     flexDirection: "row",
     justifyContent: "space-between",
