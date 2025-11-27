@@ -131,7 +131,7 @@ export default function PlantDetailScreen({ navigation, route }) {
       /*
         프론트 상태 갱신
         - 백엔드 반영 OK
-        - UI도 즉시 업데이트
+        - UI 즉시 반영
       */
       setCurrentPlant({
         ...currentPlant,
@@ -141,7 +141,7 @@ export default function PlantDetailScreen({ navigation, route }) {
         nextWater: nextWaterDate
       });
     } catch (error) {
-      console.error("물 준 날짜 수정 실패:", error);
+      console.error("[PlantDetailScreen] 물 준 날짜 수정 실패:", error);
       Alert.alert("오류", "물 준 날짜 수정에 실패했습니다.");
     }
   };
@@ -184,7 +184,7 @@ export default function PlantDetailScreen({ navigation, route }) {
       setShowPicker(false);
       window.alert("물 준 날짜가 수정되었습니다.");
     } catch (error) {
-      console.error("물 준 날짜 수정 실패:", error);
+      console.error("[PlantDetailScreen] 물 준 날짜 수정 실패:", error);
       window.alert("물 준 날짜 수정에 실패했습니다.");
     }
   };
@@ -255,7 +255,7 @@ export default function PlantDetailScreen({ navigation, route }) {
 
         return base64;
       } catch (err) {
-        console.error("웹 이미지 변환 실패:", err);
+        console.error("[PlantDetailScreen] 웹 이미지 변환 실패:", err);
         return tempUri;
       }
     }
@@ -267,7 +267,7 @@ export default function PlantDetailScreen({ navigation, route }) {
       await FileSystem.copyAsync({ from: tempUri, to: dest });
       return dest;
     } catch (err) {
-      console.error("모바일 이미지 저장 실패:", err);
+      console.error("[PlantDetailScreen] 모바일 이미지 저장 실패:", err);
       return tempUri;
     }
   };
@@ -297,7 +297,7 @@ export default function PlantDetailScreen({ navigation, route }) {
         Alert.alert("완료", "사진이 변경되었습니다.");
       }
     } catch (err) {
-      console.error("사진 변경 실패:", err);
+      console.error("[PlantDetailScreen] 사진 변경 실패:", err);
 
       if (Platform.OS === "web") window.alert("사진 변경 실패");
       else Alert.alert("오류", "사진 변경에 실패했습니다.");

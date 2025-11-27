@@ -75,7 +75,9 @@ React Native → expo-sqlite (오프라인 DB)
     │       ├── plantService.js      # 식물 CRUD (로컬 DB)
     │       ├── userService.js       # 사용자 관리 (로컬 DB)
     │       └── userPlantService.js  # 화분 관리 (로컬 DB)
-    ├── screens/          # 화면 컴포넌트 (7개)
+    ├── screens/          # 화면 컴포넌트 (8개)
+    ├── components/       # 재사용 컴포넌트
+    ├── constants/        # 디자인 시스템 상수
     ├── navigation/       # React Navigation 설정
     ├── utils/            # 유틸리티
     └── App.js            # 앱 진입점 (DB 초기화)
@@ -162,7 +164,7 @@ npx expo start --tunnel
 | 📅 캘린더 | `CalendarScreen.js` | 물주기 일정 캘린더 |
 | 📊 레포트 | `ReportScreen.js` | 30일 물주기 성실도 통계 |
 | 🔬 병충해 결과 | `DiseaseResultScreen.js` | AI 분석 결과 표시 |
-| ⚙️ 설정 | `SettingsScreen.js` | 알림 설정, 앱 정보 |
+| ⚙️ 알림 설정 | `NotificationSettingScreen.js` | 알림 설정, 앱 정보 |
 
 ## 기술 스택
 

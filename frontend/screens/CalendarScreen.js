@@ -33,7 +33,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  ImageBackground // ★ 추가: 캘린더 화면 배경 이미지
+  ImageBackground
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -59,7 +59,7 @@ export default function CalendarScreen({ navigation }) {
     loadPlantData();
   }, []);
 
-  /* 화면 focus 시 자동 새로고침 */
+  /* 화면 focus 시 자동 갱신 */
   useEffect(() => {
     const unsub = navigation.addListener("focus", loadPlantData);
     return unsub;
@@ -149,7 +149,7 @@ export default function CalendarScreen({ navigation }) {
   /* ------------------ 화면 구성 ------------------ */
   return (
     <ImageBackground
-      source={require("../assets/bg_full_calendar.png")} // ★ 캘린더 전용 배경
+      source={require("../assets/bg_full_calendar.png")}
       style={{ flex: 1 }}
       resizeMode="cover"
       blurRadius={2}
@@ -158,7 +158,7 @@ export default function CalendarScreen({ navigation }) {
       <View style={styles.overlay} />
 
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: "transparent" }} // ★ 배경 이미지를 보이도록 투명 처리
+        style={{ flex: 1, backgroundColor: "transparent" }}
         edges={["top", "bottom", "left", "right"]}
       >
         {/* ------------------ 헤더 (톱니 추가) ------------------ */}

@@ -76,7 +76,7 @@ export default function PlantEditorScreen({ navigation }) {
           reader.readAsDataURL(blob);
         });
       } catch (e) {
-        console.error("웹 이미지 변환 실패:", e);
+        console.error("[PlantEditorScreen] 웹 이미지 변환 실패:", e);
         return tempUri;
       }
     }
@@ -86,7 +86,7 @@ export default function PlantEditorScreen({ navigation }) {
       const saved = await saveImageToStorage(tempUri, name);
       return saved;
     } catch (e) {
-      console.error("모바일 이미지 저장 실패:", e);
+      console.error("[PlantEditorScreen] 모바일 이미지 저장 실패:", e);
       return tempUri;
     }
   };
@@ -163,7 +163,7 @@ export default function PlantEditorScreen({ navigation }) {
         `식물: ${res.aiLabelKo}\n신뢰도: ${(res.confidence * 100).toFixed(1)}%`
       );
     } catch (error) {
-      console.error("AI 분석 오류:", error);
+      console.error("[PlantEditorScreen] AI 분석 오류:", error);
 
       Alert.alert(
         "분석 실패",
@@ -226,7 +226,7 @@ export default function PlantEditorScreen({ navigation }) {
       Alert.alert("등록 완료", "새 화분이 추가되었습니다.");
       navigation.goBack();
     } catch (err) {
-      console.error("저장 오류:", err);
+      console.error("[PlantEditorScreen] 저장 오류:", err);
       Alert.alert("오류", err.message || "저장 실패");
     } finally {
       setIsSaving(false);

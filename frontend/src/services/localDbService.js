@@ -1,15 +1,15 @@
 /*
   파일명: services/localDbService.js
-  목적:
-    - local SQLite 데이터베이스 제어
-    - native 환경에서는 실제 SQLite + FileSystem 사용
-    - Web 환경에서는 dummy DB 사용하여 앱이 죽지 않도록 보호
-    - 기본 식물 DB + 사용자 식물(user_plants) + 물준기록(watering_logs)
-    - 신규 기능: 누적 성실도(score) 기능 추가
+  기능:
+    - 로컬 SQLite 데이터베이스 제어
+    - Native: 실제 SQLite + FileSystem 사용
+    - Web: dummy DB 사용하여 앱 크래시 방지
+    - 테이블: plants, users, user_plants, watering_logs
+    - 성실도(score) 관리:
         · 등록 시 score = 100
         · 물줄 때 점수 갱신 (제때: +2 / 지연: 1일당 -5)
-        · 점수는 항상 0~100 범위 유지
-        · Web(dummy) 환경에서는 모든 연산 안전하게 스킵됨
+        · 점수 범위: 0~100
+        · Web 환경에서는 모든 연산 스킵
 */
 
 import { Platform } from "react-native";
@@ -50,7 +50,6 @@ const dummyDb = {
    설명:
      - Native: assets DB 복사 → SQLite open → 테이블 준비
      - Web: dummy DB 사용
-   신규:
      - watering_logs 테이블 생성
      - user_plants.score 컬럼 추가 (없으면 생성)
 ============================================================ */
@@ -117,11 +116,9 @@ export const initDatabase = async () => {
       );
     `);
 
-    // --------------------------------------------------------
-    // NEW: user_plants.score 컬럼 생성
-    //  - 최초 DB에는 없을 수 있으므로 ALTER TABLE 사용
-    //  - 이미 존재하면 에러 발생 → catch에서 무시
-    // --------------------------------------------------------
+    // user_plants.score 컬럼 생성
+    // 최초 DB에는 없을 수 있으므로 ALTER TABLE 사용
+    // 이미 존재하면 에러 발생 → catch에서 무시
     try {
       await db.execAsync(`
         ALTER TABLE user_plants ADD COLUMN score INTEGER DEFAULT 100;
@@ -265,9 +262,7 @@ export const addUserPlant = async (
 
   const newId = result.lastInsertRowId;
 
-  // ----------------------------------------------------------
-  // NEW: 등록 직후 score = 100 설정 (INSERT 를 건드리지 않기 위해)
-  // ----------------------------------------------------------
+  // 등록 직후 score = 100 설정
   try {
     await database.runAsync(
       "UPDATE user_plants SET score = 100 WHERE id = ?",
@@ -313,21 +308,15 @@ export const recordWatering = async (userPlantId) => {
   const database = await getDatabase();
   const today = getTodayKST();
 
-  // ----------------------------------------------------------
-  // 1. 먼저 점수 계산 (next_watering 업데이트 전에!)
-  //
+  // 점수 계산 (next_watering 업데이트 전에)
   // 규칙:
   //   diff = (오늘 - 예정일)
-  //   · 제때(diff == 0): +2
-  //   · 지연(diff > 0): 1일당 -5
-  //   · score = clamp(score + delta, 0, 100)
-  //
+  //   제때(diff == 0): +2
+  //   지연(diff > 0): 1일당 -5
+  //   score = clamp(score + delta, 0, 100)
   // 참고:
-  //   - UI상 물주기 버튼은 nextWater <= today일 때만 표시되므로
-  //     조기 물주기(diff < 0)는 발생하지 않음
-  //   - Web(dummy) 환경은 모든 UPDATE/SELECT 자체가 dummy이므로
-  //     위 로직 존재해도 에러 없이 자연스럽게 스킵됨
-  // ----------------------------------------------------------
+  //   UI상 물주기 버튼은 nextWater <= today일 때만 표시되므로 조기 물주기는 발생하지 않음
+  //   Web 환경은 모든 UPDATE/SELECT가 dummy이므로 에러 없이 스킵됨
   try {
     const info = await database.getFirstAsync(
       "SELECT next_watering, score FROM user_plants WHERE id = ?",
@@ -358,9 +347,7 @@ export const recordWatering = async (userPlantId) => {
     console.log("[localDbService] score 업데이트 오류:", e);
   }
 
-  // ----------------------------------------------------------
-  // 2. 그 다음 next_watering 업데이트
-  // ----------------------------------------------------------
+  // next_watering 업데이트
   const plant = await database.getFirstAsync(
     "SELECT wateringperiod FROM user_plants WHERE id = ?",
     [userPlantId]

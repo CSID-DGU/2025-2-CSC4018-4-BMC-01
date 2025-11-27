@@ -34,7 +34,7 @@ const request = async (endpoint, options = {}) => {
 
     return data;
   } catch (error) {
-    console.error(`API Error [${endpoint}]:`, error.message);
+    console.error(`[api] 요청 오류 [${endpoint}]:`, error.message);
     throw error;
   }
 };

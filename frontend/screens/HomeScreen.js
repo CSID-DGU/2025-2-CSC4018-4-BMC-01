@@ -1,13 +1,10 @@
 /*
   파일명: HomeScreen.js
-  목적:
-    - 홈 화면 UI 및 기능 관리
-      · 현재 시간/날씨 표시
-      · 대표 화분 슬라이드
-      · 오늘 물 줄 화분 리스트
-    - (신규) 고정 배경 이미지 적용
-      → ImageBackground로 전체 화면만 감싸고
-        ScrollView는 투명 처리하여 배경이 스크롤되지 않도록 유지
+  기능:
+    - 현재 시간 및 날씨 표시
+    - 대표 화분 슬라이드
+    - 오늘 물 줄 화분 리스트
+    - 고정 배경 이미지 (ImageBackground 사용)
 */
 
 import React, { useEffect, useState, useRef } from "react";
@@ -21,7 +18,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
-  ImageBackground // ★ 추가: 배경 이미지 적용
+  ImageBackground
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
@@ -114,7 +111,7 @@ export default function HomeScreen({ navigation }) {
           setLocationText(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
         }
       } catch (geoErr) {
-        console.log("역지오코딩 실패:", geoErr);
+        console.log("[HomeScreen] 역지오코딩 실패:", geoErr);
         setLocationText(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
       }
 
@@ -130,7 +127,7 @@ export default function HomeScreen({ navigation }) {
         setWeatherText("날씨 정보 없음");
       }
     } catch (err) {
-      console.log("날씨 오류:", err);
+      console.error("[HomeScreen] 날씨 조회 오류:", err);
       setWeatherText("날씨 정보를 가져올 수 없습니다.");
     }
   };
@@ -153,7 +150,7 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   /* ----------------------------------------------------------
-      홈 탭 재진입 시 자동 새로고침
+      홈 탭 재진입 시 자동 갱신
   ---------------------------------------------------------- */
   useEffect(() => {
     const unsub = navigation.addListener("focus", () => {
@@ -264,7 +261,7 @@ export default function HomeScreen({ navigation }) {
   ---------------------------------------------------------- */
   return (
     <ImageBackground
-      source={require("../assets/bg_full_home.png")} // ★ 홈 배경 이미지
+      source={require("../assets/bg_full_home.png")}
       style={{ flex: 1 }}
       resizeMode="cover"
       blurRadius={2}
@@ -274,7 +271,7 @@ export default function HomeScreen({ navigation }) {
 
       <SafeAreaView style={{ flex: 1, backgroundColor: "transparent" }}>
         <ScrollView
-          style={[styles.container, { backgroundColor: "transparent" }]} // ★ 배경 투명화
+          style={[styles.container, { backgroundColor: "transparent" }]}
           contentContainerStyle={{ paddingBottom: 40 }}
           showsVerticalScrollIndicator={false}
         >

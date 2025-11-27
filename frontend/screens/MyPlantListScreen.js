@@ -1,12 +1,12 @@
 /*
   파일명: MyPlantListScreen.js
-  목적:
-    - 사용자 식물 전체 목록을 2열 그리드 형태로 표시
+  기능:
+    - 사용자 식물 전체 목록을 2열 그리드로 표시
     - 식물 상세 페이지(PlantDetail)로 이동
-    - Storage.js 기반의 통합 모델을 사용하여 리스트 구성
-    - 식물이 1개인 경우에도 2열 그리드 유지 (UI 안정성 확보)
-    - 즐겨찾기(favorite) 확장용 구조를 포함 (향후 대표식물 기능)
-    - ★ 새 화분 추가 버튼(+ 버튼) 추가 (PlantEditorScreen 이동)
+    - Storage.js 기반 통합 모델 사용
+    - 2열 그리드 고정 (UI 안정성)
+    - 즐겨찾기(favorite) 기능
+    - 새 화분 추가 버튼 (PlantEditorScreen 이동)
 
   데이터 흐름:
     fetchPlants() → Storage.js에서 API 데이터 + 로컬 메타데이터(WateringPeriod, favorite 등)
@@ -60,14 +60,14 @@ export default function MyPlantListScreen({ navigation }) {
       setPlants(list);
       setLoadError(false);
     } catch (e) {
-      console.error("식물 목록 로드 실패:", e);
+      console.error("[MyPlantListScreen] 식물 목록 로드 실패:", e);
       setLoadError(true);
       setPlants([]); // 오류 시 빈 리스트라도 렌더링되도록 처리
     }
   };
 
   /* ----------------------------------------------------------
-      화면 focus 시 자동 새로고침
+      화면 focus 시 자동 갱신
       - 상세 화면에서 돌아왔을 때 최신 정보 반영
   ----------------------------------------------------------- */
   useEffect(() => {
@@ -81,9 +81,7 @@ export default function MyPlantListScreen({ navigation }) {
   }, []);
 
   /* ----------------------------------------------------------
-      ★ favorite 토글 핸들러
-      - 별 버튼 누르면 toggleFavorite 호출
-      - meta 저장 후, 리스트 재로딩
+      favorite 토글 핸들러
   ----------------------------------------------------------- */
   const handleToggleFavorite = async (plantId) => {
     await toggleFavorite(plantId);
@@ -98,7 +96,7 @@ export default function MyPlantListScreen({ navigation }) {
   ----------------------------------------------------------- */
   const renderItem = ({ item }) => (
     <View style={styles.cardContainer}>
-      {/* ⭐ 즐겨찾기 토글 버튼 */}
+      {/* 즐겨찾기 토글 버튼 */}
       <TouchableOpacity
         style={[
           styles.favoriteBtn,
@@ -140,9 +138,6 @@ export default function MyPlantListScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       화면 렌더링
-      - SafeAreaView: 상단/하단 노치 대응
-      - 오류/빈 목록 안내 메시지 포함
-      - ★ 오른쪽 상단 + 버튼 → PlantEditorScreen 이동
   ----------------------------------------------------------- */
   return (
     <SafeAreaView
@@ -155,7 +150,7 @@ export default function MyPlantListScreen({ navigation }) {
         <View style={styles.headerRow}>
           <Text style={styles.title}>내 화분</Text>
 
-          {/* ★ 새 화분 추가 버튼 */}
+          {/* 새 화분 추가 버튼 */}
           <TouchableOpacity
             style={styles.addBtn}
             onPress={() => navigation.navigate("PlantEditor")}

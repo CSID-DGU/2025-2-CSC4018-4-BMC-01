@@ -1,10 +1,9 @@
 /*
   파일명: ReportScreen.js
-  목적:
-    - 최근 30일 기준 리포트 + 누적 성실도 리포트를 모두 지원
-    - 사용자 토글로 모드 선택 가능 (recent30 | score)
-    - 기존 recent30 구조/레이아웃/스타일은 그대로 유지
-    - 신규 기능: 모드별 안내 박스 + score 기반 그래프/카드 출력
+  기능:
+    - 최근 30일 기준 리포트 + 누적 성실도 리포트 지원
+    - 사용자 토글로 모드 선택 (recent30 | score)
+    - 모드별 안내 박스 + 그래프/카드 출력
 
   데이터 소스:
     - fetchPlants(): Storage.js (API + 로컬메타)
@@ -27,7 +26,7 @@ import * as localDb from "../src/services/localDbService";
 export default function ReportScreen({ navigation }) {
   const [plants, setPlants] = useState([]);
   const [report, setReport] = useState([]);
-  const [mode, setMode] = useState("recent30"); // ★ 신규: 성실도 리포트 모드
+  const [mode, setMode] = useState("recent30");
 
   /* -------------------------------------------------
      데이터 로드
@@ -51,8 +50,8 @@ export default function ReportScreen({ navigation }) {
 
   /* -------------------------------------------------
      리포트 생성
-     - 기존 recent30 방식 유지
-     - 신규: p.score (localDb 저장) 함께 포함
+     - recent30: 최근 30일 기준
+     - score: p.score (localDb 저장) 포함
   ------------------------------------------------- */
   const generateReport = async (list) => {
     const DAYS = 30;
@@ -71,7 +70,7 @@ export default function ReportScreen({ navigation }) {
         Math.round((actual / expected) * 100)
       );
 
-      // ★ 신규: score 기반 리포트 — 데이터만 병합, 계산은 DB recordWatering에서 수행
+      // score 기반 리포트 (계산은 DB recordWatering에서 수행)
       const scoreRate = p.score ?? 100;
 
       results.push({

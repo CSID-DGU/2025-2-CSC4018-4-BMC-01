@@ -34,7 +34,7 @@ export const requestNotificationPermissions = async () => {
   }
 
   if (finalStatus !== 'granted') {
-    console.log('알림 권한이 거부되었습니다.');
+    console.log('[notificationService] 알림 권한 거부');
     return false;
   }
 
@@ -76,7 +76,7 @@ const checkAndSendNotification = async () => {
       });
     }
   } catch (error) {
-    console.error('알림 발송 오류:', error);
+    console.error('[notificationService] 알림 발송 오류:', error);
   }
 };
 
@@ -85,7 +85,7 @@ const checkAndSendNotification = async () => {
  */
 export const scheduleDailyNotification = async () => {
   if (Platform.OS === 'web') {
-    console.log('웹에서는 알림이 지원되지 않습니다.');
+    console.log('[notificationService] 웹에서는 알림 미지원');
     return;
   }
 
@@ -96,7 +96,7 @@ export const scheduleDailyNotification = async () => {
   const notificationData = await loadNotificationData();
 
   if (!notificationData || !notificationData.enabled) {
-    console.log('알림이 비활성화되어 있습니다.');
+    console.log('[notificationService] 알림 비활성화 상태');
     return;
   }
 
@@ -117,7 +117,7 @@ export const scheduleDailyNotification = async () => {
     },
   });
 
-  console.log(`매일 ${hour}:${minute}에 알림이 설정되었습니다.`);
+  console.log(`[notificationService] 매일 ${hour}:${minute} 알림 설정 완료`);
 };
 
 /**

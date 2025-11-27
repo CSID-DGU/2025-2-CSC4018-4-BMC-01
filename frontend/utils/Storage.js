@@ -97,7 +97,7 @@ export const saveImageToStorage = async (uri, fileName) => {
     await FileSystem.copyAsync({ from: uri, to: dest });
     return dest;
   } catch (e) {
-    console.error("saveImageToStorage Error:", e);
+    console.error("[Storage] saveImageToStorage 오류:", e);
     return uri;
   }
 };
@@ -114,7 +114,7 @@ export const saveLeafImageToStorage = async (uri, fileName) => {
     await FileSystem.copyAsync({ from: uri, to: dest });
     return dest;
   } catch (e) {
-    console.error("saveLeafImageToStorage Error:", e);
+    console.error("[Storage] saveLeafImageToStorage 오류:", e);
     return uri;
   }
 };
@@ -179,7 +179,7 @@ export const fetchPlants = async () => {
       };
     });
   } catch (e) {
-    console.error("fetchPlants Error:", e);
+    console.error("[Storage] fetchPlants 오류:", e);
     return [];
   }
 };
@@ -212,7 +212,7 @@ export const updateWaterDate = async (plantId) => {
 
     return { waterDate, nextWater };
   } catch (e) {
-    console.error("updateWaterDate Error:", e);
+    console.error("[Storage] updateWaterDate 오류:", e);
     throw e;
   }
 };
@@ -234,7 +234,7 @@ export const toggleFavorite = async (plantId) => {
     await saveMeta(meta);
     return meta[plantId].favorite;
   } catch (err) {
-    console.error("toggleFavorite Error:", err);
+    console.error("[Storage] toggleFavorite 오류:", err);
     return false;
   }
 };
