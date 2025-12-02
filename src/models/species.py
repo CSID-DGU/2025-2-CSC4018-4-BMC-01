@@ -9,11 +9,6 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 try:
-    import yaml
-except Exception:
-    yaml = None
-
-try:
     import torch
     import torch.nn as nn
     from torch import Tensor
@@ -27,43 +22,7 @@ except Exception:
     timm = None
     _HAS_TIMM = False
 
-# -----------------------------
-# Config loading
-# -----------------------------
-_CONFIG_PATHS = [
-    Path("config.yaml"),
-    Path("src/config.yaml"),
-    Path("/mnt/src/config.yaml"),
-]
-
-_REQUIRED_KEYS: Tuple[Tuple[str, ...], ...] = (
-    ("models",),
-    ("models","species"),
-    ("models","species","backend"),
-    ("models","species","ckpt_path"),
-    ("models","species","label_path"),
-    ("models","species","num_classes"),
-    ("models","species","device"),
-)
-
-def _need(cfg: Dict[str, Any], path: Tuple[str, ...]) -> Any:
-    cur = cfg
-    for k in path:
-        if not isinstance(cur, dict) or k not in cur:
-            dotted = ".".join(path)
-            raise KeyError(f"config 누락: {dotted}")
-        cur = cur[k]
-    return cur
-
-def load_config() -> Dict[str, Any]:
-    cfg_path = next((p for p in _CONFIG_PATHS if p.exists()), None)
-    if not cfg_path:
-        raise FileNotFoundError("config.yaml을 찾을 수 없음: " + ", ".join(map(str, _CONFIG_PATHS)))
-    with open(cfg_path, "r", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f) or {}
-    for p in _REQUIRED_KEYS:
-        _need(cfg, p)
-    return cfg
+from src.config_loader import load_config
 
 # -----------------------------
 # Labels
@@ -111,41 +70,63 @@ def _load_torch_model(ckpt_path: str, num_classes: int) -> nn.Module:
     if not p.exists():
         raise FileNotFoundError(f"종 모델 체크포인트 없음: {p}")
 
+    logger.info(f"체크포인트 로딩: {p}")
+
     # 1) TorchScript
     try:
         m = torch.jit.load(str(p), map_location="cpu")
         if isinstance(m, torch.jit.ScriptModule) or isinstance(m, torch.jit.RecursiveScriptModule):
+            logger.info("TorchScript 모델 로드 성공")
             m.eval()
             return m  # type: ignore[return-value]
-    except Exception:
-        pass
+    except Exception as e:
+        logger.debug(f"TorchScript 로드 실패 (정상): {e}")
 
-    # 2) PyTorch
-    obj = torch.load(str(p), map_location="cpu")
+    # 2) PyTorch state_dict
+    try:
+        obj = torch.load(str(p), map_location="cpu")
+    except Exception as e:
+        raise RuntimeError(f"체크포인트 로드 실패: {e}")
+
     if isinstance(obj, nn.Module):
+        logger.info("nn.Module 직렬화 모델 로드 성공")
         obj.eval()
         return obj
 
     if isinstance(obj, dict):
-        # 가능한 키: 'model', 'state_dict', 'arch'
-        state = obj.get("model") or obj.get("state_dict") or obj
+        state = obj.get("model") or obj.get("state_dict")
         arch = obj.get("arch", None)
 
-        if arch and _HAS_TIMM:
-            model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
-            missing, unexpected = model.load_state_dict(state, strict=False)
-            if missing or unexpected:
-                logger.info(
-                    "state_dict load mismatch | missing=%d unexpected=%d",
-                    len(missing),
-                    len(unexpected),
-                )
-            model.eval()
-            return model
+        logger.info(f"체크포인트 키: {list(obj.keys())}")
+        logger.info(f"아키텍처: {arch}, num_classes: {num_classes}")
 
-        raise RuntimeError("아키텍처 정보(arch)가 없어 모델을 복원할 수 없음. timm arch 또는 nn.Module 직렬화를 사용하세요.")
+        if not arch:
+            raise RuntimeError(
+                f"체크포인트에 'arch' 필드가 없습니다. "
+                f"체크포인트 저장 시 {{'arch': 'efficientnet_b0', 'state_dict': model.state_dict()}} 형식으로 저장하세요. "
+                f"현재 키: {list(obj.keys())}"
+            )
 
-    raise RuntimeError("지원되지 않는 체크포인트 형식")
+        if not _HAS_TIMM:
+            raise RuntimeError("timm 라이브러리가 설치되지 않았습니다.")
+
+        if not state:
+            raise RuntimeError(
+                f"체크포인트에 'state_dict' 또는 'model' 키가 없습니다. "
+                f"현재 키: {list(obj.keys())}"
+            )
+
+        model = timm.create_model(arch, pretrained=False, num_classes=num_classes)
+        missing, unexpected = model.load_state_dict(state, strict=False)
+        if missing or unexpected:
+            logger.warning(
+                f"state_dict 불일치 | missing={len(missing)} unexpected={len(unexpected)}"
+            )
+        logger.info(f"timm 모델 로드 성공: {arch}")
+        model.eval()
+        return model
+
+    raise RuntimeError(f"지원되지 않는 체크포인트 형식: {type(obj)}")
 
 def _get_model_and_device(cfg: Dict[str, Any]) -> Tuple[nn.Module, torch.device, List[str]]: # type: ignore
     global _MODEL_CACHE, _DEVICE_CACHE
@@ -210,12 +191,15 @@ def _tr(label_en: str, tmap: Dict[str, str]) -> str:
 # -----------------------------
 # Inference API
 # -----------------------------
-def run_species(x: "Tensor", meta: Dict[str, Any], topk: int = 5) -> Dict[str, Any]:
+def run_species(x: "Tensor", meta: Dict[str, Any], topk: int = None) -> Dict[str, Any]:
     if x.ndim != 3:
         raise ValueError(f"CHW 텐서 기대, got {tuple(x.shape)}")
 
     cfg = load_config()
     model, device, labels = _get_model_and_device(cfg)
+
+    if topk is None:
+        topk = cfg.get("app", {}).get("topk", 5)
 
     tpath = cfg.get("models", {}).get("species", {}).get("translate_path")
     tmap = _load_translator(tpath)

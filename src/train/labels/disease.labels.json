@@ -1,12 +1,8 @@
 {
-  "0": "Bacterial_spot",
-  "1": "Black_rot",
-  "2": "Early_blight",
-  "3": "Healthy",
-  "4": "Late_blight",
-  "5": "Leaf_spot",
-  "6": "Mite_damage",
-  "7": "Powdery_mildew",
-  "8": "Rust",
-  "9": "Viral_disease"
+  "0": "Black_rot",
+  "1": "Early_blight",
+  "2": "Healthy",
+  "3": "Late_blight",
+  "4": "Leaf_spot",
+  "5": "Powdery_mildew"
 }

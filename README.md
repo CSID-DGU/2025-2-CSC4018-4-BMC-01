@@ -22,31 +22,40 @@
 dip_dev/
 ├─ outputs/                      # 추론 결과 json
 ├─ samples/                      # 학습용 이미지 샘플
-│  ├─ plants/
-│  └─ leaves/
+│  ├─ plants/                    # 종 분류용 샘플 (102 종)
+│  ├─ plants_aug/                # 증강용 식물 데이터
+│  └─ leaves/                    # 병충해 분류용 샘플 (6 클래스)
 ├─ src/
 │  ├─ data/
 │  │   ├─ image.py               # 입출력, 리사이즈, 정규화, 텐서 변환 등
-│  │   └─ morphology.py          # 경로② 전용 모폴로지 연산
-│  ├─ models/            
+│  │   └─ morphology.py          # 경로② 전용 모폴로지 연산 (미사용)
+│  ├─ models/
 │  │   ├─ species.py             # 경로① 종 분류
 │  │   └─ disease.py             # 경로② 병충해 분류
 │  ├─ io/                        # 출력 보조용 {name, ko_name} 맵
 │  │   ├─ label_map_species.json
 │  │   └─ label_map_disease.json
 │  ├─ train/
-│  │   ├─ checkpoints            # 학습 체크포인트
-│  │   ├─ histories              # 학습 로그
-│  │   ├─ labels                 # 종/병충해 레이블
-│  │   ├─ splits                 # 데이터셋 분할 정보
+│  │   ├─ checkpoints/           # 학습 체크포인트
+│  │   │   ├─ species/efficientnet_b0/
+│  │   │   └─ disease/tf_efficientnet_b0_ns/
+│  │   ├─ histories/             # 학습 로그
+│  │   ├─ labels/                # 종/병충해 레이블
+│  │   │   ├─ species.labels.json
+│  │   │   └─ disease.labels.json
+│  │   ├─ splits/                # 데이터셋 분할 정보
 │  │   └─ train_classifier.py    # 모델 학습 코드
-│  ├─ config.yaml                # 공통 규칙 설정(경로, 파라미터 값 등) 
+│  ├─ config.yaml                # 공통 규칙 설정(경로, 파라미터 값 등)
+│  ├─ config_loader.py           # 설정 파일 로더 (싱글톤)
 │  └─ router.py                  # 파일명 기반 ①/② 분기, 파이프라인 실행
-├─ app.py
-├─ Dockerfile
+├─ app.py                        # FastAPI 서버 엔트리포인트
+├─ apply_morphology.py           # 병충해 판별 전처리 데이터셋용 모폴로지 스크립트 (미사용)
+├─ Dockerfile                    # Docker 컨테이너 설정
 ├─ house_plants.json             # 원예 식물 데이터시트
 ├─ README.md
-└─ requirements.txt
+├─ requirements.txt
+├─ .gitignore
+└─ .gcloudignore
 ```
 
 ---
@@ -63,21 +72,8 @@ dip_dev/
 
 ## 📤 결과 스키마(JSON) 예시
 
-**종 분류**
-```
-  "stage": "infer",
-  "mode": "disease",
-  "pred_class": 2,
-  "pred_label": "Early_blight",
-  "pred_label_ko": "겹무늬병",
-  "confidence": 0.5041054487228394,
-  "topk": [
-  ...
-}
-```
-
-**병충해 분류**
-```
+**종 분류 (Species Classification)**
+```json
 {
   "stage": "infer",
   "mode": "species",
@@ -86,7 +82,41 @@ dip_dev/
   "pred_label_ko": "앵초",
   "confidence": 0.6328405141830444,
   "topk": [
-  ...
+    {
+      "index": 74,
+      "label": "primula",
+      "prob": 0.6328405141830444
+    },
+    ...
+  ],
+  "meta": {
+    "original_size": [1024, 768],
+    "preprocessed_size": [224, 224]
+  }
+}
+```
+
+**병충해 분류 (Disease Diagnosis)**
+```json
+{
+  "stage": "infer",
+  "mode": "disease",
+  "pred_class": 2,
+  "pred_label": "Early_blight",
+  "pred_label_ko": "겹무늬병",
+  "confidence": 0.5041054487228394,
+  "topk": [
+    {
+      "index": 2,
+      "label": "Early_blight",
+      "prob": 0.5041054487228394
+    },
+    ...
+  ],
+  "meta": {
+    "original_size": [800, 600],
+    "preprocessed_size": [224, 224]
+  }
 }
 ```
 

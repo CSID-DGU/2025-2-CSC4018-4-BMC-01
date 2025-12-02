@@ -25,8 +25,9 @@ labels:
 
 preprocess:
   common:
-    img_size: [488, 488]      # [W, H] 0은 미적용 의미
+    img_size: [224, 224]      # [W, H] 0은 미적용 의미
     to_rgb: true
+    keep_ratio: 0.9
     normalize:
       enable: true
       mean: [0.485, 0.456, 0.406]
@@ -39,22 +40,37 @@ preprocess:
     extra: { anchor: "center" }
 
 morphology:
-  enable: false
-  # todo:아래 값들은 모두 설계 후 채움. 지금은 비활성/디폴트.
-  grayscale: true
-  binarization:
-    method: "otsu"            # otsu | adaptive | fixed
-    thresh: null
+  enable: true
+  grayscale: false
+  hsv_masking:
+    color_ranges:
+      # 녹색
+      - lower: [25, 10, 10]   # [Hue, Saturation, Value]
+        upper: [90, 255, 255]
+      # 노란색/연한 녹색
+      - lower: [10, 10, 10]
+        upper: [40, 255, 255]
+      # 빨강/갈색/어두운 색
+      - lower: [0, 10, 10]
+        upper: [10, 255, 255]
+      # 매우 어두운 녹색
+      - lower: [25, 5, 5]
+        upper: [90, 150, 150]
+    smooth_edges:
+      enable: false
+      blur_size: 5
   ops:
-    open:   { enable: false, ksize: [3, 3], iter: 1 }
-    close:  { enable: false, ksize: [3, 3], iter: 1 }
+    open:   { enable: true, ksize: [5, 5], iter: 2 }
+    close:  { enable: true, ksize: [9, 9], iter: 4 }
     erode:  { enable: false, ksize: [3, 3], iter: 1 }
     dilate: { enable: false, ksize: [3, 3], iter: 1 }
     tophat: { enable: false, ksize: [15, 15] }
     blackhat: { enable: false, ksize: [15, 15] }
   roi:
-    enable: false
-    method: "largest_contour" # 설계 후 변경
+    enable: true
+    method: "largest_contour"
+    padding: 10
+    roundness_threshold: 0.3
 
 models:
   species:
@@ -63,14 +79,14 @@ models:
     label_path: "src/train/labels/species.labels.json"
     translate_path: "src/io/label_map_species.json"
     num_classes: 102
-    device: cpu               # cpu | cuda:0
+    device: cuda              # cpu | cuda | cuda:0
   disease:
     backend: "torch"          # dummy | torch | onnx | tflite
-    ckpt_path: "src/train/checkpoints/disease/efficientnet_b0/ckpt.pt.best"
+    ckpt_path: "src/train/checkpoints/disease/tf_efficientnet_b0_ns/ckpt.pt.best"
     label_path: "src/train/labels/disease.labels.json"
     translate_path: "src/io/label_map_disease.json"
-    num_classes: 10
-    device: cpu
+    num_classes: 6
+    device: cuda              # cpu | cuda | cuda:0
 
 router:
   rules:

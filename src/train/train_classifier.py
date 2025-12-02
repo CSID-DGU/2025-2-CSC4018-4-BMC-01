@@ -45,16 +45,18 @@ def default_transforms(img_size: int):
     mean = [0.485, 0.456, 0.406]
     std  = [0.229, 0.224, 0.225]
     train_tf = transforms.Compose([
-        transforms.RandomResizedCrop(img_size, scale=(0.2, 1.0)),
+        transforms.RandomResizedCrop(img_size, scale=(0.3, 1.0), ratio=(0.75, 1.33)),
         transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomPerspective(distortion_scale=0.2, p=0.2),
+        transforms.RandomPerspective(distortion_scale=0.15, p=0.2),
         transforms.RandomAffine(
-            degrees=15, translate=(0.1, 0.1), scale=(0.85, 1.15), shear=10
+            degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=10
         ),
-        transforms.ColorJitter(0.3, 0.3, 0.3, 0.1),
+        transforms.RandomApply([
+            transforms.ColorJitter(0.25, 0.25, 0.25, 0.1),
+        ], p=0.6),
         transforms.ToTensor(),
         transforms.Normalize(mean, std),
-        transforms.RandomErasing(p=0.25, scale=(0.02, 0.2), ratio=(0.3, 3.3)),
+        transforms.RandomErasing(p=0.2, scale=(0.02, 0.2), ratio=(0.3, 3.3)),
     ])
     val_tf = transforms.Compose([
         transforms.Resize(int(img_size * 1.1)),
@@ -129,7 +131,7 @@ def epoch_loop(model, loader, criterion, optimizer, scaler, device, train=True):
     return total_loss / n, total_acc / n
 
 def save_checkpoint(model, arch, class_to_idx, img_size, mean, std,
-                    hparams, history, best_val, ckpt_dir: Path, is_best: bool):
+                    hparams, history, best_val, ckpt_dir: Path, is_best: bool, use_morphology: bool = False):
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     payload = {
         "arch": arch,
@@ -144,9 +146,11 @@ def save_checkpoint(model, arch, class_to_idx, img_size, mean, std,
         "best_val_acc": best_val,
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "is_best": is_best,
+        "use_morphology": use_morphology,
     }
     tag = ".best" if is_best else ".last"
-    torch.save(payload, str((ckpt_dir / "ckpt.pt").with_suffix(".pt" + tag)))
+    ckpt_name = "ckpt_mp.pt" if use_morphology else "ckpt.pt"
+    torch.save(payload, str((ckpt_dir / ckpt_name).with_suffix(".pt" + tag)))
 
 # -----------------------------
 # Main
@@ -165,6 +169,7 @@ def main():
     ap.add_argument("--patience", type=int, default=5)
     ap.add_argument("--num-workers", type=int, default=4)
     ap.add_argument("--no-pretrained", action="store_true")
+    ap.add_argument("--use-morphology", action="store_true", help="병충해 모델 학습 시 morphology 전처리 적용")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -234,6 +239,7 @@ def main():
         "pretrained": not args.no_pretrained,
         "arch": args.arch,
         "task": task,
+        "use_morphology": args.use_morphology,
     }
 
     for epoch in range(1, args.epochs + 1):
@@ -251,7 +257,7 @@ def main():
             best_val = va_acc
             epochs_no_improve = 0
             save_checkpoint(model, args.arch, class_to_idx, args.img_size, mean, std,
-                            hparams, history, best_val, ckpt_dir, is_best=True)
+                            hparams, history, best_val, ckpt_dir, is_best=True, use_morphology=args.use_morphology)
         else:
             epochs_no_improve += 1
             if epochs_no_improve >= args.patience:
@@ -260,7 +266,7 @@ def main():
 
     # checkpoint 저장
     save_checkpoint(model, args.arch, class_to_idx, args.img_size, mean, std,
-                    hparams, history, best_val, ckpt_dir, is_best=False)
+                    hparams, history, best_val, ckpt_dir, is_best=False, use_morphology=args.use_morphology)
 
     # label 저장
     map_path = save_label_map_json(class_to_idx, task=task)
