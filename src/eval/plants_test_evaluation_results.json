@@ -1,0 +1,518 @@
+{
+  "overall_accuracy": 43.29411764705882,
+  "mean_class_accuracy": 45.53921568627451,
+  "correct": 184,
+  "total": 425,
+  "per_class": {
+    "alpine_sea_holly": {
+      "correct": 2,
+      "total": 4,
+      "accuracy": 50.0
+    },
+    "anthurium": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "artichoke": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "azalea": {
+      "correct": 3,
+      "total": 5,
+      "accuracy": 60.0
+    },
+    "ball_moss": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "balloon_flower": {
+      "correct": 3,
+      "total": 5,
+      "accuracy": 60.0
+    },
+    "barbeton_daisy": {
+      "correct": 2,
+      "total": 4,
+      "accuracy": 50.0
+    },
+    "bearded_iris": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 100.0
+    },
+    "bee_balm": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "bird_of_paradise": {
+      "correct": 5,
+      "total": 5,
+      "accuracy": 100.0
+    },
+    "bishop_of_llandaff": {
+      "correct": 5,
+      "total": 6,
+      "accuracy": 83.33333333333334
+    },
+    "black_eyed_susan": {
+      "correct": 0,
+      "total": 6,
+      "accuracy": 0.0
+    },
+    "blackberry_lily": {
+      "correct": 4,
+      "total": 5,
+      "accuracy": 80.0
+    },
+    "blanket_flower": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "bolero_deep_blue": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "bougainvillea": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "bromelia": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "buttercup": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "californian_poppy": {
+      "correct": 3,
+      "total": 6,
+      "accuracy": 50.0
+    },
+    "camellia": {
+      "correct": 1,
+      "total": 4,
+      "accuracy": 25.0
+    },
+    "canna_lily": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "canterbury_bells": {
+      "correct": 0,
+      "total": 6,
+      "accuracy": 0.0
+    },
+    "cape_flower": {
+      "correct": 2,
+      "total": 6,
+      "accuracy": 33.33333333333333
+    },
+    "carnation": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "cautleya_spicata": {
+      "correct": 0,
+      "total": 1,
+      "accuracy": 0.0
+    },
+    "clematis": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "colt_s_foot": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "columbine": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "common_dandelion": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "corn_poppy": {
+      "correct": 1,
+      "total": 4,
+      "accuracy": 25.0
+    },
+    "cyclamen": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "daffodil": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "desert_rose": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "english_marigold": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "fire_lily": {
+      "correct": 1,
+      "total": 2,
+      "accuracy": 50.0
+    },
+    "foxglove": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "frangipani": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "fritillary": {
+      "correct": 0,
+      "total": 7,
+      "accuracy": 0.0
+    },
+    "garden_phlox": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "gaura": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 100.0
+    },
+    "gazania": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "geranium": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "giant_white_arum_lily": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "globe_flower": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "globe_thistle": {
+      "correct": 1,
+      "total": 3,
+      "accuracy": 33.33333333333333
+    },
+    "grape_hyacinth": {
+      "correct": 1,
+      "total": 3,
+      "accuracy": 33.33333333333333
+    },
+    "great_masterwort": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "hard_leaved_pocket_orchid": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "hibiscus": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "hippeastrum": {
+      "correct": 1,
+      "total": 3,
+      "accuracy": 33.33333333333333
+    },
+    "japanese_anemone": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 100.0
+    },
+    "king_protea": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "lenten_rose": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "lotus": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "love_in_the_mist": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 100.0
+    },
+    "magnolia": {
+      "correct": 1,
+      "total": 3,
+      "accuracy": 33.33333333333333
+    },
+    "mallow": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "marigold": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "mexican_aster": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "mexican_petunia": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "monkshood": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "moon_orchid": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "morning_glory": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "orange_dahlia": {
+      "correct": 0,
+      "total": 3,
+      "accuracy": 0.0
+    },
+    "osteospermum": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "oxeye_daisy": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "passion_flower": {
+      "correct": 3,
+      "total": 3,
+      "accuracy": 100.0
+    },
+    "pelargonium": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "peruvian_lily": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "petunia": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "pincushion_flower": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "pink_primrose": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "pink_yellow_dahlia": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "poinsettia": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "primula": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "prince_of_wales_feathers": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "purple_coneflower": {
+      "correct": 0,
+      "total": 5,
+      "accuracy": 0.0
+    },
+    "red_ginger": {
+      "correct": 5,
+      "total": 6,
+      "accuracy": 83.33333333333334
+    },
+    "rose": {
+      "correct": 2,
+      "total": 3,
+      "accuracy": 66.66666666666666
+    },
+    "ruby_lipped_cattleya": {
+      "correct": 5,
+      "total": 5,
+      "accuracy": 100.0
+    },
+    "siam_tulip": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "silverbush": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "snapdragon": {
+      "correct": 2,
+      "total": 5,
+      "accuracy": 40.0
+    },
+    "spear_thistle": {
+      "correct": 4,
+      "total": 4,
+      "accuracy": 100.0
+    },
+    "spring_crocus": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "stemless_gentian": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "sunflower": {
+      "correct": 3,
+      "total": 5,
+      "accuracy": 60.0
+    },
+    "sweet_pea": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "sweet_william": {
+      "correct": 2,
+      "total": 6,
+      "accuracy": 33.33333333333333
+    },
+    "sword_lily": {
+      "correct": 2,
+      "total": 4,
+      "accuracy": 50.0
+    },
+    "thorn_apple": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "tiger_lily": {
+      "correct": 4,
+      "total": 5,
+      "accuracy": 80.0
+    },
+    "toad_lily": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "tree_mallow": {
+      "correct": 2,
+      "total": 4,
+      "accuracy": 50.0
+    },
+    "tree_poppy": {
+      "correct": 4,
+      "total": 5,
+      "accuracy": 80.0
+    },
+    "trumpet_creeper": {
+      "correct": 5,
+      "total": 5,
+      "accuracy": 100.0
+    },
+    "wallflower": {
+      "correct": 1,
+      "total": 3,
+      "accuracy": 33.33333333333333
+    },
+    "water_lily": {
+      "correct": 1,
+      "total": 5,
+      "accuracy": 20.0
+    },
+    "watercress": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "wild_pansy": {
+      "correct": 3,
+      "total": 4,
+      "accuracy": 75.0
+    },
+    "windflower": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    },
+    "yellow_iris": {
+      "correct": 0,
+      "total": 4,
+      "accuracy": 0.0
+    }
+  }
+}

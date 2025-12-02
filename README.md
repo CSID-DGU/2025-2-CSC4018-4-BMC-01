@@ -22,10 +22,19 @@
 dip_dev/
 ├─ outputs/                      # 추론 결과 json
 ├─ samples/                      # 학습용 이미지 샘플
-│  ├─ plants/                    # 종 분류용 샘플 (102 종)
+│  ├─ plants/                    # 종 분류용 샘플 (102 종, VGG Flowers)
 │  ├─ plants_aug/                # 증강용 식물 데이터
 │  └─ leaves/                    # 병충해 분류용 샘플 (6 클래스)
 ├─ src/
+│  ├─ aug/                       # 데이터 증강 관련 스크립트
+│  │   ├─ analyze_plants_aug.py
+│  │   ├─ split_plants_test.py
+│  │   ├─ apply_morphology.py
+│  │   ├─ plants_aug_analysis.json
+│  │   └─ plants_split_metadata.json
+│  ├─ eval/                      # 모델 평가 스크립트
+│  │   ├─ evaluate_plants_test.py
+│  │   └─ plants_test_evaluation_results.json
 │  ├─ data/
 │  │   ├─ image.py               # 입출력, 리사이즈, 정규화, 텐서 변환 등
 │  │   └─ morphology.py          # 경로② 전용 모폴로지 연산 (미사용)
@@ -37,22 +46,22 @@ dip_dev/
 │  │   └─ label_map_disease.json
 │  ├─ train/
 │  │   ├─ checkpoints/           # 학습 체크포인트
-│  │   │   ├─ species/efficientnet_b0/
+│  │   │   ├─ species/tf_efficientnetv2_b0_finetuned/
 │  │   │   └─ disease/tf_efficientnet_b0_ns/
 │  │   ├─ histories/             # 학습 로그
 │  │   ├─ labels/                # 종/병충해 레이블
 │  │   │   ├─ species.labels.json
 │  │   │   └─ disease.labels.json
 │  │   ├─ splits/                # 데이터셋 분할 정보
-│  │   └─ train_classifier.py    # 모델 학습 코드
+│  │   └─ train_classifier.py    # 모델 학습 코드 (resume, val-data, output-suffix 지원)
 │  ├─ config.yaml                # 공통 규칙 설정(경로, 파라미터 값 등)
 │  ├─ config_loader.py           # 설정 파일 로더 (싱글톤)
 │  └─ router.py                  # 파일명 기반 ①/② 분기, 파이프라인 실행
 ├─ app.py                        # FastAPI 서버 엔트리포인트
-├─ apply_morphology.py           # 병충해 판별 전처리 데이터셋용 모폴로지 스크립트 (미사용)
 ├─ Dockerfile                    # Docker 컨테이너 설정
 ├─ house_plants.json             # 원예 식물 데이터시트
 ├─ README.md
+├─ CLAUDE.md                     # Claude Code를 위한 프로젝트 가이드
 ├─ requirements.txt
 ├─ .gitignore
 └─ .gcloudignore
@@ -122,10 +131,86 @@ dip_dev/
 
 ## 📝 API 테스트
 
-```
+```bash
 curl -X POST \
   -F "file=@samples/bacterical_spot_leaf.jpg" \
   https://smartpot-api-551846265142.asia-northeast3.run.app/infer
 
 curl -X POST -F "file=@samples/bacterical_spot_leaf.jpg" https://smartpot-api-551846265142.asia-northeast3.run.app/infer
 ```
+
+---
+
+## 🧪 모델 학습 및 평가
+
+### 데이터셋 구성
+
+**1. 원본 데이터 (plants)**
+- VGG Flowers 데이터셋 기반
+- 102개 식물 종
+- Baseline 모델 학습용
+
+**2. 증강 데이터 (plants_aug)**
+- 실제 환경에서 촬영한 이미지
+- 총 장 → Train: 장 / Test: 장
+- 배경 적응 fine-tuning용
+
+**3. 테스트 데이터 (plants_test)**
+- plants_aug에서 분리한 장
+- 학습에 절대 사용하지 않음
+- 최종 평가 전용
+
+### Baseline 모델 학습
+
+**학습 명령어:**
+```bash
+# TF-EfficientNetV2-B0 (224×224)
+python src/train/train_classifier.py \
+  --data samples/plants \
+  --arch tf_efficientnetv2_b0 \
+
+**Baseline 평가 결과 (plants_test):**
+
+| 모델 | 입력 크기 | Overall Accuracy | Mean Class Accuracy |
+|------|----------|------------------|---------------------|
+| TF-EfficientNet-B0-NS | 224×224 | 44.71% | 47.03% |
+| TF-EfficientNetV2-B0 | 224×224 | 43.29% | 45.54% |
+| TF-EfficientNetV2-B2 | 260×260 | 43.76% | 46.65% |
+
+### Fine-tuning (배경 적응 학습)
+
+**Fine-tuning 명령어:**
+```bash
+python src/train/train_classifier.py \
+  --data samples/plants_aug \
+  --val-data samples/plants \
+  --arch tf_efficientnetv2_b0 \
+  --resume src/train/checkpoints/species/tf_efficientnetv2_b0/ckpt.pt.best \
+  --output-suffix _finetuned \
+  --epochs 30 \
+  --lr 1e-5 \
+  --weight-decay 1e-3 \
+  --patience 10
+```
+
+### 모델 평가
+
+**평가 명령어:**
+```bash
+# config.yaml에서 체크포인트 경로 설정 후:
+python src/eval/evaluate_plants_test.py
+```
+
+**평가 결과:**
+- Baseline: ~45%
+- Fine-tuned: TBD
+
+---
+
+## 🛠️ 주요 기능
+
+### train_classifier.py 옵션
+
+- `--resume`: 기존 체크포인트 로드 (fine-tuning)
+- `--val-data`: 별도 validation 데이터 사용
+- `--output-suffix`: 체크포인트 폴더 이름에 suffix 추가 (덮어쓰기 방지)

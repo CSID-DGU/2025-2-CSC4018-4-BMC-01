@@ -1,0 +1,66 @@
+{
+  "stage": "infer",
+  "mode": "disease",
+  "pred_class": 1,
+  "pred_label": "Early_blight",
+  "pred_label_ko": "겹무늬병",
+  "confidence": 0.4383164048194885,
+  "topk": [
+    {
+      "index": 1,
+      "label": "Early_blight",
+      "prob": 0.4383164048194885
+    },
+    {
+      "index": 3,
+      "label": "Late_blight",
+      "prob": 0.19747352600097656
+    },
+    {
+      "index": 4,
+      "label": "Leaf_spot",
+      "prob": 0.18608631193637848
+    }
+  ],
+  "meta": {
+    "stage": "image",
+    "mode": "disease",
+    "source_path": "C:\\Users\\junhy\\Documents\\GitHub\\2025-2-CSC4018-4-BMC-01\\samples\\leaves_test\\eb.jpg",
+    "preprocess": {
+      "common": {
+        "img_size": [
+          224,
+          224
+        ],
+        "to_rgb": true,
+        "keep_ratio": 0.9,
+        "normalize": {
+          "enable": true,
+          "mean": [
+            0.485,
+            0.456,
+            0.406
+          ],
+          "std": [
+            0.229,
+            0.224,
+            0.225
+          ]
+        }
+      },
+      "species": {
+        "enable": true,
+        "extra": {
+          "anchor": "center"
+        }
+      },
+      "disease": {
+        "enable": true,
+        "extra": {
+          "anchor": "center"
+        }
+      }
+    },
+    "preprocessed_image_path": "outputs\\test\\eb_preprocessed.png"
+  }
+}

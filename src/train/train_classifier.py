@@ -157,11 +157,12 @@ def save_checkpoint(model, arch, class_to_idx, img_size, mean, std,
 # -----------------------------
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--data", required=True, help="폴더 구조: class 폴더별 이미지")
+    ap.add_argument("--data", required=True, help="폴더 구조: class 폴더별 이미지 (train)")
+    ap.add_argument("--val-data", type=str, default=None, help="별도 validation 데이터 경로 (지정 안 하면 --data에서 자동 split)")
     ap.add_argument("--arch", default="efficientnet_b0")
     ap.add_argument("--img-size", type=int, default=224)
-    ap.add_argument("--epochs", type=int, default=30)
-    ap.add_argument("--batch-size", type=int, default=32)
+    ap.add_argument("--epochs", type=int, default=50)
+    ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--weight-decay", type=float, default=5e-2)
     ap.add_argument("--val-ratio", type=float, default=0.2)
@@ -170,6 +171,8 @@ def main():
     ap.add_argument("--num-workers", type=int, default=4)
     ap.add_argument("--no-pretrained", action="store_true")
     ap.add_argument("--use-morphology", action="store_true", help="병충해 모델 학습 시 morphology 전처리 적용")
+    ap.add_argument("--resume", type=str, default=None, help="체크포인트 경로 (fine-tuning용)")
+    ap.add_argument("--output-suffix", type=str, default="", help="체크포인트 폴더 이름에 suffix 추가 (예: _finetuned)")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -181,12 +184,35 @@ def main():
     # Datasets
     train_tf, val_tf, mean, std = default_transforms(args.img_size)
     DS = _SkipZZImageFolder if task == "species" else datasets.ImageFolder
-    base_ds = DS(data_root)
-    class_to_idx = base_ds.class_to_idx
-    train_ids, val_ids = stratified_split_by_index(base_ds.targets, args.val_ratio, seed=args.seed)
 
-    train_ds = Subset(DS(data_root, transform=train_tf), train_ids)
-    val_ds   = Subset(DS(data_root, transform=val_tf),   val_ids)
+    if args.val_data:
+        # Separate train and validation datasets
+        print(f"[INFO] Using separate validation data: {args.val_data}")
+        val_data_root = Path(args.val_data).resolve()
+
+        # Train: use all data from --data
+        train_ds = DS(data_root, transform=train_tf)
+        class_to_idx = train_ds.class_to_idx
+
+        # Val: use all data from --val-data
+        val_ds = DS(val_data_root, transform=val_tf)
+
+        # No split indices (using separate datasets)
+        train_ids = None
+        val_ids = None
+
+        print(f"[INFO] Train: {len(train_ds)} images from {data_root.name}")
+        print(f"[INFO] Val: {len(val_ds)} images from {val_data_root.name}")
+    else:
+        # Original behavior: auto split from --data
+        base_ds = DS(data_root)
+        class_to_idx = base_ds.class_to_idx
+        train_ids, val_ids = stratified_split_by_index(base_ds.targets, args.val_ratio, seed=args.seed)
+
+        train_ds = Subset(DS(data_root, transform=train_tf), train_ids)
+        val_ds   = Subset(DS(data_root, transform=val_tf),   val_ids)
+
+        print(f"[INFO] Auto split: {len(train_ids)} train, {len(val_ids)} val")
 
     train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
                               num_workers=args.num_workers, pin_memory=True)
@@ -198,6 +224,39 @@ def main():
     model = timm.create_model(
         args.arch, pretrained=(not args.no_pretrained), num_classes=num_classes
     ).to(device)
+
+    # Load checkpoint for fine-tuning
+    if args.resume:
+        print(f"[INFO] Loading checkpoint from: {args.resume}")
+        ckpt_path = Path(args.resume)
+        if not ckpt_path.exists():
+            raise FileNotFoundError(f"Checkpoint not found: {ckpt_path}")
+
+        ckpt = torch.load(str(ckpt_path), map_location=device)
+
+        # Check architecture match
+        if ckpt["arch"] != args.arch:
+            print(f"[WARNING] Architecture mismatch: ckpt={ckpt['arch']}, args={args.arch}")
+
+        # Check num_classes match
+        if ckpt["num_classes"] != num_classes:
+            print(f"[WARNING] num_classes mismatch: ckpt={ckpt['num_classes']}, current={num_classes}")
+            print("[INFO] Loading weights except classifier head (fine-tuning mode)")
+            # Load all except classifier
+            state_dict = ckpt["state_dict"]
+            model_dict = model.state_dict()
+            # Filter out classifier weights
+            pretrained_dict = {k: v for k, v in state_dict.items()
+                             if k in model_dict and v.shape == model_dict[k].shape}
+            model_dict.update(pretrained_dict)
+            model.load_state_dict(model_dict)
+            print(f"[INFO] Loaded {len(pretrained_dict)}/{len(state_dict)} layers")
+        else:
+            # Load full state dict
+            model.load_state_dict(ckpt["state_dict"])
+            print(f"[INFO] Loaded checkpoint successfully (best_val_acc: {ckpt.get('best_val_acc', 'N/A')})")
+
+        print("[INFO] Fine-tuning mode enabled")
 
     # Optim/Loss/Sched
     criterion = nn.CrossEntropyLoss(label_smoothing=0.1)
@@ -215,10 +274,11 @@ def main():
     scaler = torch.cuda.amp.GradScaler() if device.type == "cuda" else None
 
     # output path
-    ckpt_dir = (CKPT_DIR / task / args.arch)
+    arch_name = args.arch + args.output_suffix
+    ckpt_dir = (CKPT_DIR / task / arch_name)
     ckpt_dir.mkdir(parents=True, exist_ok=True)
-    split_path = SPLIT_DIR / f"{task}_{args.arch}.split.json"
-    history_path = HISTORY_DIR / f"{task}_{args.arch}.history.json"
+    split_path = SPLIT_DIR / f"{task}_{arch_name}.split.json"
+    history_path = HISTORY_DIR / f"{task}_{arch_name}.history.json"
 
     # Train
     best_val = -1.0
@@ -273,13 +333,19 @@ def main():
 
     # split 저장
     with open(split_path, "w", encoding="utf-8") as f:
-        json.dump({
+        split_info = {
             "seed": args.seed,
             "val_ratio": args.val_ratio,
-            "train_indices": train_ids,
-            "val_indices": val_ids,
             "n_classes": num_classes,
-        }, f, indent=2)
+        }
+        if train_ids is not None:
+            split_info["train_indices"] = train_ids
+            split_info["val_indices"] = val_ids
+        else:
+            split_info["note"] = "Using separate validation dataset (--val-data)"
+            split_info["train_data"] = str(args.data)
+            split_info["val_data"] = str(args.val_data)
+        json.dump(split_info, f, indent=2)
 
     # history 저장
     with open(history_path, "w", encoding="utf-8") as f:
