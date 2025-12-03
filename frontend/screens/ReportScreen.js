@@ -152,7 +152,7 @@ export default function ReportScreen({ navigation }) {
                 mode === "recent30" && styles.toggleTextActive,
               ]}
             >
-              최근 30일
+              최근 30일 성실도
             </Text>
           </TouchableOpacity>
 
@@ -169,7 +169,7 @@ export default function ReportScreen({ navigation }) {
                 mode === "score" && styles.toggleTextActive,
               ]}
             >
-              누적 성실도
+              성실도 점수
             </Text>
           </TouchableOpacity>
         </View>
@@ -184,17 +184,18 @@ export default function ReportScreen({ navigation }) {
               - 물주는 주기 대비 실제 물준 횟수로 계산{"\n"}
               - 예상 물주기 횟수 = 30일 ÷ 물주는 주기{"\n"}
               - 성실도 = (실제 횟수 ÷ 예상 횟수) × 100%{"\n"}
-              - 최대 100%까지 표시됩니다.
+              - 최대 100%까지 표시됩니다.{"\n"}
+              ※ 첫 등록 시, 기본값은 0%로 계산됩니다.
             </Text>
           </View>
         ) : (
           <View style={styles.infoBox}>
             <Text style={styles.infoText}>
-              ● 누적 성실도 안내{"\n"}
+              ● 성실도 점수 안내{"\n"}
               - 식물 등록 시 100점에서 시작합니다{"\n"}
               - 제때 물주기: +2점 추가{"\n"}
               - 물주기 지연: 1일당 -5점 감점{"\n"}
-              - 점수는 0~100 사이에서 유지됩니다.
+              - 점수는 0점~100점 사이에서 유지됩니다.
             </Text>
           </View>
         )}
@@ -204,8 +205,12 @@ export default function ReportScreen({ navigation }) {
         ------------------------------------------------- */}
         <View style={styles.dashboardRow}>
           <View style={styles.dashboardBox}>
-            <Text style={styles.dashboardTitle}>평균 성실도</Text>
-            <Text style={styles.dashboardValue}>{avg}%</Text>
+            <Text style={styles.dashboardTitle}>
+              {mode === "recent30" ? "평균 성실도" : "평균 점수"}
+            </Text>
+            <Text style={styles.dashboardValue}>
+              {avg}{mode === "score" ? "점" : "%"}
+            </Text>
           </View>
 
           <View style={styles.dashboardBox}>
@@ -224,7 +229,7 @@ export default function ReportScreen({ navigation }) {
            (모드에 따라 기준 rate 변경)
         ------------------------------------------------- */}
         <Text style={styles.sectionTitle}>
-          {mode === "recent30" ? "최근 30일 성실도" : "누적 성실도"}
+          {mode === "recent30" ? "최근 30일 성실도" : "성실도 점수"}
         </Text>
 
         {report.map((r) => {
@@ -245,8 +250,9 @@ export default function ReportScreen({ navigation }) {
                   ]}
                 />
               </View>
-
-              <Text style={styles.graphRate}>{rate}%</Text>
+              <Text style={styles.graphRate}>
+                {rate}{mode === "score" ? "점" : "%"}
+              </Text>
             </View>
           );
         })}
@@ -287,7 +293,9 @@ export default function ReportScreen({ navigation }) {
               )}
 
               <View style={styles.rateBox}>
-                <Text style={styles.rateText}>{rate}%</Text>
+                <Text style={styles.rateText}>
+                  {rate}{mode === "score" ? "점" : "%"}
+                </Text>
               </View>
             </View>
           );
