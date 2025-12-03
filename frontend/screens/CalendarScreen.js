@@ -16,9 +16,9 @@
     - 우측 상단 톱니 아이콘(⚙️)
       → 알림 설정 화면(NotificationSettingScreen) 이동
     - 캘린더 마킹:
-      · O (빈 원, 44px)  = nextWater 날짜 (물 줘야 함)
-      · ● (채워진 원, 44px) = last_watered 날짜 (최근 물 줌)
-      · nextWater == last_watered 시 O가 우선 표시
+      · 빈 물방울 = nextWater 날짜 (물 줘야 함)
+      · 채워진 물바울 = last_watered 날짜 (최근 물 줌)
+      · nextWater == last_watered 시 빈 물방울이 우선 표시
 
   확장 요소:
     - 날짜별 물주기 일정 표시
@@ -33,111 +33,79 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar } from "react-native-calendars";
-
-/* Storage.js 연동 */
 import { usePlants } from "../context/PlantContext";
 
+const DROP_EMPTY = require("../assets/icons/drop_empty.png");
+const DROP_FILLED = require("../assets/icons/drop_filled.png");
+
 export default function CalendarScreen({ navigation }) {
-  // Context에서 식물 데이터 가져오기
   const { plants, loadPlants } = usePlants();
-  const [markedDates, setMarkedDates] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPlants, setSelectedPlants] = useState([]);
 
-  /* 초기 로드 */
   useEffect(() => {
     loadPlants();
   }, []);
 
-  /* 화면 focus 시 자동 갱신 */
   useEffect(() => {
     const unsub = navigation.addListener("focus", () => loadPlants());
     return unsub;
   }, [navigation, loadPlants]);
 
-  /* ------------------ custom marker 생성 ------------------ */
-  const generateMarks = (list) => {
-    const marks = {};
-
-    list.forEach((p) => {
-      const next = p.nextWater;
-      const last = p.waterDate;
-
-      // O (물 줘야 할 날)
-      if (next) {
-        marks[next] = {
-          customStyles: {
-            container: {
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              borderWidth: 3,
-              borderColor: "#6CC96F",
-              backgroundColor: "white",
-              justifyContent: "center",
-              alignItems: "center"
-            },
-            text: {
-              color: "#6CC96F",
-              fontWeight: "bold"
-            }
-          }
-        };
-      }
-
-      // ● (최근 물 준 날짜) — 단 nextWater와 같으면 O 우선
-      if (last && last !== next) {
-        marks[last] = {
-          customStyles: {
-            container: {
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              backgroundColor: "#6CC96F",
-              justifyContent: "center",
-              alignItems: "center"
-            },
-            text: {
-              color: "white",
-              fontWeight: "bold"
-            }
-          }
-        };
-      }
-    });
-
-    return marks;
+  const handleDayPress = (dateObj) => {
+    const d = dateObj.dateString;
+    setSelectedDate(d);
+    setSelectedPlants(plants.filter((p) => p.nextWater === d));
   };
 
-  /* ------------------ 날짜 선택 ------------------ */
-  const handleDayPress = (day) => {
-    const date = day.dateString;
-    setSelectedDate(date);
+  /* 물방울 존재 여부 계산 */
+  const getIconForDate = (dateStr) => {
+    const isNext = plants.some((p) => p.nextWater === dateStr);
+    const isLast = plants.some((p) => p.waterDate === dateStr);
 
-    setSelectedPlants(plants.filter((p) => p.nextWater === date));
+    if (isNext) return DROP_EMPTY;
+    if (isLast) return DROP_FILLED;
+    return null;
   };
 
-  /* ------------------ 마크된 날짜 업데이트 ------------------ */
-  useEffect(() => {
-    setMarkedDates(generateMarks(plants));
-  }, [plants]);
+  /* 날짜 custom renderer (터치 보존 버전) */
+  const renderDay = ({ date, state, onPress }) => {
+    if (!date) return null;
 
-  /* ------------------ 선택 날짜 리스트 ------------------ */
-  const renderItem = ({ item }) => (
-    <View style={styles.plantBox}>
-      <Text style={styles.plantName}>{item.name}</Text>
-      <Text style={styles.plantText}>
-        마지막 물 준 날 : {item.waterDate || "기록 없음"}
-      </Text>
-    </View>
-  );
+    const icon = getIconForDate(date.dateString);
+    const disabled = state === "disabled";
 
-  /* ------------------ 화면 구성 ------------------ */
+    return (
+      <TouchableOpacity
+        onPress={() => onPress(date)}
+        style={styles.dayBox}
+      >
+        {icon && (
+          <View style={styles.dropWrapper}>
+            <Image
+              source={icon}
+              style={icon === DROP_EMPTY ? styles.dropIconEmpty : styles.dropIconFilled}
+            />
+            <Text style={[styles.dayTextOnIcon, disabled && { color: "#CCC" }]}>
+              {date.day}
+            </Text>
+          </View>
+        )}
+
+        {!icon && (
+          <Text style={[styles.dayText, disabled && { color: "#CCC" }]}>
+            {date.day}
+          </Text>
+        )}
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ImageBackground
       source={require("../assets/bg_full_calendar.png")}
@@ -145,14 +113,9 @@ export default function CalendarScreen({ navigation }) {
       resizeMode="cover"
       blurRadius={2}
     >
-      {/* 흰색 오버레이 */}
       <View style={styles.overlay} />
 
-      <SafeAreaView
-        style={{ flex: 1, backgroundColor: "transparent" }}
-        edges={["top", "bottom", "left", "right"]}
-      >
-        {/* ------------------ 헤더 (톱니 추가) ------------------ */}
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.headerRow}>
           <Text style={styles.title}>물주기 캘린더</Text>
 
@@ -164,25 +127,14 @@ export default function CalendarScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={{ paddingBottom: 40 }}
-          showsVerticalScrollIndicator={false}
-        >
-          {/* 캘린더 */}
+        <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 80 }}>
           <Calendar
-            markedDates={markedDates}
-            markingType="custom"
             onDayPress={handleDayPress}
-            theme={{
-              textDayFontSize: 16,
-              textMonthFontSize: 18,
-              textDayHeaderFontSize: 14
-            }}
+            dayComponent={renderDay}
             style={styles.calendar}
           />
 
-          {/* 선택 날짜 정보 */}
+          {/* 선택 날짜 리스트 */}
           {selectedDate && (
             <View style={styles.infoBox}>
               <Text style={styles.infoTitle}>{selectedDate} 물 줄 화분</Text>
@@ -195,7 +147,14 @@ export default function CalendarScreen({ navigation }) {
                 <FlatList
                   data={selectedPlants}
                   keyExtractor={(i) => i.id.toString()}
-                  renderItem={renderItem}
+                  renderItem={({ item }) => (
+                    <View style={styles.plantBox}>
+                      <Text style={styles.plantName}>{item.name}</Text>
+                      <Text style={styles.plantText}>
+                        마지막 물 준 날 : {item.waterDate || "기록 없음"}
+                      </Text>
+                    </View>
+                  )}
                   scrollEnabled={false}
                 />
               )}
@@ -215,13 +174,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(255, 255, 255, 0.25)"
+    backgroundColor: "rgba(255,255,255,0.25)",
+    pointerEvents: "none",
   },
 
   container: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 10
+    paddingTop: 10,
+    paddingBottom: 40,
   },
 
   headerRow: {
@@ -230,70 +191,103 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 24,
     paddingTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
   },
 
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333"
+    color: "#333",
   },
 
-  settingBtn: {
-    padding: 4
-  },
+  settingBtn: { padding: 4 },
 
   calendar: {
     borderRadius: 15,
     elevation: 2,
     marginBottom: 25,
     backgroundColor: "#FFF",
-    paddingVertical: 10
+    paddingVertical: 10,
+  },
+
+  /* 날짜 셀 */
+  dayBox: {
+    width: 44,
+    height: 44,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  dropWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  dropIcon: {
+    width: 34,
+    height: 34,
+  },
+
+  dropIconEmpty: {
+    width: 34,
+    height: 34,
+  },
+
+  dropIconFilled: {
+    width: 45,
+    height: 45,
+  },
+
+  dayTextOnIcon: {
+    position: "absolute",
+    fontSize: 14,
+    color: "#333",
+  },
+
+  dayText: {
+    fontSize: 14,
+    color: "#333",
   },
 
   infoBox: {
     backgroundColor: "#FFF",
     padding: 20,
-    borderRadius: 15
+    borderRadius: 15,
   },
 
   infoTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 15
+    marginBottom: 15,
   },
 
   emptyPlantBox: {
     backgroundColor: "#FFF",
     paddingVertical: 15,
-    paddingHorizontal: 15,
     borderRadius: 12,
-    marginBottom: 12,
-    minHeight: 60,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   noneText: {
     fontSize: 15,
     color: "#999",
-    textAlign: "center"
   },
 
   plantBox: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderColor: "#EEE"
+    borderColor: "#EEE",
   },
 
   plantName: {
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: "600",
   },
 
   plantText: {
     fontSize: 13,
     color: "#777",
-    marginTop: 3
-  }
+    marginTop: 3,
+  },
 });

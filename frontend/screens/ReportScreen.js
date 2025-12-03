@@ -194,7 +194,7 @@ export default function ReportScreen({ navigation }) {
         )}
 
         {/* -------------------------------------------------
-           대시보드 3칸 (원본 유지)
+           대시보드 3칸
         ------------------------------------------------- */}
         <View style={styles.dashboardRow}>
           <View style={styles.dashboardBox}>
