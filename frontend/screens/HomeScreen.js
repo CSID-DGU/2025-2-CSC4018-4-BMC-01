@@ -18,7 +18,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
-  ImageBackground
+  ImageBackground,
+  InteractionManager
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
@@ -146,11 +147,14 @@ export default function HomeScreen({ navigation }) {
 
   /* ----------------------------------------------------------
       홈 탭 재진입 시 자동 갱신
+      - 애니메이션 완료 후 데이터 로드 (InteractionManager)
   ---------------------------------------------------------- */
   useEffect(() => {
     const unsub = navigation.addListener("focus", () => {
-      updateDateTime();
-      loadPlants(); // Context 캐싱 활용 (5초 이내는 재사용)
+      InteractionManager.runAfterInteractions(() => {
+        updateDateTime();
+        loadPlants();
+      });
     });
     return unsub;
   }, [navigation, loadPlants]);

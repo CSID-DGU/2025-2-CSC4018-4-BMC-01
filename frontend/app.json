@@ -15,7 +15,8 @@
         "NSCameraUsageDescription": "식물 사진을 촬영하여 AI로 식물을 식별하고 병충해를 진단합니다.",
         "NSPhotoLibraryUsageDescription": "갤러리에서 식물 사진을 선택하여 AI로 식물을 식별하고 병충해를 진단합니다.",
         "NSLocationWhenInUseUsageDescription": "현재 위치를 기반으로 날씨 정보를 제공합니다.",
-        "NSMicrophoneUsageDescription": "카메라 사용 시 필요합니다."
+        "NSMicrophoneUsageDescription": "카메라 사용 시 필요합니다.",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
       }
     },
     "android": {

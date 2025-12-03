@@ -884,24 +884,6 @@
   {
     "id": 350,
     "tempmax": {
-      "celsius": 30
-    },
-    "tempmin": {
-      "celsius": 5
-    },
-    "ideallight": "Bright light with some direct sun.",
-    "toleratedlight": "Bright indirect light.",
-    "watering": "Water evenly; do not let soil dry completely.",
-    "wateringperiod": "6",
-    "ai_label_en": "hippeastrum",
-    "ai_label_ko": "아마릴리스",
-    "ideallight_ko": "밝은 빛과 약간의 직사광선을 받을 수 있는 곳에 두어주세요",
-    "toleratedlight_ko": "밝은 간접광이 좋아요",
-    "watering_ko": "고르게 물을 주시고 흙이 완전히 마르지 않게 해주세요"
-  },
-  {
-    "id": 351,
-    "tempmax": {
       "celsius": 25
     },
     "tempmin": {
@@ -918,7 +900,7 @@
     "watering_ko": "표토가 마르면 물을 주시고, 휴면기에는 건조하게 유지해주세요"
   },
   {
-    "id": 352,
+    "id": 351,
     "tempmax": {
       "celsius": 25
     },
@@ -936,7 +918,7 @@
     "watering_ko": "흙을 촉촉하게 유지하시고 완전히 마르지 않게 해주세요"
   },
   {
-    "id": 353,
+    "id": 352,
     "tempmax": {
       "celsius": 30
     },
@@ -954,7 +936,7 @@
     "watering_ko": "깊게 물을 주시고 마르도록 하세요. 배수가 중요해요"
   },
   {
-    "id": 354,
+    "id": 353,
     "tempmax": {
       "celsius": 20
     },
@@ -972,7 +954,7 @@
     "watering_ko": "고르게 촉촉하게 유지하되 물이 고이지 않게 해주세요"
   },
   {
-    "id": 355,
+    "id": 354,
     "tempmax": {
       "celsius": 35
     },
@@ -990,7 +972,7 @@
     "watering_ko": "수생 식물이에요. 수위를 유지해주세요"
   },
   {
-    "id": 356,
+    "id": 355,
     "tempmax": {
       "celsius": 25
     },
@@ -1008,7 +990,7 @@
     "watering_ko": "정기적으로 물을 주시고, 흙이 약간 마르도록 해주세요"
   },
   {
-    "id": 357,
+    "id": 356,
     "tempmax": {
       "celsius": 30
     },
@@ -1026,7 +1008,7 @@
     "watering_ko": "촉촉하게 유지해주시고, 특히 어린 나무일 때 신경 써주세요"
   },
   {
-    "id": 358,
+    "id": 357,
     "tempmax": {
       "celsius": 30
     },
@@ -1044,7 +1026,7 @@
     "watering_ko": "흙 표면이 마르면 물을 주세요. 매우 강건해요"
   },
   {
-    "id": 359,
+    "id": 358,
     "tempmax": {
       "celsius": 35
     },
@@ -1062,7 +1044,7 @@
     "watering_ko": "표토가 마르면 물을 주시고 과습에 주의해주세요"
   },
   {
-    "id": 360,
+    "id": 359,
     "tempmax": {
       "celsius": 30
     },
@@ -1080,7 +1062,7 @@
     "watering_ko": "건조에 강해요. 흙이 마르면 물을 주세요"
   },
   {
-    "id": 361,
+    "id": 360,
     "tempmax": {
       "celsius": 35
     },
@@ -1098,7 +1080,7 @@
     "watering_ko": "흙을 촉촉하게 유지해주세요. 물을 많이 필요로 해요"
   },
   {
-    "id": 362,
+    "id": 361,
     "tempmax": {
       "celsius": 20
     },
@@ -1116,7 +1098,7 @@
     "watering_ko": "서늘하고 촉촉하게 유지하시고 마르지 않게 해주세요"
   },
   {
-    "id": 363,
+    "id": 362,
     "tempmax": {
       "celsius": 28
     },
@@ -1134,7 +1116,7 @@
     "watering_ko": "뿌리가 마르거나 은색으로 변하면 담가주시고 배수를 잘 해주세요"
   },
   {
-    "id": 364,
+    "id": 363,
     "tempmax": {
       "celsius": 30
     },
@@ -1152,7 +1134,7 @@
     "watering_ko": "촉촉하게 유지하시고 여름에는 매일 물을 주세요"
   },
   {
-    "id": 365,
+    "id": 364,
     "tempmax": {
       "celsius": 35
     },
@@ -1170,7 +1152,7 @@
     "watering_ko": "건조에 강해요. 흙이 마르면 물을 주세요"
   },
   {
-    "id": 366,
+    "id": 365,
     "tempmax": {
       "celsius": 25
     },
@@ -1188,7 +1170,7 @@
     "watering_ko": "표면이 마르면 물을 주시고 배수가 잘 되게 해주세요"
   },
   {
-    "id": 367,
+    "id": 366,
     "tempmax": {
       "celsius": 30
     },
@@ -1206,7 +1188,7 @@
     "watering_ko": "정기적으로 물을 주세요. 자리잡으면 건조에 강해요"
   },
   {
-    "id": 368,
+    "id": 367,
     "tempmax": {
       "celsius": 30
     },
@@ -1224,7 +1206,7 @@
     "watering_ko": "생장기에는 흙을 촉촉하게 유지하시고 잎에 물을 분무해주세요"
   },
   {
-    "id": 369,
+    "id": 368,
     "tempmax": {
       "celsius": 30
     },
@@ -1242,7 +1224,7 @@
     "watering_ko": "표토가 마르면 물을 주시고 과습에 주의해주세요"
   },
   {
-    "id": 370,
+    "id": 369,
     "tempmax": {
       "celsius": 25
     },
@@ -1260,7 +1242,7 @@
     "watering_ko": "정기적으로 물을 주시고 촉촉하되 배수가 잘 되게 해주세요"
   },
   {
-    "id": 371,
+    "id": 370,
     "tempmax": {
       "celsius": 30
     },
@@ -1278,7 +1260,7 @@
     "watering_ko": "표토가 마르면 물을 주시고 잎이 젖지 않게 주의해주세요"
   },
   {
-    "id": 372,
+    "id": 371,
     "tempmax": {
       "celsius": 25
     },
@@ -1296,7 +1278,7 @@
     "watering_ko": "흙이 약간 마르도록 하시고 적당히 물을 주세요"
   },
   {
-    "id": 373,
+    "id": 372,
     "tempmax": {
       "celsius": 30
     },
@@ -1314,7 +1296,7 @@
     "watering_ko": "건조에 강해요. 가끔 물을 주세요"
   },
   {
-    "id": 374,
+    "id": 373,
     "tempmax": {
       "celsius": 28
     },
@@ -1332,7 +1314,7 @@
     "watering_ko": "촉촉하게 유지해주세요. 차갑고 젖은 흙에서 구근이 썩을 수 있어요"
   },
   {
-    "id": 375,
+    "id": 374,
     "tempmax": {
       "celsius": 25
     },
@@ -1350,7 +1332,7 @@
     "watering_ko": "흙 표면이 마른 느낌이 들면 물을 주세요"
   },
   {
-    "id": 376,
+    "id": 375,
     "tempmax": {
       "celsius": 20
     },
@@ -1366,6 +1348,24 @@
     "ideallight_ko": "반그늘이 좋아요",
     "toleratedlight_ko": "그늘이 좋아요",
     "watering_ko": "흙을 계속 촉촉하게 유지하시고 서늘한 환경을 유지해주세요"
+  },
+  {
+    "id": 376,
+    "tempmax": {
+      "celsius": 27
+    },
+    "tempmin": {
+      "celsius": 15
+    },
+    "ideallight": "Full sun (6+ hours direct sunlight).",
+    "toleratedlight": "Bright sunlight.",
+    "watering": "Water daily to keep soil evenly moist. Do not overwater.",
+    "wateringperiod": "2",
+    "ai_label_en": "prince_of_wales_feathers",
+    "ai_label_ko": "촛불맨드라미",
+    "ideallight_ko": "하루 6시간 이상 직사광선을 받을 수 있는 곳에 두어주세요",
+    "toleratedlight_ko": "밝은 햇빛이 좋아요",
+    "watering_ko": "흙을 고르게 촉촉하게 유지하시고 과습에 주의해주세요"
   },
   {
     "id": 377,

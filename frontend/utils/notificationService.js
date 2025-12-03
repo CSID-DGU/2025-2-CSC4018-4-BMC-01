@@ -1,14 +1,36 @@
 /*
   파일명: notificationService.js
-  목적: 푸시 알림 관리 서비스 (모바일 전용)
+  목적: 푸시 알림 관리 서비스
+
+  기능:
+    - Background Task: 15분마다 주기적으로 식물 체크
+    - 물 안 준 식물 필터링 및 알림 발송
+    - 알림 권한 관리
+    - 모바일 전용 (웹 미지원)
+
+  동작 방식:
+    1. 앱 시작 시 Background Task 등록
+    2. OS가 15-30분마다 앱을 백그라운드에서 깨움
+    3. 로컬 DB에서 식물 목록 조회
+    4. 오늘 물 줘야 할 식물 필터링
+    5. 식물 이름 포함한 알림 발송
 */
 
 import * as Notifications from 'expo-notifications';
+import * as TaskManager from 'expo-task-manager';
+import * as BackgroundFetch from 'expo-background-fetch';
 import { Platform } from 'react-native';
 import { loadNotificationData } from './Storage';
 import { fetchPlants } from './Storage';
 
-// 알림 핸들러 설정
+/* ----------------------------------------------------------
+   상수 정의
+---------------------------------------------------------- */
+const BACKGROUND_NOTIFICATION_TASK = 'background-notification-task';
+
+/* ----------------------------------------------------------
+   알림 핸들러 설정
+---------------------------------------------------------- */
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -17,9 +39,9 @@ Notifications.setNotificationHandler({
   }),
 });
 
-/**
- * 알림 권한 요청
- */
+/* ----------------------------------------------------------
+   알림 권한 요청
+---------------------------------------------------------- */
 export const requestNotificationPermissions = async () => {
   if (Platform.OS === 'web') {
     return false;
@@ -41,22 +63,35 @@ export const requestNotificationPermissions = async () => {
   return true;
 };
 
-/**
- * 모든 예약된 알림 취소
- */
+/* ----------------------------------------------------------
+   모든 예약된 알림 취소
+---------------------------------------------------------- */
 export const cancelAllNotifications = async () => {
   if (Platform.OS === 'web') return;
   await Notifications.cancelAllScheduledNotificationsAsync();
 };
 
-/**
- * 물 줄 식물 체크 및 알림 발송
- */
-const checkAndSendNotification = async () => {
+/* ----------------------------------------------------------
+   물 줄 식물 체크 및 알림 발송
+   - 로컬 DB에서 식물 목록 조회
+   - 오늘 물 줘야 할 식물 필터링
+   - 식물 이름 포함한 알림 발송
+---------------------------------------------------------- */
+export const checkAndSendNotification = async () => {
   try {
-    const plants = await fetchPlants();
-    const today = new Date().toISOString().split('T')[0];
+    const notificationData = await loadNotificationData();
+    if (!notificationData || !notificationData.enabled) {
+      return BackgroundFetch.BackgroundFetchResult.NoData;
+    }
 
+    const plants = await fetchPlants();
+
+    // 한국 시간 기준 오늘 날짜
+    const now = new Date();
+    const kst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    const today = kst.toISOString().split('T')[0];
+
+    // 물 줘야 할 식물 필터링
     const mustWaterPlants = plants.filter((p) => {
       if (!p.nextWater) return true;
       return p.nextWater <= today;
@@ -72,57 +107,99 @@ const checkAndSendNotification = async () => {
           sound: true,
           priority: Notifications.AndroidNotificationPriority.HIGH,
         },
-        trigger: null, // 즉시 발송
+        trigger: null,
       });
+
+      console.log(`[notificationService] 알림 발송: ${plantNames}`);
+      return BackgroundFetch.BackgroundFetchResult.NewData;
+    } else {
+      console.log('[notificationService] 물 줄 식물 없음');
+      return BackgroundFetch.BackgroundFetchResult.NoData;
     }
   } catch (error) {
     console.error('[notificationService] 알림 발송 오류:', error);
+    return BackgroundFetch.BackgroundFetchResult.Failed;
   }
 };
 
-/**
- * 매일 알림 스케줄 설정
- */
-export const scheduleDailyNotification = async () => {
-  if (Platform.OS === 'web') {
-    console.log('[notificationService] 웹에서는 알림 미지원');
-    return;
+/* ----------------------------------------------------------
+   Background Task 정의
+   - OS가 15-30분마다 호출
+   - 물 안 준 식물 체크 및 알림 발송
+---------------------------------------------------------- */
+TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, async () => {
+  try {
+    const result = await checkAndSendNotification();
+    return result;
+  } catch (error) {
+    console.error('[Background Task] 오류:', error);
+    return BackgroundFetch.BackgroundFetchResult.Failed;
   }
+});
 
-  // 기존 알림 모두 취소
-  await cancelAllNotifications();
+/* ----------------------------------------------------------
+   Background Task 등록
+---------------------------------------------------------- */
+export const registerBackgroundTask = async () => {
+  if (Platform.OS === 'web') return;
 
-  // 알림 설정 불러오기
+  try {
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_NOTIFICATION_TASK);
+    if (isRegistered) return;
+
+    const notificationData = await loadNotificationData();
+    if (!notificationData || !notificationData.enabled) return;
+
+    await BackgroundFetch.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK, {
+      minimumInterval: 60 * 15, // 15분
+      stopOnTerminate: false,
+      startOnBoot: true,
+    });
+
+    console.log('[notificationService] Background Task 등록 완료');
+  } catch (error) {
+    console.error('[notificationService] Background Task 등록 실패:', error);
+  }
+};
+
+/* ----------------------------------------------------------
+   Background Task 해제
+---------------------------------------------------------- */
+export const unregisterBackgroundTask = async () => {
+  if (Platform.OS === 'web') return;
+
+  try {
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_NOTIFICATION_TASK);
+    if (isRegistered) {
+      await BackgroundFetch.unregisterTaskAsync(BACKGROUND_NOTIFICATION_TASK);
+      console.log('[notificationService] Background Task 해제 완료');
+    }
+  } catch (error) {
+    console.error('[notificationService] Background Task 해제 실패:', error);
+  }
+};
+
+/* ----------------------------------------------------------
+   알림 스케줄 설정
+   - 알림 ON: Background Task 등록
+   - 알림 OFF: Background Task 해제
+---------------------------------------------------------- */
+export const scheduleDailyNotification = async () => {
+  if (Platform.OS === 'web') return;
+
   const notificationData = await loadNotificationData();
 
   if (!notificationData || !notificationData.enabled) {
-    console.log('[notificationService] 알림 비활성화 상태');
+    await unregisterBackgroundTask();
     return;
   }
 
-  const { hour, minute } = notificationData;
-
-  // 매일 지정된 시간에 알림 예약
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: '🪴 물 주기 체크',
-      body: '오늘 물을 줘야 할 식물을 확인하세요!',
-      sound: true,
-      priority: Notifications.AndroidNotificationPriority.HIGH,
-    },
-    trigger: {
-      hour: hour || 9,
-      minute: minute || 0,
-      repeats: true,
-    },
-  });
-
-  console.log(`[notificationService] 매일 ${hour}:${minute} 알림 설정 완료`);
+  await registerBackgroundTask();
 };
 
-/**
- * 알림 초기화 (앱 시작 시 호출)
- */
+/* ----------------------------------------------------------
+   알림 초기화 (앱 시작 시 호출)
+---------------------------------------------------------- */
 export const initializeNotifications = async () => {
   if (Platform.OS === 'web') return;
 
@@ -138,4 +215,7 @@ export default {
   cancelAllNotifications,
   scheduleDailyNotification,
   initializeNotifications,
+  registerBackgroundTask,
+  unregisterBackgroundTask,
+  checkAndSendNotification,
 };

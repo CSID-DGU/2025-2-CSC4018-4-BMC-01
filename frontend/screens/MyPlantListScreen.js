@@ -2,24 +2,22 @@
   파일명: MyPlantListScreen.js
   기능:
     - 사용자 식물 전체 목록을 2열 그리드로 표시
+    - 즐겨찾기(favorite) 토글 기능
     - 식물 상세 페이지(PlantDetail)로 이동
-    - Storage.js 기반 통합 모델 사용
-    - 2열 그리드 고정 (UI 안정성)
-    - 즐겨찾기(favorite) 기능
     - 새 화분 추가 버튼 (PlantEditorScreen 이동)
 
   데이터 흐름:
-    fetchPlants() → Storage.js에서 API 데이터 + 로컬 메타데이터(WateringPeriod, favorite 등)
-                  → waterDate / nextWater 계산 포함한 모델 반환
-    MyPlantListScreen → 리스트 렌더링 → 상세 화면으로 plant 객체 그대로 전달
+    - PlantContext에서 식물 데이터 관리 (캐싱)
+    - 즐겨찾기 토글 시 즉시 UI 업데이트 (낙관적 업데이트)
+    - Storage.js에 비동기 저장 후 강제 갱신
 
-  주요 기능:
-    - 예외 처리: API/Storage 오류 발생 시 앱 크래시 방지
-    - 2열 고정 그리드: 화면 크기와 무관하게 Layout 안정화
-    - SafeAreaView 적용: iOS/Android 위아래 Notch 영역 대응
+  성능 최적화:
+    - InteractionManager: 화면 전환 애니메이션 완료 후 데이터 로드
+    - FlatList 최적화: removeClippedSubviews, windowSize 등
+    - useCallback: renderItem 메모이제이션
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -27,7 +25,8 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  InteractionManager
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -48,38 +47,50 @@ const CARD_WIDTH = (SCREEN_WIDTH - H_PADDING * 2 - SPACING) / 2;
 
 export default function MyPlantListScreen({ navigation }) {
   // Context에서 식물 데이터 가져오기
-  const { plants, loadPlants } = usePlants();
+  const { plants, loadPlants, updatePlant } = usePlants();
   const [loadError, setLoadError] = useState(false);
 
   /* ----------------------------------------------------------
       화면 focus 시 자동 갱신
-      - 상세 화면에서 돌아왔을 때 최신 정보 반영
+      - 애니메이션 완료 후 데이터 로드 (InteractionManager)
   ----------------------------------------------------------- */
   useEffect(() => {
-    const unsub = navigation.addListener("focus", () => loadPlants());
+    const unsub = navigation.addListener("focus", () => {
+      InteractionManager.runAfterInteractions(() => {
+        loadPlants();
+      });
+    });
     return unsub;
   }, [navigation, loadPlants]);
 
-  /* 초기 로드 */
-  useEffect(() => {
-    loadPlants();
-  }, []);
-
   /* ----------------------------------------------------------
-      favorite 토글 핸들러
+      즐겨찾기 토글
+      - 낙관적 UI 업데이트 → Storage 저장 → 강제 갱신
   ----------------------------------------------------------- */
   const handleToggleFavorite = async (plantId) => {
-    await toggleFavorite(plantId);
-    loadPlantData();
+    try {
+      // 1. 즉시 UI 업데이트 (낙관적 업데이트)
+      const currentPlant = plants.find(p => p.id === plantId);
+      if (currentPlant) {
+        updatePlant(plantId, { favorite: !currentPlant.favorite });
+      }
+
+      // 2. 백그라운드에서 Storage 업데이트
+      await toggleFavorite(plantId);
+
+      // 3. 강제 갱신 (캐시 무시)
+      await loadPlants(true);
+    } catch (error) {
+      console.error('[MyPlantListScreen] 즐겨찾기 토글 실패:', error);
+      // 에러 발생 시 원복을 위해 강제 갱신
+      await loadPlants(true);
+    }
   };
 
   /* ----------------------------------------------------------
-      개별 식물 카드 렌더링
-      - 2열 그리드 구조 유지
-      - navigation: PlantDetail 으로 plant 객체 전달
-      - favorite 속성 표시 및 토글 버튼 추가
+      개별 식물 카드 렌더링 (useCallback 최적화)
   ----------------------------------------------------------- */
-  const renderItem = ({ item }) => (
+  const renderItem = useCallback(({ item }) => (
     <View style={styles.cardContainer}>
       {/* 즐겨찾기 토글 버튼 */}
       <TouchableOpacity
@@ -119,7 +130,7 @@ export default function MyPlantListScreen({ navigation }) {
         </Text>
       </TouchableOpacity>
     </View>
-  );
+  ), [handleToggleFavorite, navigation]);
 
   /* ----------------------------------------------------------
       화면 렌더링
@@ -163,6 +174,11 @@ export default function MyPlantListScreen({ navigation }) {
             columnWrapperStyle={styles.row}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
+            removeClippedSubviews={true}
+            maxToRenderPerBatch={10}
+            updateCellsBatchingPeriod={50}
+            initialNumToRender={10}
+            windowSize={5}
           />
         )}
       </View>

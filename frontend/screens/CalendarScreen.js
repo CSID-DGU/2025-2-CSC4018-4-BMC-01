@@ -35,6 +35,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  InteractionManager
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Calendar } from "react-native-calendars";
@@ -52,8 +53,13 @@ export default function CalendarScreen({ navigation }) {
     loadPlants();
   }, []);
 
+  /* 화면 focus 시 자동 갱신 (애니메이션 완료 후) */
   useEffect(() => {
-    const unsub = navigation.addListener("focus", () => loadPlants());
+    const unsub = navigation.addListener("focus", () => {
+      InteractionManager.runAfterInteractions(() => {
+        loadPlants();
+      });
+    });
     return unsub;
   }, [navigation, loadPlants]);
 

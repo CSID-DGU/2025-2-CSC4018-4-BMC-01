@@ -65,12 +65,14 @@ npm install
 **주요 의존성:**
 ```json
 {
-  "expo-sqlite": "~15.0.0",        // 로컬 SQLite DB
-  "expo-asset": "~11.0.0",         // 에셋 관리
-  "expo-file-system": "~19.0.0",   // 파일 시스템
-  "expo-image-picker": "~17.0.0",  // 이미지 선택
-  "expo-location": "~19.0.0",      // GPS 위치
-  "expo-notifications": "~0.32.0"  // 푸시 알림
+  "expo-sqlite": "~15.0.0",           // 로컬 SQLite DB
+  "expo-asset": "~11.0.0",            // 에셋 관리
+  "expo-file-system": "~19.0.0",      // 파일 시스템
+  "expo-image-picker": "~17.0.0",     // 이미지 선택
+  "expo-location": "~19.0.0",         // GPS 위치
+  "expo-notifications": "~0.32.0",    // 푸시 알림
+  "expo-task-manager": "~13.0.0",     // Background Task
+  "expo-background-fetch": "~14.0.0"  // Background Fetch
 }
 ```
 
@@ -344,6 +346,30 @@ useEffect(() => {
 - Google Cloud AI API 직접 호출
 - localDbService.updateDisease()로 저장
 
+### 6. Background 알림 (2025.12 신규)
+
+**동작 방식:**
+```javascript
+// notificationService.js
+// 1. Background Task 등록 (앱 시작 시)
+registerBackgroundTask()
+
+// 2. OS가 15-30분마다 앱을 백그라운드에서 깨움
+// 3. checkAndSendNotification() 실행
+//    - 로컬 DB에서 식물 목록 조회
+//    - 오늘 물 줘야 할 식물 필터링
+//    - 식물 이름 포함한 알림 발송
+
+// 알림 예시:
+// 🪴 물 줄 시간이에요!
+// 오늘 물을 줘야 할 식물: 장미, 선인장, 고무나무
+```
+
+**제약사항:**
+- iOS: 15-30분마다 실행 (정확한 시간 보장 안 됨)
+- 배터리 절약 모드에서 제한될 수 있음
+- 앱 강제 종료 시 작동 안 할 수 있음
+
 ## 저장소
 
 ### AsyncStorage
@@ -408,10 +434,10 @@ npm install -g eas-cli
 eas build:configure
 
 # Android 빌드
-eas build --platform android
+eas build --platform android --profile preview
 
 # iOS 빌드 (Mac 전용)
-eas build --platform ios
+eas build --platform ios --profile preview
 ```
 
 ## 주의사항
@@ -472,11 +498,30 @@ npx expo start
 - Development Build 또는 Production Build 필요
 - 로컬 알림만 Expo Go에서 작동
 
-## 성능 최적화
+## 성능 최적화 (2025.12 업데이트)
 
-- **전역 상태 관리**: PlantContext로 중복 DB 쿼리 75% 감소 (5초 캐싱)
+### 1. 전역 상태 관리
+- **PlantContext**: 5초 캐싱으로 중복 DB 쿼리 75% 감소
+- 화면 전환 시 캐시 재사용
+
+### 2. 화면 전환 최적화
+- **InteractionManager**: 애니메이션 완료 후 데이터 로드
+  ```javascript
+  InteractionManager.runAfterInteractions(() => {
+    loadPlants();
+  });
+  ```
+- HomeScreen, CalendarScreen, ReportScreen, MyPlantListScreen 적용
+
+### 3. FlatList 최적화
+- **MyPlantListScreen**:
+  - `removeClippedSubviews`: 화면 밖 아이템 제거
+  - `windowSize`: 현재 화면 기준 5배 영역만 렌더링
+  - `maxToRenderPerBatch`: 10개씩 배치 렌더링
+  - `useCallback`: renderItem 메모이제이션
+
+### 4. 기타
 - **이미지**: expo-image 사용 (자동 캐싱)
-- **리스트**: FlatList 사용 (가상화)
 - **네비게이션**: React Navigation의 lazy loading
 - **DB 쿼리**: 인덱싱 및 COALESCE 활용
 

@@ -18,6 +18,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  InteractionManager
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { usePlants } from "../context/PlantContext";
@@ -42,8 +43,13 @@ export default function ReportScreen({ navigation }) {
     loadData();
   }, []);
 
+  /* 화면 focus 시 자동 갱신 (애니메이션 완료 후) */
   useEffect(() => {
-    const unsub = navigation.addListener("focus", () => loadData());
+    const unsub = navigation.addListener("focus", () => {
+      InteractionManager.runAfterInteractions(() => {
+        loadData();
+      });
+    });
     return unsub;
   }, [navigation]);
 
