@@ -1,7 +1,7 @@
 {
-  "overall_accuracy": 83.9546191247974,
-  "mean_class_accuracy": 84.16005291005291,
-  "correct": 518,
+  "overall_accuracy": 84.44084278768233,
+  "mean_class_accuracy": 84.11803610333021,
+  "correct": 521,
   "total": 617,
   "per_class": {
     "alpine_sea_holly": {
@@ -10,29 +10,29 @@
       "accuracy": 100.0
     },
     "anthurium": {
-      "correct": 7,
+      "correct": 6,
       "total": 7,
-      "accuracy": 100.0
+      "accuracy": 85.71428571428571
     },
     "artichoke": {
-      "correct": 5,
+      "correct": 4,
       "total": 5,
-      "accuracy": 100.0
+      "accuracy": 80.0
     },
     "azalea": {
-      "correct": 6,
+      "correct": 5,
       "total": 6,
-      "accuracy": 100.0
+      "accuracy": 83.33333333333334
     },
     "ball_moss": {
+      "correct": 6,
+      "total": 7,
+      "accuracy": 85.71428571428571
+    },
+    "balloon_flower": {
       "correct": 7,
       "total": 7,
       "accuracy": 100.0
-    },
-    "balloon_flower": {
-      "correct": 4,
-      "total": 7,
-      "accuracy": 57.14285714285714
     },
     "barbeton_daisy": {
       "correct": 6,
@@ -75,14 +75,14 @@
       "accuracy": 66.66666666666666
     },
     "bolero_deep_blue": {
-      "correct": 5,
-      "total": 6,
-      "accuracy": 83.33333333333334
-    },
-    "bougainvillea": {
       "correct": 6,
       "total": 6,
       "accuracy": 100.0
+    },
+    "bougainvillea": {
+      "correct": 5,
+      "total": 6,
+      "accuracy": 83.33333333333334
     },
     "bromelia": {
       "correct": 7,
@@ -105,14 +105,14 @@
       "accuracy": 83.33333333333334
     },
     "canna_lily": {
-      "correct": 5,
+      "correct": 6,
       "total": 7,
-      "accuracy": 71.42857142857143
+      "accuracy": 85.71428571428571
     },
     "canterbury_bells": {
-      "correct": 5,
+      "correct": 3,
       "total": 8,
-      "accuracy": 62.5
+      "accuracy": 37.5
     },
     "cape_flower": {
       "correct": 6,
@@ -125,19 +125,19 @@
       "accuracy": 83.33333333333334
     },
     "cautleya_spicata": {
-      "correct": 1,
+      "correct": 0,
       "total": 1,
-      "accuracy": 100.0
+      "accuracy": 0.0
     },
     "clematis": {
+      "correct": 3,
+      "total": 6,
+      "accuracy": 50.0
+    },
+    "colt_s_foot": {
       "correct": 4,
       "total": 6,
       "accuracy": 66.66666666666666
-    },
-    "colt_s_foot": {
-      "correct": 5,
-      "total": 6,
-      "accuracy": 83.33333333333334
     },
     "columbine": {
       "correct": 4,
@@ -145,14 +145,14 @@
       "accuracy": 57.14285714285714
     },
     "common_dandelion": {
-      "correct": 2,
+      "correct": 3,
       "total": 4,
-      "accuracy": 50.0
+      "accuracy": 75.0
     },
     "corn_poppy": {
-      "correct": 4,
+      "correct": 6,
       "total": 6,
-      "accuracy": 66.66666666666666
+      "accuracy": 100.0
     },
     "cyclamen": {
       "correct": 5,
@@ -190,14 +190,14 @@
       "accuracy": 100.0
     },
     "fritillary": {
-      "correct": 6,
+      "correct": 7,
       "total": 7,
-      "accuracy": 85.71428571428571
+      "accuracy": 100.0
     },
     "garden_phlox": {
-      "correct": 6,
+      "correct": 5,
       "total": 7,
-      "accuracy": 85.71428571428571
+      "accuracy": 71.42857142857143
     },
     "gaura": {
       "correct": 6,
@@ -210,9 +210,9 @@
       "accuracy": 100.0
     },
     "geranium": {
-      "correct": 2,
+      "correct": 3,
       "total": 5,
-      "accuracy": 40.0
+      "accuracy": 60.0
     },
     "giant_white_arum_lily": {
       "correct": 5,
@@ -220,9 +220,9 @@
       "accuracy": 100.0
     },
     "globe_flower": {
-      "correct": 3,
+      "correct": 4,
       "total": 5,
-      "accuracy": 60.0
+      "accuracy": 80.0
     },
     "globe_thistle": {
       "correct": 5,
@@ -230,14 +230,14 @@
       "accuracy": 100.0
     },
     "grape_hyacinth": {
-      "correct": 6,
-      "total": 6,
-      "accuracy": 100.0
-    },
-    "great_masterwort": {
       "correct": 5,
       "total": 6,
       "accuracy": 83.33333333333334
+    },
+    "great_masterwort": {
+      "correct": 6,
+      "total": 6,
+      "accuracy": 100.0
     },
     "hard_leaved_pocket_orchid": {
       "correct": 7,
@@ -255,9 +255,9 @@
       "accuracy": 100.0
     },
     "japanese_anemone": {
-      "correct": 4,
+      "correct": 5,
       "total": 5,
-      "accuracy": 80.0
+      "accuracy": 100.0
     },
     "king_protea": {
       "correct": 6,
@@ -265,9 +265,9 @@
       "accuracy": 85.71428571428571
     },
     "lenten_rose": {
-      "correct": 4,
+      "correct": 3,
       "total": 4,
-      "accuracy": 100.0
+      "accuracy": 75.0
     },
     "lotus": {
       "correct": 4,
@@ -285,14 +285,14 @@
       "accuracy": 83.33333333333334
     },
     "mallow": {
-      "correct": 3,
+      "correct": 4,
       "total": 4,
-      "accuracy": 75.0
+      "accuracy": 100.0
     },
     "marigold": {
-      "correct": 2,
+      "correct": 4,
       "total": 5,
-      "accuracy": 40.0
+      "accuracy": 80.0
     },
     "mexican_aster": {
       "correct": 6,
@@ -300,9 +300,9 @@
       "accuracy": 100.0
     },
     "mexican_petunia": {
-      "correct": 3,
+      "correct": 4,
       "total": 6,
-      "accuracy": 50.0
+      "accuracy": 66.66666666666666
     },
     "monkshood": {
       "correct": 5,
@@ -320,9 +320,9 @@
       "accuracy": 85.71428571428571
     },
     "orange_dahlia": {
-      "correct": 5,
+      "correct": 6,
       "total": 6,
-      "accuracy": 83.33333333333334
+      "accuracy": 100.0
     },
     "osteospermum": {
       "correct": 4,
@@ -340,24 +340,24 @@
       "accuracy": 100.0
     },
     "pelargonium": {
-      "correct": 3,
+      "correct": 4,
       "total": 6,
-      "accuracy": 50.0
+      "accuracy": 66.66666666666666
     },
     "peruvian_lily": {
-      "correct": 6,
-      "total": 7,
-      "accuracy": 85.71428571428571
-    },
-    "petunia": {
       "correct": 5,
       "total": 7,
       "accuracy": 71.42857142857143
     },
-    "pincushion_flower": {
+    "petunia": {
       "correct": 6,
+      "total": 7,
+      "accuracy": 85.71428571428571
+    },
+    "pincushion_flower": {
+      "correct": 5,
       "total": 6,
-      "accuracy": 100.0
+      "accuracy": 83.33333333333334
     },
     "pink_primrose": {
       "correct": 3,
@@ -370,14 +370,14 @@
       "accuracy": 71.42857142857143
     },
     "poinsettia": {
-      "correct": 5,
+      "correct": 3,
       "total": 7,
-      "accuracy": 71.42857142857143
+      "accuracy": 42.857142857142854
     },
     "primula": {
-      "correct": 5,
+      "correct": 3,
       "total": 7,
-      "accuracy": 71.42857142857143
+      "accuracy": 42.857142857142854
     },
     "prince_of_wales_feathers": {
       "correct": 7,
@@ -385,9 +385,9 @@
       "accuracy": 77.77777777777779
     },
     "purple_coneflower": {
-      "correct": 2,
+      "correct": 3,
       "total": 7,
-      "accuracy": 28.57142857142857
+      "accuracy": 42.857142857142854
     },
     "red_ginger": {
       "correct": 7,
@@ -400,9 +400,9 @@
       "accuracy": 75.0
     },
     "ruby_lipped_cattleya": {
-      "correct": 4,
+      "correct": 5,
       "total": 7,
-      "accuracy": 57.14285714285714
+      "accuracy": 71.42857142857143
     },
     "siam_tulip": {
       "correct": 4,
@@ -435,9 +435,9 @@
       "accuracy": 100.0
     },
     "sunflower": {
-      "correct": 4,
+      "correct": 6,
       "total": 6,
-      "accuracy": 66.66666666666666
+      "accuracy": 100.0
     },
     "sweet_pea": {
       "correct": 5,
@@ -465,29 +465,29 @@
       "accuracy": 100.0
     },
     "toad_lily": {
-      "correct": 6,
+      "correct": 5,
       "total": 6,
-      "accuracy": 100.0
+      "accuracy": 83.33333333333334
     },
     "tree_mallow": {
-      "correct": 6,
+      "correct": 5,
       "total": 6,
-      "accuracy": 100.0
+      "accuracy": 83.33333333333334
     },
     "tree_poppy": {
-      "correct": 6,
+      "correct": 7,
       "total": 7,
-      "accuracy": 85.71428571428571
+      "accuracy": 100.0
     },
     "trumpet_creeper": {
-      "correct": 6,
+      "correct": 4,
       "total": 7,
-      "accuracy": 85.71428571428571
+      "accuracy": 57.14285714285714
     },
     "wallflower": {
-      "correct": 5,
+      "correct": 4,
       "total": 5,
-      "accuracy": 100.0
+      "accuracy": 80.0
     },
     "water_lily": {
       "correct": 7,
@@ -510,9 +510,9 @@
       "accuracy": 83.33333333333334
     },
     "yellow_iris": {
-      "correct": 4,
+      "correct": 6,
       "total": 6,
-      "accuracy": 66.66666666666666
+      "accuracy": 100.0
     }
   }
 }

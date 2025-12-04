@@ -79,14 +79,14 @@ models:
     label_path: "src/train/labels/species.labels.json"
     translate_path: "src/io/label_map_species.json"
     num_classes: 102
-    device: cuda              # cpu | cuda | cuda:0
+    device: cpu              # cpu | cuda | cuda:0
   disease:
     backend: "torch"          # dummy | torch | onnx | tflite
     ckpt_path: "src/train/checkpoints/disease/tf_efficientnetv2_b0/ckpt.pt.best"
     label_path: "src/train/labels/disease.labels.json"
     translate_path: "src/io/label_map_disease.json"
     num_classes: 6
-    device: cuda              # cpu | cuda | cuda:0
+    device: cpu              # cpu | cuda | cuda:0
 
 router:
   rules:
