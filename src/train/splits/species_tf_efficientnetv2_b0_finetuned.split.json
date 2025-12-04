@@ -1,0 +1,8 @@
+{
+  "seed": 42,
+  "val_ratio": 0.2,
+  "n_classes": 102,
+  "note": "Using separate validation dataset (--val-data)",
+  "train_data": "samples/plants_aug",
+  "val_data": "samples/plants"
+}

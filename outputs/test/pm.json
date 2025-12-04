@@ -1,25 +1,25 @@
 {
   "stage": "infer",
   "mode": "disease",
-  "pred_class": 0,
-  "pred_label": "Black_rot",
-  "pred_label_ko": "검은무늬병",
-  "confidence": 0.5044302344322205,
+  "pred_class": 5,
+  "pred_label": "Powdery_mildew",
+  "pred_label_ko": "흰가루병",
+  "confidence": 0.6636765599250793,
   "topk": [
-    {
-      "index": 0,
-      "label": "Black_rot",
-      "prob": 0.5044302344322205
-    },
     {
       "index": 5,
       "label": "Powdery_mildew",
-      "prob": 0.2837624251842499
+      "prob": 0.6636765599250793
     },
     {
-      "index": 1,
-      "label": "Early_blight",
-      "prob": 0.1142425686120987
+      "index": 0,
+      "label": "Black_rot",
+      "prob": 0.08715314418077469
+    },
+    {
+      "index": 2,
+      "label": "Healthy",
+      "prob": 0.07258692383766174
     }
   ],
   "meta": {

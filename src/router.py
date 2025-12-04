@@ -361,9 +361,4 @@ python -m src.router "samples/img_leaf_0001.jpg" --force disease --skip-morph
 
 # 배치 추론 (폴더 내 모든 이미지)
 python -m src.router "samples/leaves_test" --batch --force disease --out outputs/test
-python -m src.router "samples/leaves_test" --batch --force disease --skip-morph --out outputs/test
-
-# 정확도 측정 (폴더 구조: leaves_test/class_name/*.jpg)
-python -m src.router "samples/leaves_test" --batch
-# → batch_summary.json에 클래스별 정확도 포함
 '''

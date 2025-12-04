@@ -1,25 +1,25 @@
 {
   "stage": "infer",
   "mode": "disease",
-  "pred_class": 4,
-  "pred_label": "Leaf_spot",
-  "pred_label_ko": "점무늬병",
-  "confidence": 0.7696397304534912,
+  "pred_class": 0,
+  "pred_label": "Black_rot",
+  "pred_label_ko": "검은무늬병",
+  "confidence": 0.7385219931602478,
   "topk": [
-    {
-      "index": 4,
-      "label": "Leaf_spot",
-      "prob": 0.7696397304534912
-    },
     {
       "index": 0,
       "label": "Black_rot",
-      "prob": 0.10406918078660965
+      "prob": 0.7385219931602478
     },
     {
       "index": 1,
       "label": "Early_blight",
-      "prob": 0.07812801748514175
+      "prob": 0.11012192070484161
+    },
+    {
+      "index": 2,
+      "label": "Healthy",
+      "prob": 0.07366351038217545
     }
   ],
   "meta": {

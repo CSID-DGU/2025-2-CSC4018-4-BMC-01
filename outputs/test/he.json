@@ -4,22 +4,22 @@
   "pred_class": 2,
   "pred_label": "Healthy",
   "pred_label_ko": "건강한 상태",
-  "confidence": 0.9041925072669983,
+  "confidence": 0.8994484543800354,
   "topk": [
     {
       "index": 2,
       "label": "Healthy",
-      "prob": 0.9041925072669983
-    },
-    {
-      "index": 5,
-      "label": "Powdery_mildew",
-      "prob": 0.021615836769342422
+      "prob": 0.8994484543800354
     },
     {
       "index": 1,
       "label": "Early_blight",
-      "prob": 0.021112997084856033
+      "prob": 0.026310550048947334
+    },
+    {
+      "index": 5,
+      "label": "Powdery_mildew",
+      "prob": 0.02056106925010681
     }
   ],
   "meta": {

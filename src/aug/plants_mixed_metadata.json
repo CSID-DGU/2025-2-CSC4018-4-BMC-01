@@ -1,0 +1,628 @@
+{
+  "created_at": "2025-12-04T08:21:24.415664",
+  "test_ratio": 0.2,
+  "random_seed": 42,
+  "strategy": "Mixed training with weighted sampling, test from plants_aug only",
+  "classes": {
+    "alpine_sea_holly": {
+      "plants": 43,
+      "plants_aug_train": 26,
+      "plants_aug_test": 6,
+      "mixed_train_total": 69
+    },
+    "anthurium": {
+      "plants": 105,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 134
+    },
+    "artichoke": {
+      "plants": 78,
+      "plants_aug_train": 23,
+      "plants_aug_test": 5,
+      "mixed_train_total": 101
+    },
+    "azalea": {
+      "plants": 96,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 124
+    },
+    "ball_moss": {
+      "plants": 46,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 75
+    },
+    "balloon_flower": {
+      "plants": 49,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 78
+    },
+    "barbeton_daisy": {
+      "plants": 127,
+      "plants_aug_train": 26,
+      "plants_aug_test": 6,
+      "mixed_train_total": 153
+    },
+    "bearded_iris": {
+      "plants": 54,
+      "plants_aug_train": 24,
+      "plants_aug_test": 5,
+      "mixed_train_total": 78
+    },
+    "bee_balm": {
+      "plants": 66,
+      "plants_aug_train": 27,
+      "plants_aug_test": 6,
+      "mixed_train_total": 93
+    },
+    "bird_of_paradise": {
+      "plants": 85,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 113
+    },
+    "bishop_of_llandaff": {
+      "plants": 109,
+      "plants_aug_train": 34,
+      "plants_aug_test": 8,
+      "mixed_train_total": 143
+    },
+    "black_eyed_susan": {
+      "plants": 54,
+      "plants_aug_train": 32,
+      "plants_aug_test": 8,
+      "mixed_train_total": 86
+    },
+    "blackberry_lily": {
+      "plants": 48,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 76
+    },
+    "blanket_flower": {
+      "plants": 49,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 77
+    },
+    "bolero_deep_blue": {
+      "plants": 40,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 68
+    },
+    "bougainvillea": {
+      "plants": 128,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 156
+    },
+    "bromelia": {
+      "plants": 63,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 91
+    },
+    "buttercup": {
+      "plants": 71,
+      "plants_aug_train": 20,
+      "plants_aug_test": 4,
+      "mixed_train_total": 91
+    },
+    "californian_poppy": {
+      "plants": 102,
+      "plants_aug_train": 32,
+      "plants_aug_test": 8,
+      "mixed_train_total": 134
+    },
+    "camellia": {
+      "plants": 91,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 116
+    },
+    "canna_lily": {
+      "plants": 82,
+      "plants_aug_train": 32,
+      "plants_aug_test": 7,
+      "mixed_train_total": 114
+    },
+    "canterbury_bells": {
+      "plants": 40,
+      "plants_aug_train": 32,
+      "plants_aug_test": 8,
+      "mixed_train_total": 72
+    },
+    "cape_flower": {
+      "plants": 108,
+      "plants_aug_train": 35,
+      "plants_aug_test": 8,
+      "mixed_train_total": 143
+    },
+    "carnation": {
+      "plants": 52,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 80
+    },
+    "cautleya_spicata": {
+      "plants": 50,
+      "plants_aug_train": 6,
+      "plants_aug_test": 1,
+      "mixed_train_total": 56
+    },
+    "clematis": {
+      "plants": 112,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 140
+    },
+    "colt_s_foot": {
+      "plants": 87,
+      "plants_aug_train": 27,
+      "plants_aug_test": 6,
+      "mixed_train_total": 114
+    },
+    "columbine": {
+      "plants": 86,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 116
+    },
+    "common_dandelion": {
+      "plants": 92,
+      "plants_aug_train": 18,
+      "plants_aug_test": 4,
+      "mixed_train_total": 110
+    },
+    "corn_poppy": {
+      "plants": 41,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 66
+    },
+    "cyclamen": {
+      "plants": 154,
+      "plants_aug_train": 20,
+      "plants_aug_test": 5,
+      "mixed_train_total": 174
+    },
+    "daffodil": {
+      "plants": 59,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 88
+    },
+    "desert_rose": {
+      "plants": 63,
+      "plants_aug_train": 19,
+      "plants_aug_test": 4,
+      "mixed_train_total": 82
+    },
+    "english_marigold": {
+      "plants": 65,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 93
+    },
+    "fire_lily": {
+      "plants": 40,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 65
+    },
+    "foxglove": {
+      "plants": 162,
+      "plants_aug_train": 20,
+      "plants_aug_test": 5,
+      "mixed_train_total": 182
+    },
+    "frangipani": {
+      "plants": 166,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 191
+    },
+    "fritillary": {
+      "plants": 91,
+      "plants_aug_train": 31,
+      "plants_aug_test": 7,
+      "mixed_train_total": 122
+    },
+    "garden_phlox": {
+      "plants": 45,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 74
+    },
+    "gaura": {
+      "plants": 67,
+      "plants_aug_train": 26,
+      "plants_aug_test": 6,
+      "mixed_train_total": 93
+    },
+    "gazania": {
+      "plants": 78,
+      "plants_aug_train": 24,
+      "plants_aug_test": 5,
+      "mixed_train_total": 102
+    },
+    "geranium": {
+      "plants": 114,
+      "plants_aug_train": 21,
+      "plants_aug_test": 5,
+      "mixed_train_total": 135
+    },
+    "giant_white_arum_lily": {
+      "plants": 56,
+      "plants_aug_train": 21,
+      "plants_aug_test": 5,
+      "mixed_train_total": 77
+    },
+    "globe_flower": {
+      "plants": 41,
+      "plants_aug_train": 21,
+      "plants_aug_test": 5,
+      "mixed_train_total": 62
+    },
+    "globe_thistle": {
+      "plants": 45,
+      "plants_aug_train": 22,
+      "plants_aug_test": 5,
+      "mixed_train_total": 67
+    },
+    "grape_hyacinth": {
+      "plants": 41,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 65
+    },
+    "great_masterwort": {
+      "plants": 56,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 81
+    },
+    "hard_leaved_pocket_orchid": {
+      "plants": 60,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 88
+    },
+    "hibiscus": {
+      "plants": 131,
+      "plants_aug_train": 23,
+      "plants_aug_test": 5,
+      "mixed_train_total": 154
+    },
+    "hippeastrum": {
+      "plants": 76,
+      "plants_aug_train": 32,
+      "plants_aug_test": 7,
+      "mixed_train_total": 108
+    },
+    "japanese_anemone": {
+      "plants": 55,
+      "plants_aug_train": 24,
+      "plants_aug_test": 5,
+      "mixed_train_total": 79
+    },
+    "king_protea": {
+      "plants": 49,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 77
+    },
+    "lenten_rose": {
+      "plants": 67,
+      "plants_aug_train": 20,
+      "plants_aug_test": 4,
+      "mixed_train_total": 87
+    },
+    "lotus": {
+      "plants": 137,
+      "plants_aug_train": 20,
+      "plants_aug_test": 4,
+      "mixed_train_total": 157
+    },
+    "love_in_the_mist": {
+      "plants": 46,
+      "plants_aug_train": 22,
+      "plants_aug_test": 5,
+      "mixed_train_total": 68
+    },
+    "magnolia": {
+      "plants": 63,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 88
+    },
+    "mallow": {
+      "plants": 66,
+      "plants_aug_train": 19,
+      "plants_aug_test": 4,
+      "mixed_train_total": 85
+    },
+    "marigold": {
+      "plants": 67,
+      "plants_aug_train": 23,
+      "plants_aug_test": 5,
+      "mixed_train_total": 90
+    },
+    "mexican_aster": {
+      "plants": 40,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 65
+    },
+    "mexican_petunia": {
+      "plants": 82,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 106
+    },
+    "monkshood": {
+      "plants": 46,
+      "plants_aug_train": 22,
+      "plants_aug_test": 5,
+      "mixed_train_total": 68
+    },
+    "moon_orchid": {
+      "plants": 40,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 64
+    },
+    "morning_glory": {
+      "plants": 107,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 136
+    },
+    "orange_dahlia": {
+      "plants": 67,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 91
+    },
+    "osteospermum": {
+      "plants": 61,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 89
+    },
+    "oxeye_daisy": {
+      "plants": 49,
+      "plants_aug_train": 17,
+      "plants_aug_test": 4,
+      "mixed_train_total": 66
+    },
+    "passion_flower": {
+      "plants": 251,
+      "plants_aug_train": 21,
+      "plants_aug_test": 5,
+      "mixed_train_total": 272
+    },
+    "pelargonium": {
+      "plants": 71,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 99
+    },
+    "peruvian_lily": {
+      "plants": 82,
+      "plants_aug_train": 32,
+      "plants_aug_test": 7,
+      "mixed_train_total": 114
+    },
+    "petunia": {
+      "plants": 258,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 288
+    },
+    "pincushion_flower": {
+      "plants": 59,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 87
+    },
+    "pink_primrose": {
+      "plants": 40,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 68
+    },
+    "pink_yellow_dahlia": {
+      "plants": 109,
+      "plants_aug_train": 32,
+      "plants_aug_test": 7,
+      "mixed_train_total": 141
+    },
+    "poinsettia": {
+      "plants": 93,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 121
+    },
+    "primula": {
+      "plants": 93,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 123
+    },
+    "prince_of_wales_feathers": {
+      "plants": 40,
+      "plants_aug_train": 36,
+      "plants_aug_test": 9,
+      "mixed_train_total": 76
+    },
+    "purple_coneflower": {
+      "plants": 85,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 115
+    },
+    "red_ginger": {
+      "plants": 42,
+      "plants_aug_train": 32,
+      "plants_aug_test": 8,
+      "mixed_train_total": 74
+    },
+    "rose": {
+      "plants": 171,
+      "plants_aug_train": 16,
+      "plants_aug_test": 4,
+      "mixed_train_total": 187
+    },
+    "ruby_lipped_cattleya": {
+      "plants": 75,
+      "plants_aug_train": 32,
+      "plants_aug_test": 7,
+      "mixed_train_total": 107
+    },
+    "siam_tulip": {
+      "plants": 41,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 71
+    },
+    "silverbush": {
+      "plants": 52,
+      "plants_aug_train": 24,
+      "plants_aug_test": 5,
+      "mixed_train_total": 76
+    },
+    "snapdragon": {
+      "plants": 87,
+      "plants_aug_train": 29,
+      "plants_aug_test": 7,
+      "mixed_train_total": 116
+    },
+    "spear_thistle": {
+      "plants": 48,
+      "plants_aug_train": 22,
+      "plants_aug_test": 5,
+      "mixed_train_total": 70
+    },
+    "spring_crocus": {
+      "plants": 42,
+      "plants_aug_train": 28,
+      "plants_aug_test": 6,
+      "mixed_train_total": 70
+    },
+    "stemless_gentian": {
+      "plants": 66,
+      "plants_aug_train": 27,
+      "plants_aug_test": 6,
+      "mixed_train_total": 93
+    },
+    "sunflower": {
+      "plants": 61,
+      "plants_aug_train": 27,
+      "plants_aug_test": 6,
+      "mixed_train_total": 88
+    },
+    "sweet_pea": {
+      "plants": 56,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 80
+    },
+    "sweet_william": {
+      "plants": 85,
+      "plants_aug_train": 32,
+      "plants_aug_test": 8,
+      "mixed_train_total": 117
+    },
+    "sword_lily": {
+      "plants": 130,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 155
+    },
+    "thorn_apple": {
+      "plants": 120,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 150
+    },
+    "tiger_lily": {
+      "plants": 45,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 75
+    },
+    "toad_lily": {
+      "plants": 41,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 66
+    },
+    "tree_mallow": {
+      "plants": 58,
+      "plants_aug_train": 25,
+      "plants_aug_test": 6,
+      "mixed_train_total": 83
+    },
+    "tree_poppy": {
+      "plants": 62,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 90
+    },
+    "trumpet_creeper": {
+      "plants": 58,
+      "plants_aug_train": 28,
+      "plants_aug_test": 7,
+      "mixed_train_total": 86
+    },
+    "wallflower": {
+      "plants": 196,
+      "plants_aug_train": 21,
+      "plants_aug_test": 5,
+      "mixed_train_total": 217
+    },
+    "water_lily": {
+      "plants": 194,
+      "plants_aug_train": 30,
+      "plants_aug_test": 7,
+      "mixed_train_total": 224
+    },
+    "watercress": {
+      "plants": 184,
+      "plants_aug_train": 23,
+      "plants_aug_test": 5,
+      "mixed_train_total": 207
+    },
+    "wild_pansy": {
+      "plants": 85,
+      "plants_aug_train": 27,
+      "plants_aug_test": 6,
+      "mixed_train_total": 112
+    },
+    "windflower": {
+      "plants": 54,
+      "plants_aug_train": 26,
+      "plants_aug_test": 6,
+      "mixed_train_total": 80
+    },
+    "yellow_iris": {
+      "plants": 49,
+      "plants_aug_train": 24,
+      "plants_aug_test": 6,
+      "mixed_train_total": 73
+    }
+  },
+  "summary": {
+    "plants_total": 8189,
+    "plants_aug_total": 3285,
+    "plants_aug_train": 2668,
+    "plants_aug_test": 617,
+    "mixed_train_total": 10857,
+    "test_total": 617
+  }
+}

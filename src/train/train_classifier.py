@@ -7,7 +7,7 @@ from typing import Dict, List
 import torch
 import torch.nn as nn
 import timm
-from torch.utils.data import DataLoader, Subset
+from torch.utils.data import DataLoader, Subset, WeightedRandomSampler
 from torchvision import datasets, transforms
 
 # -----------------------------
@@ -173,6 +173,8 @@ def main():
     ap.add_argument("--use-morphology", action="store_true", help="병충해 모델 학습 시 morphology 전처리 적용")
     ap.add_argument("--resume", type=str, default=None, help="체크포인트 경로 (fine-tuning용)")
     ap.add_argument("--output-suffix", type=str, default="", help="체크포인트 폴더 이름에 suffix 추가 (예: _finetuned)")
+    ap.add_argument("--weighted-sampling", action="store_true", help="plants_aug 샘플에 더 높은 가중치 부여 (mixed training용)")
+    ap.add_argument("--aug-weight", type=float, default=2.0, help="plants_aug 샘플 가중치 (기본: 2.0)")
     args = ap.parse_args()
 
     set_seed(args.seed)
@@ -214,8 +216,41 @@ def main():
 
         print(f"[INFO] Auto split: {len(train_ids)} train, {len(val_ids)} val")
 
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True,
-                              num_workers=args.num_workers, pin_memory=True)
+    # Weighted sampling for mixed training (plants + plants_aug)
+    train_sampler = None
+    shuffle = True
+    if args.weighted_sampling:
+        print(f"[INFO] Weighted sampling enabled: aug_weight={args.aug_weight}")
+        weights = []
+
+        # Get image paths from dataset
+        if hasattr(train_ds, 'samples'):
+            # Direct ImageFolder
+            samples = train_ds.samples
+        elif hasattr(train_ds, 'dataset') and hasattr(train_ds.dataset, 'samples'):
+            # Subset of ImageFolder
+            samples = [train_ds.dataset.samples[i] for i in train_ds.indices]
+        else:
+            raise ValueError("Cannot extract samples from train_ds for weighted sampling")
+
+        # Assign weights based on filename prefix
+        for img_path, _ in samples:
+            filename = Path(img_path).name
+            if filename.startswith('aug_'):
+                weights.append(args.aug_weight)
+            else:
+                weights.append(1.0)
+
+        # Count weighted samples
+        num_aug = sum(1 for w in weights if w == args.aug_weight)
+        num_plants = len(weights) - num_aug
+        print(f"[INFO] Sample counts: {num_plants} plants (weight=1.0), {num_aug} aug (weight={args.aug_weight})")
+
+        train_sampler = WeightedRandomSampler(weights, len(weights), replacement=True)
+        shuffle = False  # sampler handles shuffling
+
+    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=shuffle,
+                              sampler=train_sampler, num_workers=args.num_workers, pin_memory=True)
     val_loader = DataLoader(val_ds, batch_size=args.batch_size, shuffle=False,
                             num_workers=args.num_workers, pin_memory=True)
 
@@ -300,6 +335,8 @@ def main():
         "arch": args.arch,
         "task": task,
         "use_morphology": args.use_morphology,
+        "weighted_sampling": args.weighted_sampling,
+        "aug_weight": args.aug_weight if args.weighted_sampling else None,
     }
 
     for epoch in range(1, args.epochs + 1):

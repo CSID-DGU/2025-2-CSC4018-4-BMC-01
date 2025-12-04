@@ -4,22 +4,22 @@
   "pred_class": 0,
   "pred_label": "Black_rot",
   "pred_label_ko": "검은무늬병",
-  "confidence": 0.7899913191795349,
+  "confidence": 0.6109687685966492,
   "topk": [
     {
       "index": 0,
       "label": "Black_rot",
-      "prob": 0.7899913191795349
+      "prob": 0.6109687685966492
     },
     {
       "index": 2,
       "label": "Healthy",
-      "prob": 0.072847880423069
+      "prob": 0.14459609985351562
     },
     {
-      "index": 3,
-      "label": "Late_blight",
-      "prob": 0.041343916207551956
+      "index": 1,
+      "label": "Early_blight",
+      "prob": 0.09724558889865875
     }
   ],
   "meta": {

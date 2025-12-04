@@ -6,37 +6,37 @@
     {
       "image": "br.jpg",
       "prediction": "Black_rot",
-      "confidence": 0.7899913191795349,
+      "confidence": 0.6109687685966492,
       "output": "outputs\\test\\br.json"
     },
     {
       "image": "eb.jpg",
       "prediction": "Early_blight",
-      "confidence": 0.4383164048194885,
+      "confidence": 0.7271748781204224,
       "output": "outputs\\test\\eb.json"
     },
     {
       "image": "he.png",
       "prediction": "Healthy",
-      "confidence": 0.9041925072669983,
+      "confidence": 0.8994484543800354,
       "output": "outputs\\test\\he.json"
     },
     {
       "image": "lb.jpg",
       "prediction": "Late_blight",
-      "confidence": 0.9027693867683411,
+      "confidence": 0.5400181412696838,
       "output": "outputs\\test\\lb.json"
     },
     {
       "image": "ls.png",
-      "prediction": "Leaf_spot",
-      "confidence": 0.7696397304534912,
+      "prediction": "Black_rot",
+      "confidence": 0.7385219931602478,
       "output": "outputs\\test\\ls.json"
     },
     {
       "image": "pm.jpg",
-      "prediction": "Black_rot",
-      "confidence": 0.5044302344322205,
+      "prediction": "Powdery_mildew",
+      "confidence": 0.6636765599250793,
       "output": "outputs\\test\\pm.json"
     }
   ]
