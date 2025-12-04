@@ -62,7 +62,7 @@ export const analyzeSpecies = async (imageUri, originalFileName = null) => {
     const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     try {
-      // Google Cloud AI API 직접 호출
+      // Google Cloud AI API 호출
       const response = await fetch(AI_API_URL, {
         method: 'POST',
         body: formData,
